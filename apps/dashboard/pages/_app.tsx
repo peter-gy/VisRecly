@@ -1,15 +1,21 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import './styles.css';
+import '../styles/global.css';
+import { cache } from '@emotion/css';
+import { CacheProvider } from '@emotion/react';
+import GlobalStyles from './../styles/GlobalStyles';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Welcome to dashboard!</title>
+        <title>VisRecLy</title>
       </Head>
       <main className="app">
-        <Component {...pageProps} />
+        <CacheProvider value={cache}>
+          <GlobalStyles />
+          <Component {...pageProps} />
+        </CacheProvider>
       </main>
     </>
   );

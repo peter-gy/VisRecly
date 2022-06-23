@@ -10,6 +10,8 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  optimizeFonts: true,
+  swcMinify: true,
 };
 
 module.exports = withNx(nextConfig);
