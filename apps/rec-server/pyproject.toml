@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "rec-server"
+version = "0.1.0"
+description = ""
+authors = ["Péter Ferenc Gyarmati <dev.petergy@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.78.0"
+uvicorn = "^0.18.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+pylint = "^2.14.3"
+mypy = "^0.961"
+isort = "^5.10.1"
+black = "^22.3.0"
+
+[tool.black]
+line-length = 120
+target-version = ['py39']
+exclude = '''
+/(
+    \.git
+  | __pycache__
+  | .pytest_cache
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
