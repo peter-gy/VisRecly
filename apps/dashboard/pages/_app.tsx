@@ -1,11 +1,11 @@
-import { AppProps } from 'next/app';
-import Head from 'next/head';
 import '../styles/global.css';
-import { cache } from '@emotion/css';
-import { CacheProvider } from '@emotion/react';
 import GlobalStyles from './../styles/GlobalStyles';
 import theme from './../styles/theme';
+import { cache } from '@emotion/css';
+import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material';
+import { AppProps } from 'next/app';
+import Head from 'next/head';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
