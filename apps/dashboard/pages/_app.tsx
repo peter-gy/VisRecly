@@ -4,6 +4,8 @@ import '../styles/global.css';
 import { cache } from '@emotion/css';
 import { CacheProvider } from '@emotion/react';
 import GlobalStyles from './../styles/GlobalStyles';
+import theme from './../styles/theme';
+import { ThemeProvider } from '@mui/material';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,7 +16,9 @@ function CustomApp({ Component, pageProps }: AppProps) {
       <main className="app">
         <CacheProvider value={cache}>
           <GlobalStyles />
-          <Component {...pageProps} />
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
         </CacheProvider>
       </main>
     </>

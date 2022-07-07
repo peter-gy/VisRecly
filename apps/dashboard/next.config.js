@@ -11,7 +11,7 @@ const nextConfig = {
     svgr: false,
   },
   optimizeFonts: true,
-  swcMinify: true,
+  swcMinify: false,
 };
 
 module.exports = withNx(nextConfig);
