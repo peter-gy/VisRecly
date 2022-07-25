@@ -1,0 +1,3 @@
+[submodule "libs/draco"]
+	path = libs/draco
+	url = https://github.com/peter-gy/draco.git
