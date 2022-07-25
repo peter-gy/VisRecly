@@ -5,7 +5,6 @@
     "dashboard": "apps/dashboard",
     "dashboard-e2e": "apps/dashboard-e2e",
     "draco": "libs/draco",
-    "draco-web": "libs/draco-web",
-    "rec-server": "apps/rec-server"
+    "draco-web": "libs/draco-web"
   }
 }
