@@ -1,1 +1,2 @@
-export * from './lib/draco-web';
+export * from './lib/solver';
+export * from './lib/types';
