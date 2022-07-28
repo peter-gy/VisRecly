@@ -138,7 +138,7 @@ function LeftDrawerLayout({
             </div>
             <div className="hidden sm:block">
               <a
-                href="https://github.com/peter-gy/VisRecLy"
+                href="https://github.com/peter-gy/visrecly"
                 target="_blank"
                 rel="noreferrer"
               >
