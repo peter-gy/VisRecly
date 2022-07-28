@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@visrecly/styles": ["libs/styles/src/index.ts"]
+      "@visrecly/draco-core": ["libs/draco/js/build"],
+      "@visrecly/draco-web": ["libs/draco-web/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
