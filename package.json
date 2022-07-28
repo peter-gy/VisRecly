@@ -5,8 +5,7 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test",
-    "format": "nx format && nx run rec-server:format"
+    "test": "nx test"
   },
   "private": true,
   "dependencies": {
