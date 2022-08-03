@@ -17,8 +17,8 @@ const MainContent = (appBarHeight: number) => {
       className="bg-[red] flex"
     >
       <RecList
-        items={[...Array(20).keys()].map((_) => (
-          <div className="p-10 bg-[aliceblue]"></div>
+        items={[...Array(20).keys()].map((idx) => (
+          <div className="p-10 bg-[aliceblue]">{idx + 1}</div>
         ))}
       />
     </div>

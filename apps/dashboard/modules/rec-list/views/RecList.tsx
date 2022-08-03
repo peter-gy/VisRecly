@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useRef } from 'react';
 
 import { IconButton, List, ListItem } from '@mui/material';
 
@@ -32,17 +32,32 @@ type RecListViewProps = {
 };
 
 function RecListView({ items }: RecListViewProps) {
+  const listRef = useRef<HTMLUListElement>(undefined);
+
+  const handleScrollUpClick = () => {
+    if (listRef.current) {
+      listRef.current.scroll({ behavior: 'smooth', top: 0 });
+    }
+  };
+  const handleScrollDownClick = () => {
+    if (listRef.current) {
+      listRef.current.scroll({
+        behavior: 'smooth',
+        top: listRef.current.scrollHeight,
+      });
+    }
+  };
   return (
     <div className="bg-[green] max-h-[100%] w-full flex flex-col justify-center items-center">
-      <IconButton size="large">
+      <IconButton size="large" onClick={handleScrollUpClick}>
         <ArrowUp className="text-white" fontSize="large" />
       </IconButton>
-      <List style={{ maxHeight: '100%', overflow: 'scroll' }}>
+      <List ref={listRef} style={{ maxHeight: '100%', overflow: 'scroll' }}>
         {items.map((item, index) => (
           <ListItem key={`rec-list-item-${index}`}>{item}</ListItem>
         ))}
       </List>
-      <IconButton size="large">
+      <IconButton size="large" onClick={handleScrollDownClick}>
         <ArrowDown className="text-white" fontSize="large" />
       </IconButton>
     </div>
