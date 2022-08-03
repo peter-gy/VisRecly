@@ -15,6 +15,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { styled, useTheme } from '@mui/material/styles';
 
+import useLayoutEffect from '../../hooks/useIsomorphicLayoutEffect';
 import useMuiAppBarHeight from '../../hooks/useMuiAppBarHeight';
 import useWindowSize from '../../hooks/useWindowSize';
 
@@ -108,7 +109,13 @@ function LeftDrawerLayout({
     }),
   }));
 
-  const [open, setOpen] = useState(true);
+  // Open drawer initially only on desktop
+  const [open, setOpen] = useState(false);
+  useLayoutEffect(() => {
+    if (windowWidth >= lg) {
+      setOpen(true);
+    }
+  }, [windowWidth]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
