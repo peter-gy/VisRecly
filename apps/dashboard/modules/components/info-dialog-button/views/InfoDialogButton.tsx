@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 
 import {
   Button,
@@ -12,12 +12,9 @@ import {
 } from '@mui/material';
 
 import { InfoIcon } from '../../icons/views/Info';
+import { Information } from '../information.type';
 
-type InfoDialogButtonProps = {
-  tooltip: string;
-  title: string;
-  description: string | ReactNode;
-};
+type InfoDialogButtonProps = Information;
 
 function InfoDialogButton({
   tooltip,
