@@ -1,5 +1,5 @@
-import useMuiAppBarHeight from '../../hooks/useMuiAppBarHeight';
-import useWindowSize from '../../hooks/useWindowSize';
+import { ReactNode, useState } from 'react';
+
 import { GitHub } from '@mui/icons-material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -14,7 +14,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { styled, useTheme } from '@mui/material/styles';
-import { ReactNode, useState } from 'react';
+
+import useMuiAppBarHeight from '../../hooks/useMuiAppBarHeight';
+import useWindowSize from '../../hooks/useWindowSize';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;

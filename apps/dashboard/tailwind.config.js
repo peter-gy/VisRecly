@@ -7,7 +7,7 @@ module.exports = {
   presets: [workspacePreset],
   mode: 'jit',
   content: ['pages/**/*.{js,ts,jsx,tsx}', 'modules/**/*.{js,ts,jsx,tsx}'].map(
-    (path) => join(__dirname, path)
+    (path) => join(__dirname, path),
   ),
   theme: {
     extend: {

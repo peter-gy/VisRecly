@@ -1,4 +1,5 @@
-import { InfoIcon } from '../../icons/views/Info';
+import { ReactNode, useState } from 'react';
+
 import {
   Button,
   Dialog,
@@ -9,7 +10,8 @@ import {
   IconButton,
   Tooltip,
 } from '@mui/material';
-import { ReactNode, useState } from 'react';
+
+import { InfoIcon } from '../../icons/views/Info';
 
 type InfoDialogButtonProps = {
   tooltip: string;

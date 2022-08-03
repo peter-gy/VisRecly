@@ -11,7 +11,7 @@ function useMuiAppBarHeight(): number {
   } = useTheme();
   const toolbarDesktopQuery = breakpoints.up('sm');
   const toolbarLandscapeQuery = `${breakpoints.up(
-    'xs'
+    'xs',
   )} and (orientation: landscape)`;
   const isDesktop = useMediaQuery(toolbarDesktopQuery);
   const isLandscape = useMediaQuery(toolbarLandscapeQuery);

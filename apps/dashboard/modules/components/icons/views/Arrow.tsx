@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import ArrowForward from '@mui/icons-material/ArrowForwardIos';
 
 export const ArrowUp = styled(ArrowForward)`

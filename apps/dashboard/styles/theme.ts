@@ -1,5 +1,6 @@
-import { createTheme } from '@mui/material';
 import { theme } from 'twin.macro';
+
+import { createTheme } from '@mui/material';
 
 const defaultTheme = createTheme({
   breakpoints: {
