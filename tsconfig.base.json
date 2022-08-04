@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@visrecly/draco-core": ["libs/draco/js/build"],
-      "@visrecly/draco-web": ["libs/draco-web/src/index.ts"]
+      "@visrecly/draco-web": ["libs/draco-web/src/index.ts"],
+      "@visrecly/ranking": ["libs/ranking/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
