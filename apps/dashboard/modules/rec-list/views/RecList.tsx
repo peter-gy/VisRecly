@@ -2,8 +2,11 @@ import { ReactNode, useRef } from 'react';
 
 import { IconButton, List, ListItem } from '@mui/material';
 
-import { ArrowDown, ArrowUp } from '../../components/icons/views/Arrow';
-import InfoDialogButton from '../../components/info-dialog-button/views/InfoDialogButton';
+import {
+  ArrowDown,
+  ArrowUp,
+} from '@dashboard/modules/components/icons/views/Arrow';
+import InfoDialogButton from '@dashboard/modules/components/info-dialog-button/views/InfoDialogButton';
 
 type RecListProps = RecListViewProps & {};
 

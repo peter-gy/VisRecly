@@ -1,7 +1,7 @@
-import Heatmap from '../modules/heatmap/views/Heatmap';
-import HeatmapScale from '../modules/heatmap/views/HeatmapScale';
-import LeftDrawerLayout from '../modules/layout/LeftDrawerLayout';
-import RecList from '../modules/rec-list/views/RecList';
+import Heatmap from '@dashboard/modules/heatmap/views/Heatmap';
+import HeatmapScale from '@dashboard/modules/heatmap/views/HeatmapScale';
+import LeftDrawerLayout from '@dashboard/modules/layout/views/LeftDrawerLayout';
+import RecList from '@dashboard/modules/rec-list/views/RecList';
 
 const App = () => {
   return <LeftDrawerLayout title="Visrecly" mainContent={MainContent} />;

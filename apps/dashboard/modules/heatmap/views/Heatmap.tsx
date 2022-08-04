@@ -1,5 +1,7 @@
-import useTileDimensions from '../hooks/useTileDimensions';
-import HeatmapHeaderTile, { HeatmapHeaderTileProps } from './HeatmapHeaderTile';
+import useTileDimensions from '@dashboard/modules/heatmap/hooks/useTileDimensions';
+import HeatmapHeaderTile, {
+  HeatmapHeaderTileProps,
+} from '@dashboard/modules/heatmap/views/HeatmapHeaderTile';
 
 type HeatmapProps = {
   headerTiles: Omit<HeatmapHeaderTileProps, 'onVisibilityChange'>[];
@@ -26,6 +28,7 @@ function Heatmap({ headerTiles }: HeatmapProps) {
       <div className="grow flex">
         {headerTiles.map((_, idx) => (
           <div
+            key={`heatmap-tile-${idx}`}
             className="border-l-2 border-black text-center"
             style={{ minWidth: tileWidth }}
           >

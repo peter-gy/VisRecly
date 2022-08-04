@@ -8,7 +8,12 @@ module.exports = {
   trailingComma: 'all',
   singleQuote: true,
   semi: true,
-  importOrder: ['^@visrecly/(.*)$', '^@mui/(.*)$', '^[./]'],
+  importOrder: [
+    '^@visrecly/(.*)$',
+    '^@mui/(.*)$',
+    '^@dashboard/(.*)$',
+    '^[./]',
+  ],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
 };

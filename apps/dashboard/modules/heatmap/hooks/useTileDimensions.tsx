@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material/styles';
 
-import useWindowSize from '../../../hooks/useWindowSize';
+import useWindowSize from '@dashboard/hooks/useWindowSize';
 
 /**
  * Determines the width of a heatmap tile

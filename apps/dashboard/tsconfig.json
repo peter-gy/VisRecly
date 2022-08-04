@@ -12,7 +12,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "types": ["jest", "node"]
+    "types": ["jest", "node"],
+    "paths": {
+      "@dashboard/hooks/*": ["apps/dashboard/hooks/*"],
+      "@dashboard/modules/*": ["apps/dashboard/modules/*"],
+      "@dashboard/styles/*": ["apps/dashboard/styles/*"]
+    }
   },
   "include": [
     "**/*.ts",

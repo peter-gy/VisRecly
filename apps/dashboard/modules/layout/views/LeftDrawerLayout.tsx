@@ -15,9 +15,9 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { styled, useTheme } from '@mui/material/styles';
 
-import useLayoutEffect from '../../hooks/useIsomorphicLayoutEffect';
-import useMuiAppBarHeight from '../../hooks/useMuiAppBarHeight';
-import useWindowSize from '../../hooks/useWindowSize';
+import useLayoutEffect from '@dashboard/hooks/useIsomorphicLayoutEffect';
+import useMuiAppBarHeight from '@dashboard/hooks/useMuiAppBarHeight';
+import useWindowSize from '@dashboard/hooks/useWindowSize';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;

@@ -4,8 +4,8 @@ import VisibilityOnIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 
-import { Information } from '../../components/info-dialog-button/information.type';
-import InfoDialogButton from '../../components/info-dialog-button/views/InfoDialogButton';
+import { Information } from '@dashboard/modules/components/info-dialog-button/information.type';
+import InfoDialogButton from '@dashboard/modules/components/info-dialog-button/views/InfoDialogButton';
 
 export type HeatmapHeaderTileProps = {
   title: string;

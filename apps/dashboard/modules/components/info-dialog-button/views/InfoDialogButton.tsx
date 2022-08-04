@@ -11,8 +11,8 @@ import {
   Tooltip,
 } from '@mui/material';
 
-import { InfoIcon } from '../../icons/views/Info';
-import { Information } from '../information.type';
+import { InfoIcon } from '@dashboard/modules/components/icons/views/Info';
+import { Information } from '@dashboard/modules/components/info-dialog-button/information.type';
 
 type InfoDialogButtonProps = Information;
 
