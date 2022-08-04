@@ -11,12 +11,16 @@ export type HeatmapHeaderTileProps = {
   title: string;
   info: Information;
   onVisibilityChange?: (visible: boolean) => void;
+  width?: number;
+  height?: number;
 };
 
 function HeatmapHeaderTile({
   title,
   info,
   onVisibilityChange,
+  width,
+  height,
 }: HeatmapHeaderTileProps) {
   const [visible, setVisible] = useState<boolean>(true);
   const VisibilityIcon = visible ? VisibilityOffIcon : VisibilityOnIcon;
@@ -26,7 +30,10 @@ function HeatmapHeaderTile({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center space-y-1 bg-blue-300">
+    <div
+      className="flex flex-col justify-center items-center space-y-1 bg-blue-300"
+      style={{ width: width, height: height }}
+    >
       <div className="flex justify-between items-center">
         <InfoDialogButton {...info} />
         <IconButton onClick={handleVisibilityIconClick}>

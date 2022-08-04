@@ -1,3 +1,4 @@
+import useTileDimensions from '../hooks/useTileDimensions';
 import HeatmapHeaderTile, { HeatmapHeaderTileProps } from './HeatmapHeaderTile';
 
 type HeatmapProps = {
@@ -5,8 +6,12 @@ type HeatmapProps = {
 };
 
 function Heatmap({ headerTiles }: HeatmapProps) {
+  const { tileWidth, numVisibleTiles } = useTileDimensions();
   return (
-    <div className="bg-green-300 h-full w-full flex flex-col overflow-auto">
+    <div
+      className="bg-green-300 h-full w-full flex flex-col overflow-auto"
+      style={{ maxWidth: numVisibleTiles * tileWidth }}
+    >
       <div className="flex">
         {headerTiles.map(({ title, info }, idx) => (
           <HeatmapHeaderTile
@@ -14,10 +19,20 @@ function Heatmap({ headerTiles }: HeatmapProps) {
             title={title}
             info={info}
             onVisibilityChange={console.log}
+            width={tileWidth}
           />
         ))}
       </div>
-      <div className="grow bg-amber-500">Heatmap</div>
+      <div className="grow flex">
+        {headerTiles.map((_, idx) => (
+          <div
+            className="border-l-2 border-black text-center"
+            style={{ minWidth: tileWidth }}
+          >
+            {idx + 1}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

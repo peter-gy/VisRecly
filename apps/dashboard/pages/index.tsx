@@ -26,7 +26,7 @@ const MainContent = (appBarHeight: number) => {
       <div className="flex justify-center items-center bg-blue-400">
         <HeatmapScale />
       </div>
-      <div className="ml-12 bg-amber-200 grow max-w-[70vw]">
+      <div className="ml-12 bg-amber-200 grow max-w-[70vw] flex justify-end">
         <Heatmap
           headerTiles={[...Array(25).keys()].map((idx) => ({
             title: `Title ${idx + 1}`,
