@@ -6,6 +6,7 @@
     "dashboard-e2e": "apps/dashboard-e2e",
     "draco": "libs/draco",
     "draco-web": "libs/draco-web",
-    "ranking": "libs/ranking"
+    "ranking": "libs/ranking",
+    "vis-tasks": "libs/vis-tasks"
   }
 }
