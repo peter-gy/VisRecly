@@ -17,7 +17,7 @@ import { styled, useTheme } from '@mui/material/styles';
 
 import useLayoutEffect from '@dashboard/hooks/useIsomorphicLayoutEffect';
 import useMuiAppBarHeight from '@dashboard/hooks/useMuiAppBarHeight';
-import useWindowSize from '@dashboard/hooks/useWindowSize';
+import useLayoutDimensions from '@dashboard/modules/layout/hooks/useLayoutDimensions';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -27,7 +27,7 @@ type LeftDrawerLayoutProps = {
   mainContent?: ReactNode | ((appBarHeight: number) => ReactNode);
   drawerContent?: ReactNode;
   title?: string;
-  drawerWidth?: number | ((windowWidth: number) => number);
+  drawerWidth?: number;
   drawerProps?: DrawerProps;
 };
 
@@ -39,28 +39,11 @@ function LeftDrawerLayout({
   drawerWidth,
 }: LeftDrawerLayoutProps) {
   // Set the drawer width
+  const { drawerWidth: responsiveDrawerWidth, drawerShouldBeOpenInitially } =
+    useLayoutDimensions();
+  const computedDrawerWidth = drawerWidth || responsiveDrawerWidth;
+
   const theme = useTheme();
-  const { md, lg, xl } = theme.breakpoints.values;
-  const { width: windowWidth } = useWindowSize();
-
-  let computedDrawerWidth = 0;
-  if (drawerWidth === undefined) {
-    if (windowWidth >= xl) {
-      computedDrawerWidth = windowWidth / 4;
-    } else if (windowWidth >= lg) {
-      computedDrawerWidth = windowWidth / 3;
-    } else if (windowWidth >= md) {
-      computedDrawerWidth = windowWidth / 2;
-    } else {
-      computedDrawerWidth = windowWidth;
-    }
-  } else {
-    computedDrawerWidth =
-      typeof drawerWidth === 'function'
-        ? drawerWidth(windowWidth)
-        : drawerWidth;
-  }
-
   const appBarHeight = useMuiAppBarHeight();
 
   const AppBar = styled(MuiAppBar, {
@@ -112,10 +95,8 @@ function LeftDrawerLayout({
   // Open drawer initially only on desktop
   const [open, setOpen] = useState(false);
   useLayoutEffect(() => {
-    if (windowWidth >= lg) {
-      setOpen(true);
-    }
-  }, [windowWidth]);
+    setOpen(drawerShouldBeOpenInitially);
+  }, [drawerShouldBeOpenInitially]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
