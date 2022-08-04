@@ -2,16 +2,15 @@
 const withNx = require('@nrwl/next/plugins/with-nx');
 
 /**
- * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
+ * @type {import("@nrwl/next/plugins/with-nx").WithNxOptions}
  **/
 const nextConfig = {
   nx: {
-    // Set this to true if you would like to to use SVGR
+    // Set this to true if you would like to use SVGR
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
   optimizeFonts: true,
-  swcMinify: true,
+  swcMinify: false,
 };
-
 module.exports = withNx(nextConfig);

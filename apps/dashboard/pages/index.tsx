@@ -1,24 +1,42 @@
-import tw from 'twin.macro';
-import { useState } from 'react';
-import Button from '@mui/material/Button';
-
-const styles = {
-  // Move long class sets out of jsx to keep it scannable
-  container: ({ hasBackground }: { hasBackground: boolean }) => [
-    tw`flex flex-col items-center justify-center h-[100vh]`,
-    hasBackground && tw`bg-gradient-to-b from-electric to-primary`,
-  ],
-};
+import Heatmap from '@dashboard/modules/heatmap/views/Heatmap';
+import HeatmapScale from '@dashboard/modules/heatmap/views/HeatmapScale';
+import LeftDrawerLayout from '@dashboard/modules/layout/views/LeftDrawerLayout';
+import RecList from '@dashboard/modules/rec-list/views/RecList';
 
 const App = () => {
-  const [a, b] = useState(true);
+  return <LeftDrawerLayout title="Visrecly" mainContent={MainContent} />;
+};
+
+// Wrapper to handle layout normalization with the `appBarHeight`
+const MainContent = (appBarHeight: number) => {
   return (
-    <div css={styles.container({ hasBackground: a })}>
-      <div tw="flex flex-col justify-center h-full gap-y-5">
-        <div className="p-8 bg-primary"></div>
-        <Button variant="contained" onClick={() => b(!a)}>
-          Switch
-        </Button>
+    <div
+      css={{
+        height: 'calc(100vh - ' + appBarHeight + 'px)',
+        width: '100vw',
+        marginTop: appBarHeight,
+      }}
+      className="bg-[red] flex"
+    >
+      <RecList
+        items={[...Array(20).keys()].map((idx) => (
+          <div className="p-10 bg-[aliceblue]">{idx + 1}</div>
+        ))}
+      />
+      <div className="flex justify-center items-center bg-blue-400">
+        <HeatmapScale />
+      </div>
+      <div className="ml-12 bg-amber-200 grow max-w-[70vw] flex justify-end">
+        <Heatmap
+          headerTiles={[...Array(25).keys()].map((idx) => ({
+            title: `Title ${idx + 1}`,
+            info: {
+              tooltip: `Tooltip ${idx + 1}`,
+              title: `Info title ${idx + 1}`,
+              description: `Description ${idx + 1}`,
+            },
+          }))}
+        />
       </div>
     </div>
   );

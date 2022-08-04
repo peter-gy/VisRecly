@@ -1,20 +1,26 @@
-import { AppProps } from 'next/app';
-import Head from 'next/head';
-import '../styles/global.css';
 import { cache } from '@emotion/css';
 import { CacheProvider } from '@emotion/react';
-import GlobalStyles from './../styles/GlobalStyles';
+import { AppProps } from 'next/app';
+import Head from 'next/head';
+
+import { ThemeProvider } from '@mui/material';
+
+import GlobalStyles from '@dashboard/styles/GlobalStyles';
+import '@dashboard/styles/global.css';
+import theme from '@dashboard/styles/theme';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>VisRecLy</title>
+        <title>Visrecly</title>
       </Head>
       <main className="app">
         <CacheProvider value={cache}>
           <GlobalStyles />
-          <Component {...pageProps} />
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
         </CacheProvider>
       </main>
     </>
