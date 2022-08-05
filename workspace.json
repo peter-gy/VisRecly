@@ -4,6 +4,7 @@
   "projects": {
     "dashboard": "apps/dashboard",
     "dashboard-e2e": "apps/dashboard-e2e",
+    "data": "libs/data",
     "draco": "libs/draco",
     "draco-web": "libs/draco-web",
     "ranking": "libs/ranking",

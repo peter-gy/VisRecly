@@ -1,3 +1,1 @@
-export function ranking(): string {
-  return 'ranking';
-}
+export function rank(data: any[]) {}

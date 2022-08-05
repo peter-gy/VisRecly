@@ -14,6 +14,7 @@
     "incremental": true,
     "types": ["jest", "node"],
     "paths": {
+      "@visrecly/data": ["libs/data/src/index.ts"],
       "@visrecly/draco-core": ["libs/draco/js/build"],
       "@visrecly/draco-web": ["libs/draco-web/src/index.ts"],
       "@visrecly/ranking": ["libs/ranking/src/index.ts"],
