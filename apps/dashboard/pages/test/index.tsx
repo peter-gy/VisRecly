@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { CARS } from '@visrecly/data';
-import { SolutionSet } from '@visrecly/draco-web';
+import { SolutionSet } from '@visrecly/ranking';
 
 import useRanking from '@dashboard/modules/ranking/hooks/useRanking';
 
