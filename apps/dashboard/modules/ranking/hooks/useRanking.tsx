@@ -1,12 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { RankingFunctionParams } from '@visrecly/ranking';
+import {
+  RankingFunctionParams,
+  RankingFunctionReturn,
+} from '@visrecly/ranking';
 
 import { ApiEndpoint } from '@dashboard/modules/api/types/endpoint.type';
 import { baseFetch } from '@dashboard/modules/api/utils/api.utils';
 
 function fetchRanking(params: RankingFunctionParams) {
-  return baseFetch<any>(ApiEndpoint.RunRanking, {
+  return baseFetch<Awaited<RankingFunctionReturn>>(ApiEndpoint.RunRanking, {
     method: 'POST',
     body: JSON.stringify(params),
     headers: {
@@ -19,7 +22,7 @@ function fetchRanking(params: RankingFunctionParams) {
 function useRanking() {
   return useMutation(
     [ApiEndpoint.RunRanking],
-    (...params: RankingFunctionParams) => fetchRanking(params),
+    (params: RankingFunctionParams) => fetchRanking(params),
     {},
   );
 }

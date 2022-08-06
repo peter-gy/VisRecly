@@ -1,19 +1,21 @@
 import { useEffect } from 'react';
 
 import { CARS } from '@visrecly/data';
+import { SolutionSet } from '@visrecly/draco-web';
 
 import useRanking from '@dashboard/modules/ranking/hooks/useRanking';
 
 function TestPage() {
-  const { mutate, isLoading, data } = useRanking();
+  const { mutate: runRanking, isLoading, data } = useRanking();
   useEffect(() => {
-    mutate(CARS.data);
+    runRanking([CARS]);
   }, []);
   return (
     <div>
       <h1>Test Page</h1>
       {isLoading && <p>Loading...</p>}
-      {JSON.stringify(data, null, 2)}
+      {data?.data &&
+        JSON.stringify((data.data as SolutionSet).vegaLiteSpecs, null, 2)}
     </div>
   );
 }
