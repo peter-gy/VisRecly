@@ -1,7 +1,7 @@
 import { ClingoError } from 'clingo-wasm';
 
 import { DataSet } from '@visrecly/data';
-import { Draco, SolutionSet } from '@visrecly/draco-web';
+import { Draco, SolutionSet, solutionSetToZippedElements } from "@visrecly/draco-web";
 
 import { encodingPrefsToAsp } from './encodingPreferences';
 
@@ -21,5 +21,6 @@ export async function rank(
     return solutionOrError as ClingoError;
   }
   const solution = solutionOrError as SolutionSet;
-  return solution;
+  const elements = solutionSetToZippedElements(solution);
+  return elements;
 }

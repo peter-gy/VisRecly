@@ -3,7 +3,7 @@ import { Field } from 'vega-lite/build/src/channeldef';
 import { TopLevelUnitSpec } from 'vega-lite/build/src/spec/unit';
 
 import { Constraint, asp2vl } from '@visrecly/draco-core';
-import { Model } from '@visrecly/draco-web';
+import { Model } from './types';
 
 const SOFT_REGEX = /(soft\(\w+).*?\)/;
 
