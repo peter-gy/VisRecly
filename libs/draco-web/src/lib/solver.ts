@@ -40,7 +40,7 @@ export class Draco {
    * Schema of the `data`, including its size and statistics.
    * @private
    */
-  private readonly schema: Schema;
+  private readonly _schema: Schema;
 
   /**
    * Data declaration as a single ASP string, interpretable by Clingo.
@@ -86,8 +86,8 @@ export class Draco {
    * @param dataUrl - the URL of the data
    */
   constructor(data: any[], dataUrl?: string) {
-    this.schema = data2schema(data);
-    this.schemaAsp = schema2asp(this.schema).join('\n');
+    this._schema = data2schema(data);
+    this.schemaAsp = schema2asp(this._schema).join('\n');
     this.dataUrl = dataUrl;
   }
 
@@ -116,6 +116,13 @@ export class Draco {
     const models = extractModels(result, constraints);
     const vegaLiteSpecs = models2vl(models, this.dataUrl);
     return { models, vegaLiteSpecs, result };
+  }
+
+  /**
+   * Schema of the `data`, including its size and statistics.
+   */
+  get schema(): Schema {
+    return this._schema;
   }
 
   private constructFullProgram(program: string, options: DracoOptions) {

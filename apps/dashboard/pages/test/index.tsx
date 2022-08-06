@@ -1,14 +1,12 @@
 import { useEffect } from 'react';
 
 import { CARS } from '@visrecly/data';
-import { SolutionSet } from '@visrecly/ranking';
 
 import useRanking from '@dashboard/modules/ranking/hooks/useRanking';
 
 function TestPage() {
   const { mutate: runRanking, isLoading, data } = useRanking();
   useEffect(() => {
-    // @ts-ignore
     runRanking([
       CARS,
       [
@@ -23,7 +21,7 @@ function TestPage() {
       <h1>Test Page</h1>
       {isLoading && <p>Loading...</p>}
       {data?.data &&
-        JSON.stringify((data.data as SolutionSet).vegaLiteSpecs, null, 2)}
+        JSON.stringify(data, null, 2)}
     </div>
   );
 }
