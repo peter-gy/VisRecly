@@ -1,44 +1,25 @@
 /**
- * Represents preferences to encode given data columns onto channels
- * available on this `type`.
+ * Constructs an ASP section made up of rules, declaring that the given
+ * `columnName` should be encoded visually.
  *
- * To obtain sensible vega-lite specs, the values of the preferences
- * **must** be valid data column names.
- */
-export type EncodingPreference = {
-  /**
-   * Name of the data column to be encoded on the `x` axis.
-   */
-  x: string;
-
-  /**
-   * Name of the data column to be encoded on the `y` axis.
-   */
-  y: string;
-};
-
-/**
- * Constructs an ASP section made up of rules, enforcing to use the specified
- * `columnName` for the specified `channel`.
- *
- * E.g. for `channel=='x'` and `columnName=='Acceleration'`,
+ * E.g. for `encoding=='e0'` and `columnName=='Acceleration'`,
  * the function would return:
  *
  * ```
- * encoding(x).
- * :- not field(x,"Acceleration").
+ * encoding(e0).
+ * :- not field(e0,"Acceleration").
  * ```
  *
- * - `encoding(x).` declares that `x` is an encoding.
- * - `:- not field(x,"Acceleration").` declares that it cannot be the case
- * that "Acceleration" is not a field encoded on `x`.
+ * - `encoding(e0).` declares that `e0` is an encoding.
+ * - `:- not field(e0,"Acceleration").` declares that it cannot be the case
+ * that "Acceleration" is not a field encoded on `e0`.
  *
- * @param channel - encoding channel
+ * @param encoding - encoding
  * @param columnName - data column name
  */
-function preferenceToAsp(channel: string, columnName: string): string {
-  const atom = `encoding(${channel}).`;
-  const rule = `:- not field(${channel},"${columnName}").`;
+function preferenceToAsp(encoding: string, columnName: string): string {
+  const atom = `encoding(${encoding}).`;
+  const rule = `:- not field(${encoding},"${columnName}").`;
   return [atom, rule].join('\n');
 }
 
@@ -46,11 +27,11 @@ function preferenceToAsp(channel: string, columnName: string): string {
  * Constructs an ASP program section declaring
  * the encoding preferences per channel.
  *
- * @param encodingPrefs - the desired encodings
+ * @param encodingPrefs - a list of data column names to be encoded
  */
-export function encodingPrefsToAsp(encodingPrefs: EncodingPreference): string {
+export function encodingPrefsToAsp(encodingPrefs: string[]): string {
   const encodingPrefsAsps = Object.entries(encodingPrefs).map(
-    ([channel, columnName]) => preferenceToAsp(channel, columnName),
+    ([idx, columnName]) => preferenceToAsp(`e${idx}`, columnName),
   );
   return encodingPrefsAsps.join('\n\n');
 }

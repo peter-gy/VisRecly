@@ -8,7 +8,15 @@ import useRanking from '@dashboard/modules/ranking/hooks/useRanking';
 function TestPage() {
   const { mutate: runRanking, isLoading, data } = useRanking();
   useEffect(() => {
-    runRanking([CARS, {x: 'Year', y: 'Miles_per_Gallon'}]);
+    // @ts-ignore
+    runRanking([
+      CARS,
+      [
+        'Acceleration',
+        'Year',
+        'Origin',
+      ],
+    ]);
   }, []);
   return (
     <div>
