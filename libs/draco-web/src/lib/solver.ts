@@ -1,20 +1,22 @@
-import { run as clingoRun, ClingoError, ClingoResult } from 'clingo-wasm';
+import { ClingoError, ClingoResult, run as clingoRun } from 'clingo-wasm';
+
 import {
-  constraints,
   Constraint,
-  data2schema,
   Schema,
+  constraints,
   constraints2json,
-  schema2asp,
+  data2schema,
   json2constraints,
+  schema2asp,
 } from '@visrecly/draco-core';
-import { DracoOptions, SolutionSet } from './types';
+
 import { extractModels, models2vl } from './clingoResultExtractor';
+import { DracoOptions, SolutionSet } from './types';
 
 const defaultHardConstraints = constraints2json(constraints.HARD);
 const defaultSoftConstraints = constraints2json(
   constraints.SOFT,
-  constraints.WEIGHTS
+  constraints.WEIGHTS,
 );
 
 const defaultClingoOptions = [
@@ -38,7 +40,7 @@ export class Draco {
    * Schema of the `data`, including its size and statistics.
    * @private
    */
-  private readonly schema: Schema;
+  private readonly _schema: Schema;
 
   /**
    * Data declaration as a single ASP string, interpretable by Clingo.
@@ -70,20 +72,28 @@ export class Draco {
   private readonly softConstraints: Constraint[] = defaultSoftConstraints;
 
   /**
+   * URL of the data.
+   * @private
+   */
+  private readonly dataUrl?: string;
+
+  /**
    * Initializes this object with the given data.
    * The supplied `data` is not stored as a member, it is just used to generate
    * its schema.
    *
    * @param data - the data to generate recommendations for
+   * @param dataUrl - the URL of the data
    */
-  constructor(data: any[]) {
-    this.schema = data2schema(data);
-    this.schemaAsp = schema2asp(this.schema).join('\n');
+  constructor(data: any[], dataUrl?: string) {
+    this._schema = data2schema(data);
+    this.schemaAsp = schema2asp(this._schema).join('\n');
+    this.dataUrl = dataUrl;
   }
 
   public async solve(
     program: string = '',
-    options: DracoOptions = {}
+    options: DracoOptions = {},
   ): Promise<ClingoError | SolutionSet> {
     // The full ASP to be passed to Clingo
     const fullProgram = this.constructFullProgram(program, options);
@@ -95,7 +105,7 @@ export class Draco {
     const clingoResultOrError = await clingoRun(
       fullProgram,
       options.models,
-      clingoOptions
+      clingoOptions,
     );
     const isError = 'Error' in clingoResultOrError;
     if (isError) {
@@ -104,8 +114,15 @@ export class Draco {
     const result = clingoResultOrError as ClingoResult;
     const constraints = [...this.softConstraints, ...this.hardConstraints];
     const models = extractModels(result, constraints);
-    const vegaLiteSpecs = models2vl(models);
+    const vegaLiteSpecs = models2vl(models, this.dataUrl);
     return { models, vegaLiteSpecs, result };
+  }
+
+  /**
+   * Schema of the `data`, including its size and statistics.
+   */
+  get schema(): Schema {
+    return this._schema;
   }
 
   private constructFullProgram(program: string, options: DracoOptions) {
@@ -116,7 +133,7 @@ export class Draco {
 
     const excludedProgramNames = ['SOFT', 'HARD', 'WEIGHTS'];
     const programNames = Object.keys(this.constraints).filter(
-      (name) => !excludedProgramNames.includes(name)
+      (name) => !excludedProgramNames.includes(name),
     );
     // Remove HARD_INTEGRITY constraints if relaxed option is set
     if (options.relaxHard) {
@@ -124,7 +141,7 @@ export class Draco {
     }
     // Add the constraints
     programChunks.push(
-      ...programNames.map((name) => (this.constraints as any)[name])
+      ...programNames.map((name) => (this.constraints as any)[name]),
     );
 
     const softAsp = json2constraints(this.softConstraints);
@@ -137,7 +154,7 @@ export class Draco {
 
   private constructClingoOptions(options: DracoOptions) {
     return (options.clingoOptions || defaultClingoOptions).concat(
-      (options.weights || []).map((w) => `-c ${w.name}=${w.value}`)
+      (options.weights || []).map((w) => `-c ${w.name}=${w.value}`),
     );
   }
 }

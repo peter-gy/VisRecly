@@ -16,7 +16,12 @@
     "paths": {
       "@dashboard/hooks/*": ["apps/dashboard/hooks/*"],
       "@dashboard/modules/*": ["apps/dashboard/modules/*"],
-      "@dashboard/styles/*": ["apps/dashboard/styles/*"]
+      "@dashboard/styles/*": ["apps/dashboard/styles/*"],
+      "@visrecly/data": ["libs/data/src/index.ts"],
+      "@visrecly/draco-core": ["libs/draco/js/build"],
+      "@visrecly/draco-web": ["libs/draco-web/src/index.ts"],
+      "@visrecly/ranking": ["libs/ranking/src/index.ts"],
+      "@visrecly/vis-tasks": ["libs/vis-tasks/src/index.ts"]
     }
   },
   "include": [
@@ -25,6 +30,7 @@
     "**/*.js",
     "**/*.jsx",
     "next-env.d.ts",
+    "environment.d.ts",
     "../../types/**/*.d.ts"
   ],
   "exclude": ["node_modules", "jest.config.ts"]
