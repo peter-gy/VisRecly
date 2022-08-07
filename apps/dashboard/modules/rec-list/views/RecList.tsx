@@ -8,7 +8,7 @@ import {
 } from '@dashboard/modules/components/icons/views/Arrow';
 import InfoDialogButton from '@dashboard/modules/components/info-dialog-button/views/InfoDialogButton';
 
-type RecListProps = RecListViewProps & {};
+type RecListProps = RecListViewProps;
 
 function RecList({ items }: RecListProps) {
   return (

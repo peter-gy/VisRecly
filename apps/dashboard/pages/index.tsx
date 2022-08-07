@@ -20,7 +20,9 @@ const MainContent = (appBarHeight: number) => {
     >
       <RecList
         items={[...Array(20).keys()].map((idx) => (
-          <div className="p-10 bg-[aliceblue]">{idx + 1}</div>
+          <div key={`dummy-tile-${idx}`} className="p-10 bg-[aliceblue]">
+            {idx + 1}
+          </div>
         ))}
       />
       <div className="flex justify-center items-center bg-blue-400">
