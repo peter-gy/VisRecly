@@ -1,8 +1,6 @@
 import { ClingoResult } from 'clingo-wasm';
-import { Field } from 'vega-lite/build/src/channeldef';
-import { TopLevelUnitSpec } from 'vega-lite/build/src/spec/unit';
 
-import { Constraint } from '@visrecly/draco-core';
+import { Constraint, VegaLiteSpec } from '@visrecly/draco-core';
 
 /**
  * Represents a weight for a given soft constraint, identified by `name`.
@@ -61,7 +59,7 @@ export type Model = {
  */
 export type SolutionSet = {
   models: Model[]; // ASP models
-  vegaLiteSpecs: TopLevelUnitSpec<Field>[]; // vega-lite specs
+  vegaLiteSpecs: VegaLiteSpec[]; // vega-lite specs
   result: ClingoResult; // result object from Clingo (for misc. use).
 };
 
@@ -71,5 +69,5 @@ export type SolutionSet = {
  */
 export type ZippedSolutionSetElement = {
   model: Model;
-  vegaLiteSpec: TopLevelUnitSpec<Field>;
+  vegaLiteSpec: VegaLiteSpec;
 };

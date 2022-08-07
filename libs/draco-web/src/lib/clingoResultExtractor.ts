@@ -1,8 +1,7 @@
 import { ClingoResult } from 'clingo-wasm';
-import { Field } from 'vega-lite/build/src/channeldef';
-import { TopLevelUnitSpec } from 'vega-lite/build/src/spec/unit';
 
-import { Constraint, asp2vl } from '@visrecly/draco-core';
+import { Constraint, VegaLiteSpec, asp2vl } from '@visrecly/draco-core';
+
 import { Model } from './types';
 
 const SOFT_REGEX = /(soft\(\w+).*?\)/;
@@ -66,9 +65,6 @@ export function extractModels(
  * @param models - Models to convert.
  * @param url - optional URL of the data source.
  */
-export function models2vl(
-  models: Model[],
-  url?: string,
-): TopLevelUnitSpec<Field>[] {
+export function models2vl(models: Model[], url?: string): VegaLiteSpec[] {
   return models.map((model) => asp2vl(model.facts, url));
 }
