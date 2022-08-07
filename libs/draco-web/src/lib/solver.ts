@@ -92,7 +92,7 @@ export class Draco {
   }
 
   public async solve(
-    program: string = '',
+    program = '',
     options: DracoOptions = {},
   ): Promise<ClingoError | SolutionSet> {
     // The full ASP to be passed to Clingo
@@ -145,7 +145,10 @@ export class Draco {
     );
 
     const softAsp = json2constraints(this.softConstraints);
-    programChunks.push(softAsp.definitions, softAsp.weights!, softAsp.assigns!);
+    if (softAsp.weights === undefined || softAsp.assigns === undefined) {
+      throw new Error('Soft constraints must have `weights` and `assigns`');
+    }
+    programChunks.push(softAsp.definitions, softAsp.weights, softAsp.assigns);
     const hardAsp = json2constraints(this.hardConstraints);
     programChunks.push(hardAsp.definitions);
 

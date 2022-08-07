@@ -8,7 +8,7 @@ function TestPage() {
   const { mutate: runRanking, isLoading, data } = useRanking();
   useEffect(() => {
     runRanking([CARS, ['Acceleration', 'Year', 'Origin']]);
-  }, []);
+  }, [runRanking]);
   return (
     <div>
       <h1>Test Page</h1>

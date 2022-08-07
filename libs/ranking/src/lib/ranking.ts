@@ -30,7 +30,7 @@ import { RankedVisualization } from './types';
 export async function rank(
   dataSet: DataSet,
   encodingPrefs: string[],
-  numMaxModels: number = 10,
+  numMaxModels = 10,
   visTaskMap: VisTaskMap = TASK_MAP,
 ) {
   const draco = new Draco(dataSet.data, dataSet.source);
