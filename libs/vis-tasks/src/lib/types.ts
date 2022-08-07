@@ -17,9 +17,11 @@ export type VisTask = {
 /**
  * Primitive marks supported by Vega-Lite v5.
  *
+ * Same as the unfolded values of the Vega-Lite v5 spec's `Mark` section.
+ *
  * @see https://vega.github.io/schema/vega-lite/v5.json
  */
-export type VegaLiteMark =
+type VegaLiteMark =
   | 'arc'
   | 'area'
   | 'bar'
@@ -35,8 +37,29 @@ export type VegaLiteMark =
   | 'square'
   | 'geoshape';
 
+/**
+ * Composite marks supported by Vega-Lite v5.
+ *
+ * Same as the unfolded values of the Vega-Lite v5 spec's `CompositeMark` section.
+ *
+ * @see https://vega.github.io/schema/vega-lite/v5.json
+ */
+type VegaLiteCompositeMark = 'boxplot' | 'errorbar' | 'errorband';
+
+/**
+ * Marks supported by Vega-Lite v5.
+ *
+ * Same as the unfolded values of the Vega-Lite v5 spec's `AnyMark` section.
+ *
+ * @see https://vega.github.io/schema/vega-lite/v5.json
+ */
+export type VegaLiteAnyMark = VegaLiteMark | VegaLiteCompositeMark;
+
 export type MarkPreference = {
-  mark: VegaLiteMark;
+  /**
+   * The mark about which the preference is being stated.
+   */
+  mark: VegaLiteAnyMark;
 
   /**
    * Weight denoting the importance of this preference.
@@ -65,3 +88,8 @@ export type VisTaskPreferences = {
  * Associates a ``VisTask`` with its ``VisTaskPreferences``s.
  */
 export type VisTaskWithPreferences = VisTask & VisTaskPreferences;
+
+/**
+ * Record of `VisTask`s indexed by name.
+ */
+export type VisTaskMap = Record<VisTask['name'], VisTask>;

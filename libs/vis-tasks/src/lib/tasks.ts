@@ -295,3 +295,12 @@ export const TASKS = [
   SORT,
   TREND,
 ];
+
+/**
+ * A collection of all declared `VisTaskWithPreferences` instances,
+ * indexed by name.
+ */
+export const TASK_MAP: Record<VisTask['name'], VisTask> = TASKS.reduce(
+  (acc, curr) => ({ ...acc, [curr.name]: curr }),
+  {},
+);

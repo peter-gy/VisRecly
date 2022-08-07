@@ -1,6 +1,6 @@
 import {
   MarkPreference,
-  VegaLiteMark,
+  VegaLiteAnyMark,
   VisTask,
   VisTaskPreferences,
   VisTaskWithPreferences,
@@ -14,7 +14,7 @@ import {
  * @param weight - optional weight
  */
 export function createMarkPreference(
-  mark: VegaLiteMark,
+  mark: VegaLiteAnyMark,
   weight?: number,
 ): MarkPreference {
   return { mark: mark, weight: weight ?? 1 };
