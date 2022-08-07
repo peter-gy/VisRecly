@@ -1,4 +1,9 @@
-import { VisTask, VisTaskPreferences } from './types';
+import {
+  VisTask,
+  VisTaskMap,
+  VisTaskPreferences,
+  VisTaskWithPreferences,
+} from './types';
 import { createMarkPreference, mergeVisTaskWithPreferences } from './utils';
 
 const CHANGE_OVER_TIME_TASK: VisTask = {
@@ -300,7 +305,18 @@ export const TASKS = [
  * A collection of all declared `VisTaskWithPreferences` instances,
  * indexed by name.
  */
-export const TASK_MAP: Record<VisTask['name'], VisTask> = TASKS.reduce(
+export const TASK_MAP: VisTaskMap = TASKS.reduce(
   (acc, curr) => ({ ...acc, [curr.name]: curr }),
   {},
 );
+
+/**
+ * Helper function to access a `VisTaskWithPreferences` instance by name.
+ *
+ * Returns the value from the default `TASK_MAP`.
+ *
+ * @param name - the name of the task to retrieve
+ */
+export function taskByName(name: VisTask['name']): VisTaskWithPreferences {
+  return TASK_MAP[name];
+}

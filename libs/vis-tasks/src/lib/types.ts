@@ -90,6 +90,11 @@ export type VisTaskPreferences = {
 export type VisTaskWithPreferences = VisTask & VisTaskPreferences;
 
 /**
- * Record of `VisTask`s indexed by name.
+ * Record of `VisTaskWithPreferences`s indexed by name.
  */
-export type VisTaskMap = Record<VisTask['name'], VisTask>;
+export type VisTaskMap = Record<VisTask['name'], VisTaskWithPreferences>;
+
+/**
+ * Record of `VisTask` costs indexed by `VisTask` name.
+ */
+export type VisTaskCostMap = Record<VisTask['name'], number>;
