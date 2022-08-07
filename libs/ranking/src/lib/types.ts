@@ -1,5 +1,4 @@
 import { VegaLiteSpec } from '@visrecly/draco-core';
-import { ZippedSolutionSetElement } from '@visrecly/draco-web';
 import { VisTaskCostMap } from '@visrecly/vis-tasks';
 
 import { rank } from './ranking';
