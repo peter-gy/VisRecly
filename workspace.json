@@ -8,6 +8,7 @@
     "draco": "libs/draco",
     "draco-web": "libs/draco-web",
     "ranking": "libs/ranking",
+    "types": "libs/types",
     "vis-tasks": "libs/vis-tasks"
   }
 }
