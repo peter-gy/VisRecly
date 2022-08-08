@@ -12,5 +12,6 @@ const nextConfig = {
   },
   optimizeFonts: true,
   swcMinify: false,
+  reactStrictMode: true,
 };
 module.exports = withNx(nextConfig);
