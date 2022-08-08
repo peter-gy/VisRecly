@@ -6,13 +6,14 @@ import { Draco } from '@visrecly/ranking';
 
 import { initialRecInputState } from '@dashboard/modules/rec-input/beans/beans';
 import { RecInputState } from '@dashboard/modules/rec-input/types/types';
+import { extractDataColum } from '@dashboard/modules/rec-input/utils/utils';
 
 /**
  * Possible actions to dispatch to the reducer
  */
 type Action =
   | { type: 'setSelectedDataset'; data: DataSet }
-  | { type: 'setEncodingPrefs'; data: string[] };
+  | { type: 'setSelectedDataColumns'; data: string[] };
 
 /**
  * Dispatch callback signature
@@ -30,7 +31,7 @@ function recInputReducer(state: RecInputState, action: Action): RecInputState {
     case 'setSelectedDataset': {
       return setSelectedDataset(state, action.data);
     }
-    case 'setEncodingPrefs': {
+    case 'setSelectedDataColumns': {
       return {
         ...state,
       };
@@ -52,12 +53,15 @@ function setSelectedDataset(
   };
 }
 
-function setEncodingPrefs(
+function setSelectedDataColumns(
   oldState: RecInputState,
-  encodingPrefs: string[],
+  dataColumnNames: string[],
 ): RecInputState {
-  const schemaStats = oldState.draco.schema.stats;
-  return { ...oldState };
+  const schema = oldState.draco.schema;
+  const selectedDataColumns = dataColumnNames.map((pref) =>
+    extractDataColum(pref, schema),
+  );
+  return { ...oldState, selectedDataColumns };
 }
 
 type RecInputProviderProps = { children: ReactNode };

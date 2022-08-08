@@ -32,5 +32,5 @@ export type RecInputState = {
   /**
    * Currently selected data columns.
    */
-  encodingPrefs: DataColumn[];
+  selectedDataColumns: DataColumn[];
 };
