@@ -30,6 +30,11 @@ export type RecInputState = {
   selectedDataset: DataSet;
 
   /**
+   * Data columns available in the currently selected data set.
+   */
+  availableDataColumns: DataColumn[];
+
+  /**
    * Currently selected data columns.
    */
   selectedDataColumns: DataColumn[];

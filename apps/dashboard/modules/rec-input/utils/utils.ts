@@ -3,6 +3,16 @@ import { Schema } from '@visrecly/types';
 import { DataColumn } from '@dashboard/modules/rec-input/types/types';
 
 /**
+ * Extracts all the `DataColumn`s which can be found in the specified `schema`.
+ * @param schema
+ */
+export function extractAllDataColumns(schema: Schema): DataColumn[] {
+  return Object.keys(schema.stats).map((dataColumnName) =>
+    extractDataColum(dataColumnName, schema),
+  );
+}
+
+/**
  * Extracts a `DataColumn` instance for the column
  * with the supplied `dataColumnName` from the pre-generated `schema`.
  *
