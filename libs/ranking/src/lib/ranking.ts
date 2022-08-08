@@ -1,6 +1,5 @@
 import { ClingoError } from 'clingo-wasm';
 
-import { DataSet } from '@visrecly/data';
 import {
   Draco,
   SolutionSet,
@@ -22,18 +21,17 @@ import { RankedVisualization } from './types';
  * from the supplied `dataSet` under the consideration of encoding preferences,
  * that is, which columns of `dataSet` should be encoded during the VisRec.
  *
- * @param dataSet - The data set to generate visualizations from.
+ * @param draco - The `Draco` instance to handle VisRec.
  * @param encodingPrefs - A list of the column names of the data set that should be visualized.
  * @param numMaxModels - The maximum number of models to return. Gets passed to Clingo under the hood.
  * @param visTaskMap - The map of visualization tasks to consider when ranking.
  */
 export async function rank(
-  dataSet: DataSet,
+  draco: Draco,
   encodingPrefs: string[],
   numMaxModels = 10,
   visTaskMap: VisTaskMap = TASK_MAP,
 ) {
-  const draco = new Draco(dataSet.data, dataSet.source);
   // Extend the core ASP of Draco by encoding declarations
   const program = encodingPrefsToAsp(encodingPrefs);
   const solutionOrError = await draco.solve(program, {

@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import {
+  Draco,
   RankingFunctionParams,
   RankingFunctionReturn,
   rank,
@@ -20,7 +21,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<BaseResponse<Awaited<RankingFunctionReturn>>>,
 ) {
-  const payload = req.body as RankingFunctionParams;
+  const [dracoJson, ...rest] = req.body;
+  const payload = [Draco.fromJson(dracoJson), ...rest] as RankingFunctionParams;
   try {
     const result = await rank(...payload);
     res.status(200).json({ success: true, data: result });
