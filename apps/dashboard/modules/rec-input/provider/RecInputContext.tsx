@@ -48,7 +48,7 @@ function setSelectedDataset(
     ...oldState,
     selectedDataset: dataset,
     // Updating the used Draco instance too
-    draco: new Draco(dataset.data, dataset.source),
+    draco: Draco.fromData(dataset.data, dataset.source),
   };
 }
 

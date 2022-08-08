@@ -1,3 +1,4 @@
 export * from './lib/ranking';
 export * from './lib/types';
-export { SolutionSet, ClingoError, Draco } from '@visrecly/draco-web';
+export type { SolutionSet, ClingoError } from '@visrecly/draco-web';
+export { Draco } from '@visrecly/draco-web';
