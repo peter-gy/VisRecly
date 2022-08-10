@@ -1,6 +1,11 @@
+import { DATA_SETS, DataSet } from '@visrecly/data';
+import { Draco } from '@visrecly/draco-web';
 import { Schema } from '@visrecly/types';
 
-import { DataColumn } from '@dashboard/modules/rec-input/types/types';
+import {
+  DataColumn,
+  RecInputState,
+} from '@dashboard/modules/rec-input/types/types';
 
 /**
  * Extracts all the `DataColumn`s which can be found in the specified `schema`.
@@ -40,4 +45,24 @@ export function defaultSelectedDataColumns(schema: Schema) {
   return dataColumnNames.map((dataColumnName) =>
     extractDataColum(dataColumnName, schema),
   );
+}
+
+/**
+ * Utility method to scaffold a `RecInputState` from the supplied `dataSet`.
+ *
+ * Constructs a new `Draco` instance internally and extracts data schema data from the `dataSet`.
+ *
+ * @param dataSet - The data set to be used for VisRec
+ */
+export function recInputStateFromDataSet(dataSet: DataSet): RecInputState {
+  const draco = Draco.fromData(dataSet.data, dataSet.source);
+  const initialDataColumns = defaultSelectedDataColumns(draco.schema);
+  const allDataColumns = extractAllDataColumns(draco.schema);
+  return {
+    draco,
+    availableDatasets: DATA_SETS,
+    selectedDataset: dataSet,
+    availableDataColumns: allDataColumns,
+    selectedDataColumns: initialDataColumns,
+  };
 }

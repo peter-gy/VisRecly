@@ -2,11 +2,13 @@
 import { ReactNode, createContext, useContext, useReducer } from 'react';
 
 import { DataSet } from '@visrecly/data';
-import { Draco } from '@visrecly/ranking';
 
 import { initialRecInputState } from '@dashboard/modules/rec-input/beans/beans';
 import { RecInputState } from '@dashboard/modules/rec-input/types/types';
-import { extractDataColum } from '@dashboard/modules/rec-input/utils/utils';
+import {
+  extractDataColum,
+  recInputStateFromDataSet,
+} from '@dashboard/modules/rec-input/utils/utils';
 
 /**
  * Possible actions to dispatch to the reducer
@@ -45,9 +47,7 @@ function setSelectedDataset(
 ): RecInputState {
   return {
     ...oldState,
-    selectedDataset: dataset,
-    // Updating the used Draco instance too
-    draco: Draco.fromData(dataset.data, dataset.source),
+    ...recInputStateFromDataSet(dataset),
   };
 }
 
