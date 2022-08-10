@@ -35,7 +35,7 @@ function ControlContainer({
 }: ControlContainerProps) {
   return (
     <>
-      <div className="flex justify-start items-center px-2 mb-2">
+      <div className="flex justify-start items-center mb-2">
         <Divider textAlign="left">
           <h2>{title}</h2>
         </Divider>
