@@ -1,10 +1,17 @@
+import DrawerContent from '@dashboard/modules/drawer/views/DrawerContent';
 import Heatmap from '@dashboard/modules/heatmap/views/Heatmap';
 import HeatmapScale from '@dashboard/modules/heatmap/views/HeatmapScale';
 import LeftDrawerLayout from '@dashboard/modules/layout/views/LeftDrawerLayout';
 import RecList from '@dashboard/modules/rec-list/views/RecList';
 
 const App = () => {
-  return <LeftDrawerLayout title="Visrecly" mainContent={MainContent} />;
+  return (
+    <LeftDrawerLayout
+      title="Visrecly"
+      mainContent={MainContent}
+      drawerContent={<DrawerContent />}
+    />
+  );
 };
 
 // Wrapper to handle layout normalization with the `appBarHeight`
