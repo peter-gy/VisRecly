@@ -17,11 +17,9 @@ type ControlContainerProps = {
 };
 
 const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
-  <Tooltip
-    {...props}
-    classes={{ popper: className }}
-    children={props.children}
-  />
+  <Tooltip {...props} classes={{ popper: className }}>
+    {props.children}
+  </Tooltip>
 ))({
   [`& .${tooltipClasses.tooltip}`]: {
     maxWidth: '40vw',

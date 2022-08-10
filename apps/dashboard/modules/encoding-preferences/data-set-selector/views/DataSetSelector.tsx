@@ -68,7 +68,7 @@ function _DataSetSelector({
           <a
             href={selectedDataset.source}
             target="_blank"
-            referrerPolicy="no-referrer"
+            rel="noreferrer"
             className={'text-primary underline'}
           >
             Source

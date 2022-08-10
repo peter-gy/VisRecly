@@ -32,9 +32,7 @@ function recInputReducer(state: RecInputState, action: Action): RecInputState {
       return setSelectedDataset(state, action.data);
     }
     case 'setSelectedDataColumns': {
-      return {
-        ...state,
-      };
+      return setSelectedDataColumns(state, action.data);
     }
     default:
       return state;
