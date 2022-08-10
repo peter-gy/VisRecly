@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
 
-import { CARS } from '@visrecly/data';
-
 import useRanking from '@dashboard/modules/ranking/hooks/useRanking';
 
 function TestPage() {
   const { mutate: runRanking, isLoading, data } = useRanking();
   useEffect(() => {
-    runRanking([CARS, ['Acceleration', 'Year', 'Origin']]);
+    runRanking([['Acceleration', 'Year', 'Origin']]);
   }, [runRanking]);
   return (
     <div>

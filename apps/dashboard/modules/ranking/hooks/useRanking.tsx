@@ -7,6 +7,8 @@ import {
 
 import { ApiEndpoint } from '@dashboard/modules/api/types/endpoint.type';
 import { baseFetch } from '@dashboard/modules/api/utils/api.utils';
+import useDraco from '@dashboard/modules/rec-input/hooks/useDraco';
+import { OmitFirst } from '@dashboard/modules/utils/types/types';
 
 function fetchRanking(params: RankingFunctionParams) {
   return baseFetch<Awaited<RankingFunctionReturn>>(ApiEndpoint.RunRanking, {
@@ -20,9 +22,11 @@ function fetchRanking(params: RankingFunctionParams) {
 }
 
 function useRanking() {
+  const draco = useDraco();
   return useMutation(
     [ApiEndpoint.RunRanking],
-    (params: RankingFunctionParams) => fetchRanking(params),
+    (params: OmitFirst<RankingFunctionParams>) =>
+      fetchRanking([draco, ...params]),
     {},
   );
 }

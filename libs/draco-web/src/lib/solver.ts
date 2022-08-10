@@ -82,13 +82,32 @@ export class Draco {
    * The supplied `data` is not stored as a member, it is just used to generate
    * its schema.
    *
-   * @param data - the data to generate recommendations for
-   * @param dataUrl - the URL of the data
+   * @param schema - The schema of the data
+   * @param dataUrl - The URL of the data
    */
-  constructor(data: any[], dataUrl?: string) {
-    this._schema = data2schema(data);
+  constructor(schema: Schema, dataUrl?: string) {
+    this._schema = schema;
     this.schemaAsp = schema2asp(this._schema).join('\n');
     this.dataUrl = dataUrl;
+  }
+
+  /**
+   * Creates a new `Draco` instance from the supplied raw data.
+   * @param data - The data to be visualized
+   * @param dataUrl - The URL of the data
+   */
+  public static fromData(data: any[], dataUrl?: string) {
+    const schema = data2schema(data);
+    return new Draco(schema, dataUrl);
+  }
+
+  /**
+   * Creates a new `Draco` instance from another JSON-serialized instance.
+   * @param json - A JSON-serialized `Draco` instance
+   */
+  public static fromJson(json: any) {
+    const { _schema, dataUrl } = json;
+    return new Draco(_schema, dataUrl);
   }
 
   public async solve(
