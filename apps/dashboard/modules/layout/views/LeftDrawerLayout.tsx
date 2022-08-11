@@ -18,6 +18,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import useLayoutEffect from '@dashboard/hooks/useIsomorphicLayoutEffect';
 import useMuiAppBarHeight from '@dashboard/hooks/useMuiAppBarHeight';
 import useLayoutDimensions from '@dashboard/modules/layout/hooks/useLayoutDimensions';
+import { useLayout } from '@dashboard/modules/layout/provider/LayoutContext';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -38,10 +39,16 @@ function LeftDrawerLayout({
   drawerProps = {},
   drawerWidth,
 }: LeftDrawerLayoutProps) {
+  const { dispatch: layoutDispatch } = useLayout();
   // Set the drawer width
   const { drawerWidth: responsiveDrawerWidth, drawerShouldBeOpenInitially } =
     useLayoutDimensions();
   const computedDrawerWidth = drawerWidth || responsiveDrawerWidth;
+
+  // Dispatch the drawer width to the `LayoutContext`
+  useLayoutEffect(() => {
+    layoutDispatch({ type: 'setDrawerWidth', data: computedDrawerWidth });
+  }, [layoutDispatch, computedDrawerWidth]);
 
   const theme = useTheme();
   const appBarHeight = useMuiAppBarHeight();
@@ -98,6 +105,11 @@ function LeftDrawerLayout({
   useLayoutEffect(() => {
     setOpen(drawerShouldBeOpenInitially);
   }, [drawerShouldBeOpenInitially]);
+
+  // Dispatch the drawer open state to the `LayoutContext`
+  useLayoutEffect(() => {
+    layoutDispatch({ type: 'setDrawerOpen', data: open });
+  }, [layoutDispatch, open]);
 
   const handleDrawerOpen = () => {
     setOpen(true);

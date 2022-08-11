@@ -73,7 +73,7 @@ function RecList() {
     }
   }
   return (
-    <div className="w-[22.5vw] flex flex-col justify-between items-center border-r-2 border-primary-600">
+    <>
       <RecListHeader />
       <div className="bg-primary-200 px-4 py-6 w-full h-[calc(100%-4.5rem)] flex justify-center items-center">
         <div
@@ -85,7 +85,7 @@ function RecList() {
           {component}
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
