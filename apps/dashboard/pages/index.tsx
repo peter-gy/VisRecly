@@ -22,43 +22,62 @@ const App = () => {
 type LayoutInfo = {
   drawerOpen: boolean;
   mainContentWidth: number;
+  appBarHeight: number;
 };
 
 const styles = {
+  mainContainer: ({
+    drawerOpen,
+    mainContentWidth,
+    appBarHeight,
+  }: LayoutInfo) => [
+    tw`bg-[red] flex`,
+    { height: `calc(100vh - ${appBarHeight}px)`, marginTop: appBarHeight },
+    !drawerOpen && tw`w-[100vw] max-w-[100vw]`,
+    drawerOpen && { width: mainContentWidth, maxWidth: mainContentWidth },
+  ],
   recListContainer: ({ drawerOpen, mainContentWidth }: LayoutInfo) => [
     tw`flex flex-col justify-between items-center border-r-2 border-primary-600`,
+    !drawerOpen && tw`w-[25vw] max-w-[25vw]`,
+    drawerOpen && {
+      width: 0.25 * mainContentWidth,
+      maxWidth: 0.25 * mainContentWidth,
+    },
   ],
   heatmapScaleContainer: ({ drawerOpen, mainContentWidth }: LayoutInfo) => [
     tw`flex justify-center items-center bg-blue-400`,
   ],
   heatmapContainer: ({ drawerOpen, mainContentWidth }: LayoutInfo) => [
     tw`ml-12 flex-grow flex justify-end`,
+    !drawerOpen && tw`w-[75vw] max-w-[75vw]`,
+    drawerOpen && {
+      width: 0.75 * mainContentWidth,
+      maxWidth: 0.75 * mainContentWidth,
+    },
   ],
 };
 
 // Wrapper to handle layout normalization with the `appBarHeight`
 const MainContent = (appBarHeight: number) => {
+  // Grab layout info for responsive styling
   const {
     state: { drawerOpen },
   } = useLayout();
   const mainContentWidth = useMainContentWidth();
+  const layoutInfo = { drawerOpen, mainContentWidth, appBarHeight };
+
+  // Run pipeline automatically
   useRankingPipeline();
+
   return (
-    <div
-      css={{
-        height: 'calc(100vh - ' + appBarHeight + 'px)',
-        width: '100vw',
-        marginTop: appBarHeight,
-      }}
-      className="bg-[red] flex"
-    >
-      <div css={styles.recListContainer({ drawerOpen, mainContentWidth })}>
+    <div css={styles.mainContainer(layoutInfo)}>
+      <div css={styles.recListContainer(layoutInfo)}>
         <RecList />
       </div>
-      <div css={styles.heatmapScaleContainer({ drawerOpen, mainContentWidth })}>
+      <div css={styles.heatmapScaleContainer(layoutInfo)}>
         <HeatmapScale />
       </div>
-      <div css={styles.heatmapContainer({ drawerOpen, mainContentWidth })}>
+      <div css={styles.heatmapContainer(layoutInfo)}>
         <Heatmap />
       </div>
     </div>

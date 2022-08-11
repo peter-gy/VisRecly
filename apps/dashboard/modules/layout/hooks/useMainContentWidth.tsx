@@ -1,4 +1,4 @@
-import useLayoutDimensions from '@dashboard/modules/layout/hooks/useLayoutDimensions';
+import useWindowSize from '@dashboard/hooks/useWindowSize';
 import { useLayout } from '@dashboard/modules/layout/provider/LayoutContext';
 
 /**
@@ -6,11 +6,11 @@ import { useLayout } from '@dashboard/modules/layout/provider/LayoutContext';
  * space occupied by the drawer if it is open.
  */
 function useMainContentWidth() {
-  const { remainingWidth } = useLayoutDimensions();
+  const { width: windowWidth } = useWindowSize();
   const {
     state: { drawerOpen, drawerWidth },
   } = useLayout();
-  return remainingWidth - (drawerOpen ? drawerWidth : 0);
+  return windowWidth - (drawerOpen ? drawerWidth : 0);
 }
 
 export default useMainContentWidth;

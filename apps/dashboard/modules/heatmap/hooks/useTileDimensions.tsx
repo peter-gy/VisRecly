@@ -13,9 +13,9 @@ function useTileDimensions() {
   const tileWidth = 80;
   let numVisibleTiles = 6;
   if (windowWidth >= xl) {
-    numVisibleTiles = 10;
+    numVisibleTiles = 14;
   } else if (windowWidth >= lg) {
-    numVisibleTiles = 8;
+    numVisibleTiles = 10;
   } else if (windowWidth >= md) {
     numVisibleTiles = 6;
   }
