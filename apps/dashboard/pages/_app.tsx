@@ -7,6 +7,7 @@ import Head from 'next/head';
 import { ThemeProvider } from '@mui/material';
 
 import { RecInputProvider } from '@dashboard/modules/rec-input/provider/RecInputContext';
+import { RecOutputProvider } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 import GlobalStyles from '@dashboard/styles/GlobalStyles';
 import '@dashboard/styles/global.css';
 import theme from '@dashboard/styles/theme';
@@ -25,7 +26,9 @@ function CustomApp({ Component, pageProps }: AppProps) {
           <ThemeProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
               <RecInputProvider>
-                <Component {...pageProps} />
+                <RecOutputProvider>
+                  <Component {...pageProps} />
+                </RecOutputProvider>
               </RecInputProvider>
             </QueryClientProvider>
           </ThemeProvider>

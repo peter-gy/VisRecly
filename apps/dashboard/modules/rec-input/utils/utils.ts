@@ -64,5 +64,6 @@ export function recInputStateFromDataSet(dataSet: DataSet): RecInputState {
     selectedDataset: dataSet,
     availableDataColumns: allDataColumns,
     selectedDataColumns: initialDataColumns,
+    numMaxModels: 10,
   };
 }

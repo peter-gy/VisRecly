@@ -1,17 +1,14 @@
-import { useEffect } from 'react';
-
-import useRanking from '@dashboard/modules/ranking/hooks/useRanking';
+import useRankingPipeline from '@dashboard/modules/ranking/hooks/useRankingPipeline';
 
 function TestPage() {
-  const { mutate: runRanking, isLoading, data } = useRanking();
-  useEffect(() => {
-    runRanking([['Acceleration', 'Year', 'Origin']]);
-  }, [runRanking]);
+  const { isClingoError, rankingResult, isServerError, isLoading } =
+    useRankingPipeline();
   return (
     <div>
-      <h1>Test Page</h1>
-      {isLoading && <p>Loading...</p>}
-      {data?.data && JSON.stringify(data, null, 2)}
+      {isLoading && <div>Loading...</div>}
+      {isServerError && <div>Server error</div>}
+      {isClingoError && <div>Clingo error</div>}
+      {rankingResult && <div>{JSON.stringify(rankingResult, null, 2)}</div>}
     </div>
   );
 }
