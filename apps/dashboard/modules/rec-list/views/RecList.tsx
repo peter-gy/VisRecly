@@ -34,20 +34,21 @@ function RecList() {
   const {
     state: { isLoading, isServerError, isClingoError, rankingResult },
   } = useRecOutput();
+  let isUnsatisfiable = false;
   if (isLoading || rankingResult === undefined) {
     component = <LoadingIndicator />;
   } else if (isServerError) {
     component = (
       <AlertMessage
-        message="Server Error - Please refresh the page"
+        message="General Server Error - Please refresh the page"
         severity="error"
       />
     );
   } else if (isClingoError) {
     component = (
       <AlertMessage
-        message="No results found for these data column preferences. Please select new variables."
-        severity="warning"
+        message="ASP Server Error - Please use a different data set"
+        severity="error"
       />
     );
   } else {
@@ -59,7 +60,17 @@ function RecList() {
         rankedVisualization={e}
       />
     ));
-    component = <RecListView items={items} />;
+    if (items.length === 0) {
+      isUnsatisfiable = true;
+      component = (
+        <AlertMessage
+          message="No results found for these data column preferences. Please select new variables."
+          severity="warning"
+        />
+      );
+    } else {
+      component = <RecListView items={items} />;
+    }
   }
   return (
     <div className="w-[22.5vw] flex flex-col justify-between items-center border-r-2 border-primary-600">
@@ -68,7 +79,7 @@ function RecList() {
         <div
           css={styles.listViewContainer({
             isLoading,
-            isError: isClingoError || isServerError,
+            isError: isClingoError || isServerError || isUnsatisfiable,
           })}
         >
           {component}
