@@ -4,7 +4,6 @@ import { INCOME } from './income';
 import { MOVIES } from './movies';
 import { PENGUINS } from './penguins';
 import { DataSet, DataSetMap } from './types';
-import { WEATHER } from './weather';
 
 export const DATA_SETS: DataSet[] = [
   BUDGETS,
@@ -12,7 +11,6 @@ export const DATA_SETS: DataSet[] = [
   INCOME,
   MOVIES,
   PENGUINS,
-  WEATHER,
 ];
 
 /**
