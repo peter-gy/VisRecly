@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 
 import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
 
-const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
 ) {
