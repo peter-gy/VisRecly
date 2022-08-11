@@ -35,10 +35,10 @@ function RecList() {
     component = <RecListView items={items} />;
   }
   return (
-    <div className="bg-[blue] w-[22.5vw] flex flex-col justify-between items-center">
+    <div className="w-[22.5vw] flex flex-col justify-between items-center border-r-2 border-primary-600">
       <RecListHeader />
-      <div className="bg-[yellow] px-4 py-6 w-full h-[calc(100%-4.5rem)] flex justify-center items-center">
-        <div className="bg-[green] max-h-[100%] w-full flex flex-col justify-center items-center">
+      <div className="bg-primary-200 px-4 py-6 w-full h-[calc(100%-4.5rem)] flex justify-center items-center">
+        <div className="bg-primary-400 max-h-[100%] w-full flex flex-col justify-center items-center rounded-md drop-shadow-xl">
           {component}
         </div>
       </div>
@@ -48,9 +48,16 @@ function RecList() {
 
 function RecListHeader() {
   return (
-    <div className="p-4 w-full bg-[orange] flex justify-center items-center space-x-2">
+    <div className="p-4 w-full bg-primary-600 flex justify-center items-center space-x-2 text-white font-bold">
       <div>Overall Rankings</div>
-      <InfoDialogButton tooltip="Info" title="Title" description="Desc" />
+      <InfoDialogButton
+        tooltip="How to interpret this?"
+        title="Overall Rankings"
+        description={`
+        Each recommendation is displayed in this column.
+        The higher a given visualization appears in the list, the more relevant it is overall.
+        `}
+      />
     </div>
   );
 }

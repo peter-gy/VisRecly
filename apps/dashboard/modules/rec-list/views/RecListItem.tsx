@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { VegaLite } from 'react-vega';
 
 import { RankedVisualization } from '@visrecly/ranking';

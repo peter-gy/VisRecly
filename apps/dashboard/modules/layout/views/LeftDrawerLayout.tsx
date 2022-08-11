@@ -61,7 +61,7 @@ function LeftDrawerLayout({
         duration: theme.transitions.duration.enteringScreen,
       }),
     }),
-    color: theme.palette.primary['900'],
+    backgroundColor: theme.palette.primary['800'],
   }));
 
   const DrawerHeader = styled('div')(({ theme }) => ({
