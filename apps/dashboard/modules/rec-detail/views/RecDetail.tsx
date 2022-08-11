@@ -52,14 +52,17 @@ function RecDetail({
           </IconButton>
         </Toolbar>
       </AppBar>
-      <div
-        className="flex justify-center items-center overflow-auto bg-primary-50"
-        style={{
-          height: 'calc(100vh - ' + appBarHeight + 'px)',
-          marginTop: appBarHeight,
-        }}
-      >
-        <div className="p-4 border-2 border-primary-800 rounded-md bg-white">
+      <div className="flex justify-center items-center bg-primary-50">
+        <div
+          className="p-4 border-2 border-primary-800 rounded-md bg-white overflow-auto"
+          style={{
+            height: 'calc(100vh - ' + 2 * appBarHeight + 'px)',
+            maxHeight: 'calc(100vh - ' + 2 * appBarHeight + 'px)',
+            maxWidth: '75vw',
+            marginTop: 1.5 * appBarHeight,
+            marginBottom: 0.5 * appBarHeight,
+          }}
+        >
           <VegaLite
             spec={vegaLiteSpec}
             width={factor * width}

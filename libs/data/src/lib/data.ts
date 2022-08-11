@@ -5,13 +5,7 @@ import { MOVIES } from './movies';
 import { PENGUINS } from './penguins';
 import { DataSet, DataSetMap } from './types';
 
-export const DATA_SETS: DataSet[] = [
-  BUDGETS,
-  CARS,
-  INCOME,
-  MOVIES,
-  PENGUINS,
-];
+export const DATA_SETS: DataSet[] = [BUDGETS, CARS, INCOME, MOVIES, PENGUINS];
 
 /**
  * A collection of all declared `DataSet` instances,
