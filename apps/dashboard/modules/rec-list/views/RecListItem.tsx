@@ -1,21 +1,38 @@
+import { useState } from 'react';
 import { VegaLite } from 'react-vega';
 
 import { RankedVisualization } from '@visrecly/ranking';
+
+import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
 
 type RecListItemProps = {
   rank: number;
   rankedVisualization: RankedVisualization;
 };
 
-function RecListItem({
-  rank,
-  rankedVisualization: { vegaLiteSpec, dataOrientedCost, visTaskCosts },
-}: RecListItemProps) {
+function RecListItem({ rank, rankedVisualization }: RecListItemProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClickOpen = () => {
+    setIsOpen(true);
+  };
+  const handleClose = () => {
+    setIsOpen(false);
+  };
   return (
-    <div className="flex justify-start items-center bg-white space-x-4 px-2 cursor-pointer">
-      <RankIndicator rank={rank} />
-      <ChartItem spec={vegaLiteSpec} />
-    </div>
+    <>
+      <div
+        className="flex justify-start items-center bg-white space-x-4 px-2 cursor-pointer rounded-md transition-all duration-300 hover:scale-[1.025] border-2 border-primary-700"
+        onClick={handleClickOpen}
+      >
+        <RankIndicator rank={rank} />
+        <ChartItem spec={rankedVisualization.vegaLiteSpec} />
+      </div>
+      <RecDetail
+        open={isOpen}
+        onClose={handleClose}
+        rankedVisualization={rankedVisualization}
+      />
+    </>
   );
 }
 
