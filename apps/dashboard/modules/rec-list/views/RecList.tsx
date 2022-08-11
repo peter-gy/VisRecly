@@ -1,5 +1,7 @@
 import { ReactNode, useRef } from 'react';
 
+import { RankedVisualization } from '@visrecly/ranking';
+
 import { IconButton, List, ListItem } from '@mui/material';
 
 import {
@@ -7,15 +9,38 @@ import {
   ArrowUp,
 } from '@dashboard/modules/components/icons/views/Arrow';
 import InfoDialogButton from '@dashboard/modules/components/info-dialog-button/views/InfoDialogButton';
+import RecListItem from '@dashboard/modules/rec-list/views/RecListItem';
+import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 
-type RecListProps = RecListViewProps;
-
-function RecList({ items }: RecListProps) {
+function RecList() {
+  let component: ReactNode;
+  const {
+    state: { isLoading, isServerError, isClingoError, rankingResult },
+  } = useRecOutput();
+  if (isLoading || rankingResult === undefined) {
+    component = <div>Loading...</div>;
+  } else if (isServerError) {
+    component = <div>Server error</div>;
+  } else if (isClingoError) {
+    component = <div>Clingo error</div>;
+  } else {
+    const visArray = rankingResult as RankedVisualization[];
+    const items = visArray.map((e, idx) => (
+      <RecListItem
+        key={`rec-list-item-${idx}`}
+        rank={idx + 1}
+        rankedVisualization={e}
+      />
+    ));
+    component = <RecListView items={items} />;
+  }
   return (
     <div className="bg-[blue] w-[22.5vw] flex flex-col justify-between items-center">
       <RecListHeader />
-      <div className="bg-[yellow] px-4 py-6 w-full max-h-[calc(100%-4.5rem)] flex justify-center items-center">
-        <RecListView items={items} />
+      <div className="bg-[yellow] px-4 py-6 w-full h-[calc(100%-4.5rem)] flex justify-center items-center">
+        <div className="bg-[green] max-h-[100%] w-full flex flex-col justify-center items-center">
+          {component}
+        </div>
       </div>
     </div>
   );
@@ -51,7 +76,7 @@ function RecListView({ items }: RecListViewProps) {
     }
   };
   return (
-    <div className="bg-[green] max-h-[100%] w-full flex flex-col justify-center items-center">
+    <>
       <IconButton size="large" onClick={handleScrollUpClick}>
         <ArrowUp className="text-white" fontSize="large" />
       </IconButton>
@@ -63,7 +88,7 @@ function RecListView({ items }: RecListViewProps) {
       <IconButton size="large" onClick={handleScrollDownClick}>
         <ArrowDown className="text-white" fontSize="large" />
       </IconButton>
-    </div>
+    </>
   );
 }
 

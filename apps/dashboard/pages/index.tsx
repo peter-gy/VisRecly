@@ -2,6 +2,7 @@ import DrawerContent from '@dashboard/modules/drawer/views/DrawerContent';
 import Heatmap from '@dashboard/modules/heatmap/views/Heatmap';
 import HeatmapScale from '@dashboard/modules/heatmap/views/HeatmapScale';
 import LeftDrawerLayout from '@dashboard/modules/layout/views/LeftDrawerLayout';
+import useRankingPipeline from '@dashboard/modules/ranking/hooks/useRankingPipeline';
 import RecList from '@dashboard/modules/rec-list/views/RecList';
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
 
 // Wrapper to handle layout normalization with the `appBarHeight`
 const MainContent = (appBarHeight: number) => {
+  useRankingPipeline();
   return (
     <div
       css={{
@@ -25,13 +27,7 @@ const MainContent = (appBarHeight: number) => {
       }}
       className="bg-[red] flex"
     >
-      <RecList
-        items={[...Array(20).keys()].map((idx) => (
-          <div key={`dummy-tile-${idx}`} className="p-10 bg-[aliceblue]">
-            {idx + 1}
-          </div>
-        ))}
-      />
+      <RecList />
       <div className="flex justify-center items-center bg-blue-400">
         <HeatmapScale />
       </div>
