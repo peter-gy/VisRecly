@@ -49,7 +49,7 @@ function RecList() {
 function RecListHeader() {
   return (
     <div className="p-4 w-full bg-[orange] flex justify-center items-center space-x-2">
-      <div>Header</div>
+      <div>Overall Rankings</div>
       <InfoDialogButton tooltip="Info" title="Title" description="Desc" />
     </div>
   );

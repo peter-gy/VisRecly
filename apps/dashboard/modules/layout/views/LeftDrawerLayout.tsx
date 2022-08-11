@@ -61,6 +61,7 @@ function LeftDrawerLayout({
         duration: theme.transitions.duration.enteringScreen,
       }),
     }),
+    color: theme.palette.primary['900'],
   }));
 
   const DrawerHeader = styled('div')(({ theme }) => ({
@@ -111,7 +112,7 @@ function LeftDrawerLayout({
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <div className="flex grow justify-between items-center">
+          <div className="flex grow justify-between items-center text-white">
             <div className="flex items-center">
               <IconButton
                 color="inherit"
