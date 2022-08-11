@@ -3,8 +3,8 @@ import tw from 'twin.macro';
 import DrawerContent from '@dashboard/modules/drawer/views/DrawerContent';
 import Heatmap from '@dashboard/modules/heatmap/views/Heatmap';
 import HeatmapScale from '@dashboard/modules/heatmap/views/HeatmapScale';
-import useMainContentWidth from '@dashboard/modules/layout/hooks/useMainContentWidth';
-import { useLayout } from '@dashboard/modules/layout/provider/LayoutContext';
+import useLayoutInfo from '@dashboard/modules/layout/hooks/useLayoutInfo';
+import { LayoutInfo } from '@dashboard/modules/layout/types/types';
 import LeftDrawerLayout from '@dashboard/modules/layout/views/LeftDrawerLayout';
 import useRankingPipeline from '@dashboard/modules/ranking/hooks/useRankingPipeline';
 import RecList from '@dashboard/modules/rec-list/views/RecList';
@@ -13,16 +13,10 @@ const App = () => {
   return (
     <LeftDrawerLayout
       title="Visrecly"
-      mainContent={MainContent}
+      mainContent={<MainContent />}
       drawerContent={<DrawerContent />}
     />
   );
-};
-
-type LayoutInfo = {
-  drawerOpen: boolean;
-  mainContentWidth: number;
-  appBarHeight: number;
 };
 
 const styles = {
@@ -58,13 +52,9 @@ const styles = {
 };
 
 // Wrapper to handle layout normalization with the `appBarHeight`
-const MainContent = (appBarHeight: number) => {
+function MainContent() {
   // Grab layout info for responsive styling
-  const {
-    state: { drawerOpen },
-  } = useLayout();
-  const mainContentWidth = useMainContentWidth();
-  const layoutInfo = { drawerOpen, mainContentWidth, appBarHeight };
+  const layoutInfo = useLayoutInfo();
 
   // Run pipeline automatically
   useRankingPipeline();
@@ -82,6 +72,6 @@ const MainContent = (appBarHeight: number) => {
       </div>
     </div>
   );
-};
+}
 
 export default App;

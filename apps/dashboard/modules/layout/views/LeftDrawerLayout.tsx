@@ -40,6 +40,7 @@ function LeftDrawerLayout({
   drawerWidth,
 }: LeftDrawerLayoutProps) {
   const { dispatch: layoutDispatch } = useLayout();
+
   // Set the drawer width
   const { drawerWidth: responsiveDrawerWidth, drawerShouldBeOpenInitially } =
     useLayoutDimensions();
@@ -52,6 +53,11 @@ function LeftDrawerLayout({
 
   const theme = useTheme();
   const appBarHeight = useMuiAppBarHeight();
+
+  // Dispatch the app bar height to the `LayoutContext`
+  useLayoutEffect(() => {
+    layoutDispatch({ type: 'setAppBarHeight', data: appBarHeight });
+  }, [layoutDispatch, appBarHeight]);
 
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',

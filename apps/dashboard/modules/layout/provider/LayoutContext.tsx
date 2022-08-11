@@ -7,7 +7,8 @@ import { LayoutState } from '@dashboard/modules/layout/types/types';
 
 type Action =
   | { type: 'setDrawerOpen'; data: boolean }
-  | { type: 'setDrawerWidth'; data: number };
+  | { type: 'setDrawerWidth'; data: number }
+  | { type: 'setAppBarHeight'; data: number };
 
 /**
  * Dispatch callback signature
@@ -26,6 +27,9 @@ function layoutReducer(state: LayoutState, action: Action): LayoutState {
     case 'setDrawerWidth': {
       return { ...state, drawerWidth: action.data };
     }
+    case 'setAppBarHeight': {
+      return { ...state, appBarHeight: action.data };
+    }
     default:
       return state;
   }
@@ -37,6 +41,7 @@ function LayoutProvider({ children }: LayoutProviderProps): JSX.Element {
   const [state, dispatch] = useReducer(layoutReducer, {
     drawerOpen: false,
     drawerWidth: 0,
+    appBarHeight: 0,
   });
 
   return (

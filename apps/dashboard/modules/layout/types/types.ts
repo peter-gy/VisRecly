@@ -11,4 +11,16 @@ export type LayoutState = {
    * The responsive drawer width.
    */
   drawerWidth: number;
+
+  /**
+   * The responsive app bar height.
+   */
+  appBarHeight: number;
+};
+
+export type LayoutInfo = LayoutState & {
+  /**
+   * The responsive main content width.
+   */
+  mainContentWidth: number;
 };
