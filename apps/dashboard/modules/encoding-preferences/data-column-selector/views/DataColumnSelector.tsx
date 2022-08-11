@@ -72,9 +72,9 @@ type DataColumnProps = {
 const styles = {
   container: ({ isSelected }: { isSelected: boolean }) => [
     tw`my-1 flex space-x-2 items-center border-2 cursor-pointer transition-all duration-[250ms]`,
-    tw`hover:bg-primary-500 hover:text-white`,
-    tw`active:bg-primary-600 active:scale-105`,
-    isSelected && tw`bg-primary-700 text-white`,
+    tw`hover:bg-primary-100`,
+    tw`active:bg-primary-200 active:scale-105`,
+    isSelected && tw`bg-primary-700 hover:bg-primary-600 text-white`,
   ],
 };
 

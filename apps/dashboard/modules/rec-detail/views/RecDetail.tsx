@@ -59,7 +59,7 @@ function RecDetail({
           marginTop: appBarHeight,
         }}
       >
-        <div className="p-2 border-2 border-primary-800 rounded-md">
+        <div className="p-4 border-2 border-primary-800 rounded-md bg-white">
           <VegaLite
             spec={vegaLiteSpec}
             width={factor * width}
