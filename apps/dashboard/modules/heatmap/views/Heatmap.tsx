@@ -1,3 +1,5 @@
+import { TASKS } from '@visrecly/vis-tasks';
+
 import useTileDimensions from '@dashboard/modules/heatmap/hooks/useTileDimensions';
 import HeatmapHeaderTile, {
   HeatmapHeaderTileProps,
@@ -8,18 +10,17 @@ type HeatmapProps = {
 };
 
 function Heatmap() {
-  return (
-    <_Heatmap
-      headerTiles={[...Array(25).keys()].map((idx) => ({
-        title: `Title ${idx + 1}`,
-        info: {
-          tooltip: `Tooltip ${idx + 1}`,
-          title: `Info title ${idx + 1}`,
-          description: `Description ${idx + 1}`,
-        },
-      }))}
-    />
+  const headerTiles = TASKS.map(
+    ({ name, descriptionShort, descriptionLong }) => ({
+      title: name,
+      info: {
+        title: name,
+        tooltip: descriptionShort,
+        description: descriptionLong.content,
+      },
+    }),
   );
+  return <_Heatmap headerTiles={headerTiles} />;
 }
 
 function _Heatmap({ headerTiles }: HeatmapProps) {

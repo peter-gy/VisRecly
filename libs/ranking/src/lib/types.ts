@@ -36,4 +36,10 @@ export type RankedVisualization = {
    * defined for visualization tasks.
    */
   visTaskCosts: VisTaskCostMap;
+
+  /**
+   * The total cost per vis task, equals the sum of the data-oriented
+   * and task-oriented costs.
+   */
+  aggregatedCosts: VisTaskCostMap;
 };

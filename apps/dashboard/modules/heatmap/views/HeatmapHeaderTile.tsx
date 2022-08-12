@@ -31,8 +31,13 @@ function HeatmapHeaderTile({
 
   return (
     <div
-      className="flex flex-col justify-center items-center space-y-1 bg-blue-300"
-      style={{ width: width, height: height }}
+      className="flex flex-col justify-start items-center space-y-1 bg-primary-200 border-r-[1px] border-primary-800"
+      style={{
+        width: width,
+        maxWidth: width,
+        height: height,
+        maxHeight: height,
+      }}
     >
       <div className="flex justify-between items-center">
         <InfoDialogButton {...info} />
@@ -40,7 +45,7 @@ function HeatmapHeaderTile({
           <VisibilityIcon />
         </IconButton>
       </div>
-      <div>{title}</div>
+      <div className="text-xs text-center">{title}</div>
     </div>
   );
 }
