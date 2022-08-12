@@ -1,26 +1,5 @@
-import { RankedVisualization } from '@visrecly/ranking';
+import { CostRange, RankedVisualization } from '@visrecly/ranking';
 import { VisTask, VisTaskCostMap } from '@visrecly/vis-tasks';
-
-/**
- * Orders the supplied `visArray` based on the items' effectiveness
- * with regard to `taskName`.
- *
- * @param visArray - The array of visualization recommendations.
- * @param taskName - The name of the task to be ranked.
- */
-export function rankVisualizationsForTask(
-  visArray: RankedVisualization[],
-  taskName: VisTask['name'],
-) {
-  return visArray.sort(
-    (a, b) => a.aggregatedCosts[taskName] - b.aggregatedCosts[taskName],
-  );
-}
-
-type CostRange = {
-  min: number;
-  max: number;
-};
 
 /**
  * Computes the cost range for the supplied `visArray`, considering all costs
@@ -46,4 +25,20 @@ function computeCostRangeSingleMap(aggregatedCosts: VisTaskCostMap): CostRange {
     min: Math.min(...values),
     max: Math.max(...values),
   };
+}
+
+/**
+ * Orders the supplied `visArray` based on the items' effectiveness
+ * with regard to `taskName`.
+ *
+ * @param visArray - The array of visualization recommendations.
+ * @param taskName - The name of the task to be ranked.
+ */
+export function rankVisualizationsForTask(
+  visArray: RankedVisualization[],
+  taskName: VisTask['name'],
+) {
+  return visArray.sort(
+    (a, b) => a.aggregatedCosts[taskName] - b.aggregatedCosts[taskName],
+  );
 }

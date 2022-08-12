@@ -14,6 +14,7 @@ import {
 } from '@visrecly/vis-tasks';
 
 import { encodingPrefsToAsp } from './encodingPreferences';
+import { projectCosts } from './projection';
 import { RankedVisualization } from './types';
 
 /**
@@ -25,6 +26,7 @@ import { RankedVisualization } from './types';
  * @param encodingPrefs - A list of the column names of the data set that should be visualized.
  * @param numMaxModels - The maximum number of models to return. Gets passed to Clingo under the hood.
  * @param relaxHard - Whether the hard constraints should be relaxed.
+ * @param costProjectionConfig - Configuration for the cost projection, used to normalize the range of costs.
  * @param visTaskMap - The map of visualization tasks to consider when ranking.
  */
 export async function rank(
@@ -32,6 +34,7 @@ export async function rank(
   encodingPrefs: string[],
   numMaxModels = 10,
   relaxHard = false,
+  costProjectionConfig: { min: number; max: number } = { min: 0, max: 10 },
   visTaskMap: VisTaskMap = TASK_MAP,
 ) {
   // Extend the core ASP of Draco by encoding declarations
@@ -51,8 +54,11 @@ export async function rank(
   const elementsWithCosts = elements.map((element) =>
     computeSingleElementCost(element, visTaskMap),
   );
-  elementsWithCosts.sort(compareVisualizations);
-  return elementsWithCosts;
+  const projectedElements = projectCosts(
+    elementsWithCosts,
+    costProjectionConfig,
+  );
+  return projectedElements.sort(compareVisualizations);
 }
 
 /**

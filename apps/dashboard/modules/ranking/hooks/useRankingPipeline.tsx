@@ -7,6 +7,10 @@
  */
 import { useEffect } from 'react';
 
+import {
+  PROJECT_RANGE,
+  RELAX_HARD,
+} from '@dashboard/modules/ranking/beans/beans';
 import useRanking from '@dashboard/modules/ranking/hooks/useRanking';
 import { useRecInput } from '@dashboard/modules/rec-input/provider/RecInputContext';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
@@ -26,7 +30,7 @@ function useRankingPipeline() {
   // Actually call the ranking function
   useEffect(() => {
     const selectedColumnNames = selectedDataColumns.map(({ name }) => name);
-    runRanking([selectedColumnNames, numMaxModels]);
+    runRanking([selectedColumnNames, numMaxModels, RELAX_HARD, PROJECT_RANGE]);
   }, [runRanking, selectedDataColumns, numMaxModels]);
 
   // Sync react-query `data` state with that of `RecOutputContext`

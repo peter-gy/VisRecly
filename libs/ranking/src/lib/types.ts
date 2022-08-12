@@ -43,3 +43,8 @@ export type RankedVisualization = {
    */
   aggregatedCosts: VisTaskCostMap;
 };
+
+export type CostRange = {
+  min: number;
+  max: number;
+};
