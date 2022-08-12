@@ -42,11 +42,11 @@ const styles = {
     tw`flex justify-center items-center bg-blue-400`,
   ],
   heatmapContainer: ({ drawerOpen, mainContentWidth }: LayoutInfo) => [
-    tw`ml-12 flex-grow flex justify-end`,
-    !drawerOpen && tw`w-[75vw] max-w-[75vw]`,
+    tw`ml-0 flex-grow flex justify-end`,
+    !drawerOpen && tw`w-[70vw] max-w-[70vw]`,
     drawerOpen && {
-      width: 0.75 * mainContentWidth,
-      maxWidth: 0.75 * mainContentWidth,
+      width: 0.65 * mainContentWidth,
+      maxWidth: 0.65 * mainContentWidth,
     },
   ],
 };
@@ -67,6 +67,8 @@ function MainContent() {
       <div css={styles.heatmapScaleContainer(layoutInfo)}>
         <HeatmapScale />
       </div>
+      {/* Spacer */}
+      <div className="flex-grow"></div>
       <div css={styles.heatmapContainer(layoutInfo)}>
         <Heatmap />
       </div>
