@@ -1,5 +1,6 @@
 import { HeatmapRect } from '@visx/heatmap';
 import { scaleLinear } from '@visx/scale';
+import { useState } from 'react';
 
 import { RankedVisualization } from '@visrecly/ranking';
 
@@ -10,6 +11,11 @@ import {
   normalizeCost,
 } from '@dashboard/modules/heatmap/beans/scale';
 import { BinType, ColumnType } from '@dashboard/modules/heatmap/types/types';
+import {
+  binsFromVisArray,
+  columnsFromVisArray,
+} from '@dashboard/modules/heatmap/utils/utils';
+import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 
 type HeatmapSvgProps = {
@@ -26,7 +32,11 @@ function HeatmapSvg({
     state: { rankingResult },
   } = useRecOutput();
   if (rankingResult === undefined) {
-    return <LoadingIndicator />;
+    return (
+      <div className="h-full w-full flex justify-center items-center">
+        <LoadingIndicator />
+      </div>
+    );
   }
   if ('Error' in rankingResult) {
     return (
@@ -47,7 +57,15 @@ function HeatmapSvg({
 }
 
 function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
-  const visTaskNames = Object.keys(visArray[0].aggregatedCosts);
+  const [selectedVis, setSelectedVis] = useState<RankedVisualization | null>(
+    null,
+  );
+  const [detailOpen, setDetailOpen] = useState(false);
+  const handleClose = () => {
+    setDetailOpen(false);
+  };
+
+  const visTaskNames = columnsFromVisArray(visArray);
 
   // Number of columns
   const numTasks = visTaskNames.length;
@@ -63,43 +81,50 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
   });
 
   return (
-    <svg width={width} height={height} overflow="visible">
-      <HeatmapRect<ColumnType, BinType>
-        data={visTaskNames}
-        bins={(visTaskName) =>
-          visArray.map(({ aggregatedCosts }, idx) => ({
-            idx,
-            cost: aggregatedCosts[visTaskName],
-            normalizedCost: normalizeCost(aggregatedCosts[visTaskName]),
-          }))
-        }
-        xScale={xScale}
-        yScale={yScale}
-        binWidth={tileWidth}
-        binHeight={tileHeight}
-      >
-        {(heatmap) =>
-          heatmap.map((heatmapBins) =>
-            heatmapBins.map((bin) => (
-              <rect
-                key={`heatmap-rect-${bin.row}-${bin.column}`}
-                className="visx-heatmap-rect cursor-pointer hover:stroke-2 hover:stroke-primary-900"
-                width={bin.width}
-                height={bin.height}
-                x={bin.x}
-                y={bin.y}
-                fill={colorScale(bin.bin.cost)}
-                fillOpacity={bin.opacity}
-                onClick={() => {
-                  const { row, column } = bin;
-                  alert(JSON.stringify({ row, column, bin: bin.bin }));
-                }}
-              />
-            )),
-          )
-        }
-      </HeatmapRect>
-    </svg>
+    <>
+      <svg width={width} height={height} overflow="visible">
+        <HeatmapRect<ColumnType, BinType>
+          data={visTaskNames}
+          bins={binsFromVisArray(visArray)}
+          xScale={xScale}
+          yScale={yScale}
+          binWidth={tileWidth}
+          binHeight={tileHeight}
+        >
+          {(heatmap) =>
+            heatmap.map((heatmapBins) =>
+              heatmapBins.map((bin) => (
+                <rect
+                  key={`heatmap-rect-${bin.row}-${bin.column}`}
+                  className="visx-heatmap-rect cursor-pointer transition-all duration-300 hover:stroke-2 hover:stroke-primary-900"
+                  width={bin.width}
+                  height={bin.height}
+                  x={bin.x}
+                  y={bin.y}
+                  fill={colorScale(bin.bin.cost)}
+                  fillOpacity={bin.opacity}
+                  onClick={() => {
+                    const {
+                      bin: { idx },
+                    } = bin;
+                    const vis = visArray[idx];
+                    setSelectedVis(vis);
+                    setDetailOpen(true);
+                  }}
+                />
+              )),
+            )
+          }
+        </HeatmapRect>
+      </svg>
+      {selectedVis !== null && (
+        <RecDetail
+          open={detailOpen}
+          onClose={handleClose}
+          rankedVisualization={selectedVis}
+        />
+      )}
+    </>
   );
 }
 

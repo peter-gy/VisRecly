@@ -7,3 +7,9 @@ export type BinType = {
   cost: number;
   normalizedCost: number;
 };
+
+export type HeatmapState = {
+  bins: BinType[];
+  highlightedBins: BinType[];
+  fadedBins: BinType[];
+};
