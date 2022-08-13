@@ -3,6 +3,16 @@
  */
 export type LayoutState = {
   /**
+   * Current width of the browser window.
+   */
+  windowWidth: number;
+
+  /**
+   * Current height of the browser window.
+   */
+  windowHeight: number;
+
+  /**
    * Indicates whether the side drawer is open.
    */
   drawerOpen: boolean;

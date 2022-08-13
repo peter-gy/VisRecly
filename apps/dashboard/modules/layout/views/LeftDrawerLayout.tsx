@@ -54,11 +54,6 @@ function LeftDrawerLayout({
   const theme = useTheme();
   const appBarHeight = useMuiAppBarHeight();
 
-  // Dispatch the app bar height to the `LayoutContext`
-  useLayoutEffect(() => {
-    layoutDispatch({ type: 'setAppBarHeight', data: appBarHeight });
-  }, [layoutDispatch, appBarHeight]);
-
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
   })<AppBarProps>(({ theme, open }) => ({

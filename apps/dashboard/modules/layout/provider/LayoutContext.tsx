@@ -1,14 +1,23 @@
 /**
  * Possible actions to dispatch to the reducer
  */
-import { ReactNode, createContext, useContext, useReducer } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+} from 'react';
 
+import useMuiAppBarHeight from '@dashboard/hooks/useMuiAppBarHeight';
+import useWindowSize from '@dashboard/hooks/useWindowSize';
 import { LayoutState } from '@dashboard/modules/layout/types/types';
 
 type Action =
   | { type: 'setDrawerOpen'; data: boolean }
   | { type: 'setDrawerWidth'; data: number }
-  | { type: 'setAppBarHeight'; data: number };
+  | { type: 'setAppBarHeight'; data: number }
+  | { type: 'setWindowSize'; data: { width: number; height: number } };
 
 /**
  * Dispatch callback signature
@@ -30,6 +39,13 @@ function layoutReducer(state: LayoutState, action: Action): LayoutState {
     case 'setAppBarHeight': {
       return { ...state, appBarHeight: action.data };
     }
+    case 'setWindowSize': {
+      return {
+        ...state,
+        windowWidth: action.data.width,
+        windowHeight: action.data.height,
+      };
+    }
     default:
       return state;
   }
@@ -38,11 +54,24 @@ function layoutReducer(state: LayoutState, action: Action): LayoutState {
 type LayoutProviderProps = { children: ReactNode };
 
 function LayoutProvider({ children }: LayoutProviderProps): JSX.Element {
+  const { width: windowWidth, height: windowHeight } = useWindowSize();
+  const appBarHeight = useMuiAppBarHeight();
   const [state, dispatch] = useReducer(layoutReducer, {
+    windowWidth,
+    windowHeight,
+    appBarHeight,
     drawerOpen: false,
     drawerWidth: 0,
-    appBarHeight: 0,
   });
+  useEffect(() => {
+    dispatch({
+      type: 'setWindowSize',
+      data: { width: windowWidth, height: windowHeight },
+    });
+  }, [windowWidth, windowHeight]);
+  useEffect(() => {
+    dispatch({ type: 'setAppBarHeight', data: appBarHeight });
+  }, [appBarHeight]);
 
   return (
     <LayoutContext.Provider value={{ state, dispatch }}>
