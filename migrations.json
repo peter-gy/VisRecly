@@ -1,20 +1,28 @@
 {
   "migrations": [
     {
+      "version": "14.5.5-beta.0",
       "cli": "nx",
-      "version": "14.4.4",
-      "description": "Adds @typescript-eslint/utils as a dev dep",
-      "factory": "./src/migrations/update-14-4-4/experimental-to-utils-deps",
-      "package": "@nrwl/linter",
-      "name": "experimental-to-utils-deps"
+      "description": "Exclude jest.config.ts from tsconfig where missing.",
+      "factory": "./src/migrations/update-14-0-0/update-jest-config-ext",
+      "package": "@nrwl/jest",
+      "name": "exclude-jest-config-from-ts-config"
     },
     {
       "cli": "nx",
-      "version": "14.4.4",
-      "description": "Switch from  @typescript-eslint/experimental-utils to @typescript-eslint/utils in all rules and rules.spec files",
-      "factory": "./src/migrations/update-14-4-4/experimental-to-utils-rules",
-      "package": "@nrwl/linter",
-      "name": "experimental-to-utils-rules"
+      "version": "14.5.3-beta.0",
+      "description": "Add .next folder to gitignore.",
+      "factory": "./src/migrations/update-14-5-3/add-gitignore-entry",
+      "package": "@nrwl/next",
+      "name": "add-gitignore-entry"
+    },
+    {
+      "cli": "nx",
+      "version": "14.5.3-beta.0",
+      "description": "Update development outputPath to the project root.",
+      "factory": "./src/migrations/update-14-5-3/update-dev-output-path",
+      "package": "@nrwl/next",
+      "name": "update-dev-output-path"
     }
   ]
 }
