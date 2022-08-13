@@ -1,4 +1,5 @@
 import { scaleQuantize } from '@visx/scale';
+import { theme } from 'twin.macro';
 
 export type ScaleSection = {
   name: string;
@@ -7,9 +8,9 @@ export type ScaleSection = {
 };
 
 const scaleSectionData: Omit<ScaleSection, 'range'>[] = [
-  { name: 'Good', color: '#76d275' },
-  { name: 'Medium', color: '#ffeb3b' },
-  { name: 'Bad', color: '#ff5f52' },
+  { name: 'Good', color: theme`colors.scale.good` },
+  { name: 'Medium', color: theme`colors.scale.medium` },
+  { name: 'Bad', color: theme`colors.scale.bad` },
 ];
 
 const scaleRange = [0, 100];

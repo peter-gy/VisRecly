@@ -16,6 +16,11 @@ module.exports = {
           900: '#1E3A8A',
           DEFAULT: '#2563EB',
         },
+        scale: {
+          good: '#8bc34a',
+          medium: '#fdd835',
+          bad: '#ff5f52',
+        },
       },
     },
   },
