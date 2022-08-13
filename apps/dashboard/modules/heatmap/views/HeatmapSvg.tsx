@@ -63,13 +63,15 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
       <HeatmapRect
         data={visTaskNames}
         bins={(visTaskName) =>
-          visArray.map(({ aggregatedCosts }) => aggregatedCosts[visTaskName])
+          visArray.map(({ aggregatedCosts }, idx) => ({
+            idx,
+            cost: aggregatedCosts[visTaskName],
+          }))
         }
         xScale={xScale}
         yScale={yScale}
         binWidth={tileWidth}
         binHeight={tileHeight}
-        colorScale={colorScale}
       >
         {(heatmap) =>
           heatmap.map((heatmapBins) =>
@@ -81,7 +83,10 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
                 height={bin.height}
                 x={bin.x}
                 y={bin.y}
-                fill={bin.color}
+                fill={
+                  /*@ts-ignore*/
+                  colorScale(bin.bin.cost)
+                }
                 fillOpacity={bin.opacity}
                 onClick={() => {
                   const { row, column } = bin;

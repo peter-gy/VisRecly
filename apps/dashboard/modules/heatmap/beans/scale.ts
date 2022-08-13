@@ -16,6 +16,10 @@ const scaleRange = [0, 100];
 const absoluteRange = scaleRange[1] - scaleRange[0];
 const numSections = scaleSectionData.length;
 
+export function normalizeCost(cost: number): number {
+  return scaleRange[1] - cost;
+}
+
 export const scaleSections: ScaleSection[] = scaleSectionData.map(
   ({ name, color }, idx) => ({
     name,
