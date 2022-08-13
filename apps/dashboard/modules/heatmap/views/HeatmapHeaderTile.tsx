@@ -31,7 +31,7 @@ function HeatmapHeaderTile({
 
   return (
     <div
-      className="flex flex-col justify-start items-center space-y-1 bg-primary-200 border-r-[1px] border-primary-800"
+      className="flex flex-col justify-start items-center space-y-1 bg-primary-300 border-r-[1px] border-primary-800"
       style={{
         width: width,
         maxWidth: width,

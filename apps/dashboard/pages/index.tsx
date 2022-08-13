@@ -25,7 +25,7 @@ const styles = {
     mainContentWidth,
     appBarHeight,
   }: LayoutInfo) => [
-    tw`bg-[red] flex`,
+    tw`bg-primary-200 flex`,
     { height: `calc(100vh - ${appBarHeight}px)`, marginTop: appBarHeight },
     !drawerOpen && tw`w-[100vw] max-w-[100vw]`,
     drawerOpen && { width: mainContentWidth, maxWidth: mainContentWidth },
@@ -39,7 +39,7 @@ const styles = {
     },
   ],
   heatmapScaleContainer: ({ drawerOpen, mainContentWidth }: LayoutInfo) => [
-    tw`flex justify-center items-center bg-blue-400`,
+    tw`flex justify-center items-center bg-primary-200`,
   ],
   heatmapContainer: ({ drawerOpen, mainContentWidth }: LayoutInfo) => [
     tw`ml-0 flex-grow flex justify-end`,
