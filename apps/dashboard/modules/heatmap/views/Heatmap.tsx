@@ -25,13 +25,7 @@ function Heatmap() {
 }
 
 function _Heatmap({ headerTiles }: HeatmapProps) {
-  const {
-    tileWidth,
-    tileHeight,
-    numVisibleTiles,
-    heatmapWidth,
-    heatmapHeight,
-  } = useHeatmapDimensions();
+  const { tileWidth, tileHeight, numVisibleTiles } = useHeatmapDimensions();
   return (
     <div
       className="bg-primary-100 h-full w-full flex flex-col overflow-auto drop-shadow-2xl"

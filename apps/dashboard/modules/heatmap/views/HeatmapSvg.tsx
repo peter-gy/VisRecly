@@ -6,10 +6,7 @@ import { RankedVisualization } from '@visrecly/ranking';
 
 import AlertMessage from '@dashboard/modules/components/alert-message/views/AlertMessage';
 import LoadingIndicator from '@dashboard/modules/components/loading-indicator/views/LoadingIndicator';
-import {
-  colorScale,
-  normalizeCost,
-} from '@dashboard/modules/heatmap/beans/scale';
+import { colorScale } from '@dashboard/modules/heatmap/beans/scale';
 import { BinType, ColumnType } from '@dashboard/modules/heatmap/types/types';
 import {
   binsFromVisArray,
