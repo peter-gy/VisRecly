@@ -5,9 +5,9 @@ export type ScaleSection = {
 };
 
 const scaleSectionData: Omit<ScaleSection, 'range'>[] = [
-  { name: 'Good', color: '#00FF00' },
-  { name: 'Medium', color: '#FFFF00' },
-  { name: 'Bad', color: '#FF0000' },
+  { name: 'Good', color: '#76d275' },
+  { name: 'Medium', color: '#ffeb3b' },
+  { name: 'Bad', color: '#ff5f52' },
 ];
 
 const scaleRange = [0, 10];
