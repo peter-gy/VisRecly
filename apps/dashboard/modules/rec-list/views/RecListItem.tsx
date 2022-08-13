@@ -8,9 +8,16 @@ import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
 type RecListItemProps = {
   rank: number;
   rankedVisualization: RankedVisualization;
+  width: number;
+  height: number;
 };
 
-function RecListItem({ rank, rankedVisualization }: RecListItemProps) {
+function RecListItem({
+  rank,
+  rankedVisualization,
+  width,
+  height,
+}: RecListItemProps) {
   const [isOpen, setIsOpen] = useState(false);
   const handleClickOpen = () => {
     setIsOpen(true);
@@ -23,6 +30,12 @@ function RecListItem({ rank, rankedVisualization }: RecListItemProps) {
       <div
         className="flex justify-start items-center bg-white space-x-4 px-2 cursor-pointer rounded-md transition-all duration-300 hover:scale-[1.025] border-2 border-primary-700"
         onClick={handleClickOpen}
+        css={{
+          width: width,
+          maxWidth: width,
+          height: height,
+          maxHeight: height,
+        }}
       >
         <RankIndicator rank={rank} />
         <ChartItem spec={rankedVisualization.vegaLiteSpec} />
@@ -54,7 +67,7 @@ type ChartItemProps = {
 
 function ChartItem({ spec }: ChartItemProps) {
   return (
-    <div className="w-[175px] h-[175px] overflow-auto">
+    <div className="w-full h-full overflow-auto">
       <VegaLite spec={spec} actions={false} />
     </div>
   );

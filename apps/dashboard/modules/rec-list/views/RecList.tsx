@@ -12,6 +12,7 @@ import {
 } from '@dashboard/modules/components/icons/views/Arrow';
 import InfoDialogButton from '@dashboard/modules/components/info-dialog-button/views/InfoDialogButton';
 import LoadingIndicator from '@dashboard/modules/components/loading-indicator/views/LoadingIndicator';
+import useRecListDimensions from '@dashboard/modules/rec-list/hooks/useRecListDimensions';
 import RecListItem from '@dashboard/modules/rec-list/views/RecListItem';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 
@@ -31,6 +32,7 @@ const styles = {
 
 function RecList() {
   let component: ReactNode;
+  const { recListItemWidth, recListItemHeight } = useRecListDimensions();
   const {
     state: { isLoading, isServerError, isClingoError, rankingResult },
   } = useRecOutput();
@@ -58,6 +60,8 @@ function RecList() {
         key={`rec-list-item-${idx}`}
         rank={idx + 1}
         rankedVisualization={e}
+        width={recListItemWidth}
+        height={recListItemHeight}
       />
     ));
     if (items.length === 0) {
