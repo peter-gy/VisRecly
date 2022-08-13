@@ -5,7 +5,11 @@ import { RankedVisualization } from '@visrecly/ranking';
 
 import AlertMessage from '@dashboard/modules/components/alert-message/views/AlertMessage';
 import LoadingIndicator from '@dashboard/modules/components/loading-indicator/views/LoadingIndicator';
-import { colorScale } from '@dashboard/modules/heatmap/beans/scale';
+import {
+  colorScale,
+  normalizeCost,
+} from '@dashboard/modules/heatmap/beans/scale';
+import { BinType, ColumnType } from '@dashboard/modules/heatmap/types/types';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 
 type HeatmapSvgProps = {
@@ -60,12 +64,13 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
 
   return (
     <svg width={width} height={height} overflow="visible">
-      <HeatmapRect
+      <HeatmapRect<ColumnType, BinType>
         data={visTaskNames}
         bins={(visTaskName) =>
           visArray.map(({ aggregatedCosts }, idx) => ({
             idx,
             cost: aggregatedCosts[visTaskName],
+            normalizedCost: normalizeCost(aggregatedCosts[visTaskName]),
           }))
         }
         xScale={xScale}
@@ -78,15 +83,12 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
             heatmapBins.map((bin) => (
               <rect
                 key={`heatmap-rect-${bin.row}-${bin.column}`}
-                className="visx-heatmap-rect"
+                className="visx-heatmap-rect cursor-pointer hover:stroke-2 hover:stroke-primary-900"
                 width={bin.width}
                 height={bin.height}
                 x={bin.x}
                 y={bin.y}
-                fill={
-                  /*@ts-ignore*/
-                  colorScale(bin.bin.cost)
-                }
+                fill={colorScale(bin.bin.cost)}
                 fillOpacity={bin.opacity}
                 onClick={() => {
                   const { row, column } = bin;
