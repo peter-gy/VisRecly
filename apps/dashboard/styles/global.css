@@ -5,3 +5,7 @@
 * {
   box-sizing: border-box;
 }
+
+.vega-embed canvas {
+  @apply cursor-pointer;
+}

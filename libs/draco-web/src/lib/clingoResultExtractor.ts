@@ -19,6 +19,7 @@ export function extractModels(
   result: ClingoResult,
   constraints: Constraint[],
 ): Model[] {
+  if (result.Result === 'UNSATISFIABLE') return [];
   return (result.Call || []).reduce((arr: any[], el: any) => {
     el.Witnesses.forEach((d: any) => {
       const facts = d.Value;

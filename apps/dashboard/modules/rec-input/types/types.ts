@@ -38,4 +38,9 @@ export type RecInputState = {
    * Currently selected data columns.
    */
   selectedDataColumns: DataColumn[];
+
+  /**
+   * Number of models to generate.
+   */
+  numMaxModels: number;
 };

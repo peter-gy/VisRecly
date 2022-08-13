@@ -1,5 +1,9 @@
+import { SyntheticEvent, useState } from 'react';
 import tw from 'twin.macro';
 
+import { Snackbar } from '@mui/material';
+
+import { Alert } from '@dashboard/modules/components/alert-message/views/AlertMessage';
 import { snakeCaseToHumanCase } from '@dashboard/modules/encoding-preferences/data-column-selector/utils/utils';
 import DataColumnTypeIcon from '@dashboard/modules/encoding-preferences/data-column-selector/views/DataColumnTypeIcon';
 import { useRecInput } from '@dashboard/modules/rec-input/provider/RecInputContext';
@@ -31,18 +35,37 @@ type DataColumnSelectorProps = {
   onSelect: (columns: DataColumnType[]) => void;
 };
 
+const NUM_MAX_COLUMNS = 5;
+
 function _DataColumnSelector({
   availableDataColumns,
   selectedDataColumns,
   onSelect,
 }: DataColumnSelectorProps) {
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+
   const handleClick = (column: DataColumnType) => {
     const newSelectedColumns =
       selectedDataColumns.find((c) => c.name === column.name) !== undefined
         ? selectedDataColumns.filter((c) => c.name !== column.name)
         : [...selectedDataColumns, column];
+    if (newSelectedColumns.length > NUM_MAX_COLUMNS) {
+      setSnackBarOpen(true);
+      return;
+    }
     onSelect(newSelectedColumns);
   };
+
+  const handleSnackbarClose = (
+    event?: SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackBarOpen(false);
+  };
+
   return (
     <div className="flex flex-col">
       {availableDataColumns.map(({ name, type }) => {
@@ -58,6 +81,15 @@ function _DataColumnSelector({
           />
         );
       })}
+      <Snackbar
+        open={snackBarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity="warning">
+          Sorry, maximum {NUM_MAX_COLUMNS} columns can be selected at once.
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
@@ -72,9 +104,9 @@ type DataColumnProps = {
 const styles = {
   container: ({ isSelected }: { isSelected: boolean }) => [
     tw`my-1 flex space-x-2 items-center border-2 cursor-pointer transition-all duration-[250ms]`,
-    tw`hover:bg-primary-500 hover:text-white`,
-    tw`active:bg-primary-600 active:scale-105`,
-    isSelected && tw`bg-primary-700 text-white`,
+    tw`hover:bg-primary-100`,
+    tw`active:bg-primary-200 active:scale-105`,
+    isSelected && tw`bg-primary-700 hover:bg-primary-600 text-white`,
   ],
 };
 

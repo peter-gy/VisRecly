@@ -14,6 +14,7 @@ import {
 } from '@visrecly/vis-tasks';
 
 import { encodingPrefsToAsp } from './encodingPreferences';
+import { projectCosts } from './projection';
 import { RankedVisualization } from './types';
 
 /**
@@ -24,18 +25,23 @@ import { RankedVisualization } from './types';
  * @param draco - The `Draco` instance to handle VisRec.
  * @param encodingPrefs - A list of the column names of the data set that should be visualized.
  * @param numMaxModels - The maximum number of models to return. Gets passed to Clingo under the hood.
+ * @param relaxHard - Whether the hard constraints should be relaxed.
+ * @param costProjectionConfig - Configuration for the cost projection, used to normalize the range of costs.
  * @param visTaskMap - The map of visualization tasks to consider when ranking.
  */
 export async function rank(
   draco: Draco,
   encodingPrefs: string[],
   numMaxModels = 10,
+  relaxHard = false,
+  costProjectionConfig: { min: number; max: number } = { min: 0, max: 10 },
   visTaskMap: VisTaskMap = TASK_MAP,
 ) {
   // Extend the core ASP of Draco by encoding declarations
   const program = encodingPrefsToAsp(encodingPrefs);
   const solutionOrError = await draco.solve(program, {
     models: numMaxModels,
+    relaxHard,
   });
   const isError = 'Error' in solutionOrError;
   if (isError) {
@@ -48,19 +54,25 @@ export async function rank(
   const elementsWithCosts = elements.map((element) =>
     computeSingleElementCost(element, visTaskMap),
   );
-  elementsWithCosts.sort(compareVisualizations);
-  return elementsWithCosts;
+  const projectedElements = projectCosts(
+    elementsWithCosts,
+    costProjectionConfig,
+  );
+  return projectedElements.sort(compareVisualizations);
 }
 
 /**
  * Compares two ranked visualizations based on their cost.
  * Used to custom sort elements to create a ranking.
  *
+ * Serves to sort costs in ascending order,
+ * lower costs indicating better results.
+ *
  * @param a - The first ranked visualization.
  * @param b  - The second ranked visualization.
  */
 function compareVisualizations(a: RankedVisualization, b: RankedVisualization) {
-  return b.dataOrientedCost - a.dataOrientedCost;
+  return a.dataOrientedCost - b.dataOrientedCost;
 }
 
 /**
@@ -80,7 +92,11 @@ function computeSingleElementCost(
   const mark = vegaLiteSpec.mark as VegaLiteAnyMark;
   // Compute the cost map based on the used mark, & return the ranked element
   const visTaskCosts = computeVisTaskCostMap(mark, visTaskMap);
-  return { vegaLiteSpec, dataOrientedCost, visTaskCosts };
+  const aggregatedCosts = computeAggregatedCostMap(
+    visTaskCosts,
+    dataOrientedCost,
+  );
+  return { vegaLiteSpec, dataOrientedCost, visTaskCosts, aggregatedCosts };
 }
 
 /**
@@ -113,6 +129,26 @@ function computeVisTaskCostMap(
       const cost = disfavorsCost - favorsCost;
       return { ...costMap, [taskName]: cost };
     },
+    {} as VisTaskCostMap,
+  );
+}
+
+/**
+ * Computes the aggregated cost of a visualization by summing the costs
+ * for each given task with the data-oriented cost.
+ *
+ * @param visTaskCosts - Raw task-oriented costs.
+ * @param dataOrientedCost - The data-oriented cost.
+ */
+function computeAggregatedCostMap(
+  visTaskCosts: VisTaskCostMap,
+  dataOrientedCost: number,
+): VisTaskCostMap {
+  return Object.entries(visTaskCosts).reduce(
+    (costMap, [taskName, cost]) => ({
+      ...costMap,
+      [taskName]: cost + dataOrientedCost,
+    }),
     {} as VisTaskCostMap,
   );
 }

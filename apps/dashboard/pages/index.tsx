@@ -1,54 +1,79 @@
+import tw from 'twin.macro';
+
 import DrawerContent from '@dashboard/modules/drawer/views/DrawerContent';
 import Heatmap from '@dashboard/modules/heatmap/views/Heatmap';
 import HeatmapScale from '@dashboard/modules/heatmap/views/HeatmapScale';
+import useLayoutInfo from '@dashboard/modules/layout/hooks/useLayoutInfo';
+import { LayoutInfo } from '@dashboard/modules/layout/types/types';
 import LeftDrawerLayout from '@dashboard/modules/layout/views/LeftDrawerLayout';
+import useRankingPipeline from '@dashboard/modules/ranking/hooks/useRankingPipeline';
 import RecList from '@dashboard/modules/rec-list/views/RecList';
 
 const App = () => {
   return (
     <LeftDrawerLayout
       title="Visrecly"
-      mainContent={MainContent}
+      mainContent={<MainContent />}
       drawerContent={<DrawerContent />}
     />
   );
 };
 
+const styles = {
+  mainContainer: ({
+    drawerOpen,
+    mainContentWidth,
+    appBarHeight,
+  }: LayoutInfo) => [
+    tw`bg-primary-200 flex`,
+    { height: `calc(100vh - ${appBarHeight}px)`, marginTop: appBarHeight },
+    !drawerOpen && tw`w-[100vw] max-w-[100vw]`,
+    drawerOpen && { width: mainContentWidth, maxWidth: mainContentWidth },
+  ],
+  recListContainer: ({ drawerOpen, mainContentWidth }: LayoutInfo) => [
+    tw`flex flex-col justify-between items-center border-r-2 border-primary-600`,
+    !drawerOpen && tw`w-[25vw] max-w-[25vw]`,
+    drawerOpen && {
+      width: 0.25 * mainContentWidth,
+      maxWidth: 0.25 * mainContentWidth,
+    },
+  ],
+  heatmapScaleContainer: ({ drawerOpen, mainContentWidth }: LayoutInfo) => [
+    tw`flex justify-center items-center bg-primary-200`,
+  ],
+  heatmapContainer: ({ drawerOpen, mainContentWidth }: LayoutInfo) => [
+    tw`ml-0 flex-grow flex justify-end`,
+    !drawerOpen && tw`w-[70vw] max-w-[70vw]`,
+    drawerOpen && {
+      width: 0.65 * mainContentWidth,
+      maxWidth: 0.65 * mainContentWidth,
+    },
+  ],
+};
+
 // Wrapper to handle layout normalization with the `appBarHeight`
-const MainContent = (appBarHeight: number) => {
+function MainContent() {
+  // Grab layout info for responsive styling
+  const layoutInfo = useLayoutInfo();
+
+  // Run pipeline automatically
+  useRankingPipeline();
+
   return (
-    <div
-      css={{
-        height: 'calc(100vh - ' + appBarHeight + 'px)',
-        width: '100vw',
-        marginTop: appBarHeight,
-      }}
-      className="bg-[red] flex"
-    >
-      <RecList
-        items={[...Array(20).keys()].map((idx) => (
-          <div key={`dummy-tile-${idx}`} className="p-10 bg-[aliceblue]">
-            {idx + 1}
-          </div>
-        ))}
-      />
-      <div className="flex justify-center items-center bg-blue-400">
+    <div css={styles.mainContainer(layoutInfo)}>
+      <div css={styles.recListContainer(layoutInfo)}>
+        <RecList />
+      </div>
+      <div css={styles.heatmapScaleContainer(layoutInfo)}>
         <HeatmapScale />
       </div>
-      <div className="ml-12 bg-amber-200 grow max-w-[70vw] flex justify-end">
-        <Heatmap
-          headerTiles={[...Array(25).keys()].map((idx) => ({
-            title: `Title ${idx + 1}`,
-            info: {
-              tooltip: `Tooltip ${idx + 1}`,
-              title: `Info title ${idx + 1}`,
-              description: `Description ${idx + 1}`,
-            },
-          }))}
-        />
+      {/* Spacer */}
+      <div className="flex-grow"></div>
+      <div css={styles.heatmapContainer(layoutInfo)}>
+        <Heatmap />
       </div>
     </div>
   );
-};
+}
 
 export default App;

@@ -17,8 +17,7 @@ function useLayoutDimensions() {
     drawerWidth = windowWidth;
   }
   const drawerShouldBeOpenInitially = windowWidth >= lg;
-  const remainingWidth = windowWidth - drawerWidth;
-  return { drawerWidth, drawerShouldBeOpenInitially, remainingWidth };
+  return { drawerWidth, drawerShouldBeOpenInitially };
 }
 
 export default useLayoutDimensions;
