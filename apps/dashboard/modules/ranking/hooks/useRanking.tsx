@@ -1,11 +1,17 @@
 import { useMutation } from '@tanstack/react-query';
 
 import {
+  RankedVisualization,
   RankingFunctionParams,
   RankingFunctionReturn,
+  rank,
 } from '@visrecly/ranking';
+import { ClingoError } from '@visrecly/types';
 
-import { ApiEndpoint } from '@dashboard/modules/api/types/endpoint.type';
+import {
+  ApiEndpoint,
+  BaseResponse,
+} from '@dashboard/modules/api/types/endpoint.type';
 import { baseFetch } from '@dashboard/modules/api/utils/api.utils';
 import useDraco from '@dashboard/modules/rec-input/hooks/useDraco';
 import { OmitFirst } from '@dashboard/modules/utils/types/types';
@@ -21,7 +27,20 @@ function fetchRanking(params: RankingFunctionParams) {
   });
 }
 
-function useRanking() {
+async function runRanking(
+  params: RankingFunctionParams,
+): Promise<BaseResponse<ClingoError | RankedVisualization[]>> {
+  try {
+    const result = await rank(...params);
+    return { success: true, data: result };
+  } catch (err) {
+    console.error(err);
+    const message = err.message || 'Something went wrong.';
+    return { success: false, message };
+  }
+}
+
+function useRankingNode() {
   const draco = useDraco();
   return useMutation(
     [ApiEndpoint.RunRanking],
@@ -29,6 +48,21 @@ function useRanking() {
       fetchRanking([draco, ...params]),
     {},
   );
+}
+
+function useRankingWeb() {
+  const draco = useDraco();
+  return useMutation(
+    [ApiEndpoint.RunRanking],
+    (params: OmitFirst<RankingFunctionParams>) =>
+      runRanking([draco, ...params]),
+    {},
+  );
+}
+
+function useRanking(node = false) {
+  /* eslint-disable react-hooks/rules-of-hooks */
+  return node ? useRankingNode() : useRankingWeb();
 }
 
 export default useRanking;
