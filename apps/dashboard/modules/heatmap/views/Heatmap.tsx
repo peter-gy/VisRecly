@@ -50,7 +50,7 @@ function _Heatmap({ headerTiles }: HeatmapProps) {
         ))}
       </div>
       <div className="grow flex">
-        <HeatmapSvg width={heatmapWidth} height={heatmapHeight} />
+        <HeatmapSvg tileWidth={tileWidth} tileHeight={tileHeight} />
       </div>
     </div>
   );

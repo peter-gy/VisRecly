@@ -1,3 +1,5 @@
+import { scaleQuantize } from '@visx/scale';
+
 export type ScaleSection = {
   name: string;
   range: [number, number];
@@ -10,7 +12,7 @@ const scaleSectionData: Omit<ScaleSection, 'range'>[] = [
   { name: 'Bad', color: '#ff5f52' },
 ];
 
-const scaleRange = [0, 10];
+const scaleRange = [0, 100];
 const absoluteRange = scaleRange[1] - scaleRange[0];
 const numSections = scaleSectionData.length;
 
@@ -24,3 +26,8 @@ export const scaleSections: ScaleSection[] = scaleSectionData.map(
     ],
   }),
 );
+
+export const colorScale = scaleQuantize<string>({
+  domain: [scaleRange[0], scaleRange[1]],
+  range: scaleSections.map(({ color }) => color),
+});
