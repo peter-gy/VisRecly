@@ -1,6 +1,6 @@
 import { BaseResponse } from '@dashboard/modules/api/types/endpoint.type';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL + '/api';
+const baseUrl = '/api';
 
 function constructFetchUrl(
   baseUrl: string,
