@@ -1,5 +1,7 @@
 import { VisTask } from '@visrecly/vis-tasks';
 
+import { RecSelectionStatus } from '@dashboard/modules/rec-selection/types/types';
+
 /**
  * Heatmap column type.
  *
@@ -8,8 +10,6 @@ import { VisTask } from '@visrecly/vis-tasks';
  * to access costs.
  */
 export type ColumnType = VisTask['name'];
-
-export type HeatmapCellState = 'normal' | 'highlighted' | 'faded';
 
 /**
  * Heatmap tile (== cell == bin) type.
@@ -21,5 +21,5 @@ export type BinType = {
   rank: number;
   cost: number;
   normalizedCost: number;
-  state: HeatmapCellState;
+  selectionStatus: RecSelectionStatus;
 };

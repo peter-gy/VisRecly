@@ -16,6 +16,7 @@ import useRecListDimensions from '@dashboard/modules/rec-list/hooks/useRecListDi
 import RecListItem from '@dashboard/modules/rec-list/views/RecListItem';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
+import { determineSelectionStatus } from '@dashboard/modules/rec-selection/utils/utils';
 import { RankedVisualizationExplicit } from '@dashboard/modules/utils/types/types';
 
 const styles = {
@@ -33,7 +34,10 @@ const styles = {
 };
 
 function RecList() {
-  const { dispatch: recSelectionDispatch } = useRecSelection();
+  const {
+    state: { activeRec },
+    dispatch: recSelectionDispatch,
+  } = useRecSelection();
   const handleItemMouseEnter = (vis: RankedVisualizationExplicit) => {
     recSelectionDispatch({ type: 'setActiveRec', data: vis });
   };
@@ -74,6 +78,10 @@ function RecList() {
         height={recListItemHeight}
         onMouseEnter={() => handleItemMouseEnter({ ...e, rank: idx })}
         onMouseLeave={() => handleItemMouseLeave({ ...e, rank: idx })}
+        selectionStatus={determineSelectionStatus(activeRec, {
+          ...e,
+          rank: idx,
+        })}
       />
     ));
     if (items.length === 0) {

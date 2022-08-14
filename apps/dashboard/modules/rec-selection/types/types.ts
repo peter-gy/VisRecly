@@ -13,3 +13,5 @@ export type RecSelectionState = {
    */
   activeRec?: RankedVisualizationExplicit;
 };
+
+export type RecSelectionStatus = 'normal' | 'highlighted' | 'faded';

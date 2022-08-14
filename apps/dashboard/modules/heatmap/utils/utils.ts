@@ -15,6 +15,6 @@ export function binsFromVisArray(visArray: RankedVisualization[]) {
       rank: idx,
       cost: aggregatedCosts[visTaskName],
       normalizedCost: normalizeCost(aggregatedCosts[visTaskName]),
-      state: 'normal',
+      selectionStatus: 'normal',
     }));
 }
