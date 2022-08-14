@@ -1,6 +1,7 @@
 import { HeatmapRect } from '@visx/heatmap';
 import { scaleLinear } from '@visx/scale';
 import { useState } from 'react';
+import tw, { theme } from 'twin.macro';
 
 import { RankedVisualization } from '@visrecly/ranking';
 
@@ -15,6 +16,8 @@ import {
 import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
+import { RecSelectionStatus } from '@dashboard/modules/rec-selection/types/types';
+import { determineSelectionStatus } from '@dashboard/modules/rec-selection/utils/utils';
 
 type HeatmapSvgProps = {
   visArray: RankedVisualization[];
@@ -54,7 +57,19 @@ function HeatmapSvg({
   );
 }
 
+const styles = {
+  rect: ({ selectionStatus }: { selectionStatus: RecSelectionStatus }) => [
+    tw`cursor-pointer transition-all duration-300 hover:stroke-[2.5px]`,
+    selectionStatus === 'highlighted' && {
+      stroke: theme`colors.primary.800`,
+      ...tw`stroke-[0px]`,
+    },
+    selectionStatus === 'faded' && tw`opacity-50 grayscale-[100%]`,
+  ],
+};
+
 function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
+  const { state: recSelectionState } = useRecSelection();
   const [selectedVis, setSelectedVis] = useState<RankedVisualization | null>(
     null,
   );
@@ -85,7 +100,7 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
       <svg width={width} height={height} overflow="visible">
         <HeatmapRect<ColumnType, BinType>
           data={visTaskNames}
-          bins={binsFromVisArray(visArray)}
+          bins={binsFromVisArray(visArray, recSelectionState)}
           xScale={xScale}
           yScale={yScale}
           binWidth={tileWidth}
@@ -96,7 +111,13 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
               heatmapBins.map((bin) => (
                 <rect
                   key={`heatmap-rect-${bin.row}-${bin.column}`}
-                  className="visx-heatmap-rect cursor-pointer transition-all duration-300 hover:stroke-2 hover:stroke-primary-900"
+                  className="visx-heatmap-rect"
+                  css={styles.rect({
+                    selectionStatus: determineSelectionStatus(
+                      recSelectionState.activeRec,
+                      { ...visArray[bin.bin.rank], rank: bin.bin.rank },
+                    ),
+                  })}
                   width={bin.width}
                   height={bin.height}
                   x={bin.x}
