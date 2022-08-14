@@ -10,6 +10,8 @@ type RecListItemProps = {
   rankedVisualization: RankedVisualization;
   width: number;
   height: number;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
 function RecListItem({
@@ -17,6 +19,8 @@ function RecListItem({
   rankedVisualization,
   width,
   height,
+  onMouseEnter,
+  onMouseLeave,
 }: RecListItemProps) {
   const [isOpen, setIsOpen] = useState(false);
   const handleClickOpen = () => {
@@ -36,6 +40,8 @@ function RecListItem({
           height: height,
           maxHeight: height,
         }}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
         <RankIndicator rank={rank} />
         <ChartItem spec={rankedVisualization.vegaLiteSpec} />

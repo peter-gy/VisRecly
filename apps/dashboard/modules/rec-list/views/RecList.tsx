@@ -15,6 +15,8 @@ import LoadingIndicator from '@dashboard/modules/components/loading-indicator/vi
 import useRecListDimensions from '@dashboard/modules/rec-list/hooks/useRecListDimensions';
 import RecListItem from '@dashboard/modules/rec-list/views/RecListItem';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
+import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
+import { RankedVisualizationExplicit } from '@dashboard/modules/utils/types/types';
 
 const styles = {
   listViewContainer: ({
@@ -31,6 +33,14 @@ const styles = {
 };
 
 function RecList() {
+  const { dispatch: recSelectionDispatch } = useRecSelection();
+  const handleItemMouseEnter = (vis: RankedVisualizationExplicit) => {
+    recSelectionDispatch({ type: 'setActiveRec', data: vis });
+  };
+  const handleItemMouseLeave = (_: RankedVisualizationExplicit) => {
+    recSelectionDispatch({ type: 'setActiveRec', data: undefined });
+  };
+
   let component: ReactNode;
   const { recListItemWidth, recListItemHeight } = useRecListDimensions();
   const {
@@ -62,6 +72,8 @@ function RecList() {
         rankedVisualization={e}
         width={recListItemWidth}
         height={recListItemHeight}
+        onMouseEnter={() => handleItemMouseEnter({ ...e, rank: idx })}
+        onMouseLeave={() => handleItemMouseLeave({ ...e, rank: idx })}
       />
     ));
     if (items.length === 0) {
