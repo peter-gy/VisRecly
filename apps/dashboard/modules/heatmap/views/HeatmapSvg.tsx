@@ -102,9 +102,9 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
                   fillOpacity={bin.opacity}
                   onClick={() => {
                     const {
-                      bin: { idx },
+                      bin: { rank },
                     } = bin;
-                    const vis = visArray[idx];
+                    const vis = visArray[rank];
                     setSelectedVis(vis);
                     setDetailOpen(true);
                   }}
