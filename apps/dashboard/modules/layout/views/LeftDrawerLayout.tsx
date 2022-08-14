@@ -49,7 +49,7 @@ function LeftDrawerLayout({
   drawerProps = {},
   drawerWidth,
 }: LeftDrawerLayoutProps) {
-  const { dispatch: layoutDispatch } = useLayout();
+  const { state: {drawerOpen}, dispatch: layoutDispatch } = useLayout();
 
   // Set the drawer width
   const { drawerWidth: responsiveDrawerWidth, drawerShouldBeOpenInitially } =
@@ -121,6 +121,11 @@ function LeftDrawerLayout({
   useLayoutEffect(() => {
     layoutDispatch({ type: 'setDrawerOpen', data: open });
   }, [layoutDispatch, open]);
+
+  // bidirectional sync
+  useLayoutEffect(() => {
+    setOpen(drawerOpen);
+  }, [drawerOpen, setOpen]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
