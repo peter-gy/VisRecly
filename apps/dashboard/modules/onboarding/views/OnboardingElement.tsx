@@ -11,7 +11,7 @@ function OnboardingElement() {
   };
 
   useEffect(() => {
-    const onStorageChange = (event) => {
+    const onStorageChange = () => {
       setEnabled(true, false);
     };
     window.addEventListener('storageChange', onStorageChange);

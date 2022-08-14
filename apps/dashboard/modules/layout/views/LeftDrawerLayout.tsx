@@ -1,9 +1,9 @@
+import dynamic from 'next/dynamic';
 import { ReactNode, useState } from 'react';
 
 import { GitHub } from '@mui/icons-material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import HelpIcon from '@mui/icons-material/Help';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -20,11 +20,15 @@ import useLayoutEffect from '@dashboard/hooks/useIsomorphicLayoutEffect';
 import useMuiAppBarHeight from '@dashboard/hooks/useMuiAppBarHeight';
 import useLayoutDimensions from '@dashboard/modules/layout/hooks/useLayoutDimensions';
 import { useLayout } from '@dashboard/modules/layout/provider/LayoutContext';
-import useOnboardingEnabled from '@dashboard/modules/onboarding/hooks/useOnboardingEnabled';
 import {
   OnboardingSection,
   onboardingStep,
 } from '@dashboard/modules/onboarding/utils/utils';
+
+const OnboardingInfoButton = dynamic(
+  () => import('@dashboard/modules/onboarding/views/OnboardingInfoButton'),
+  { ssr: false },
+);
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -126,11 +130,6 @@ function LeftDrawerLayout({
     setOpen(false);
   };
 
-  const setOnboardingEnabled = useOnboardingEnabled()[1];
-  const handleInfoButtonClick = () => {
-    setOnboardingEnabled(true);
-  };
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -157,12 +156,7 @@ function LeftDrawerLayout({
               </Typography>
             </div>
             <div className="hidden sm:flex space-x-4 justify-center items-center">
-              <IconButton
-                id={onboardingStep(OnboardingSection.AppInfo)}
-                onClick={handleInfoButtonClick}
-              >
-                <HelpIcon className="text-white" />
-              </IconButton>
+              <OnboardingInfoButton />
               <a
                 href="https://github.com/peter-gy/visrecly"
                 target="_blank"
