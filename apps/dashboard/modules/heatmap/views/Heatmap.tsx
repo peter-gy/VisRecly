@@ -1,10 +1,11 @@
-import { TASKS } from '@visrecly/vis-tasks';
+import { TASKS, VisTask } from '@visrecly/vis-tasks';
 
 import useHeatmapDimensions from '@dashboard/modules/heatmap/hooks/useHeatmapDimensions';
 import HeatmapHeaderTile, {
   HeatmapHeaderTileProps,
 } from '@dashboard/modules/heatmap/views/HeatmapHeaderTile';
 import HeatmapSvg from '@dashboard/modules/heatmap/views/HeatmapSvg';
+import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
 
 type HeatmapProps = {
   headerTiles: Omit<HeatmapHeaderTileProps, 'onVisibilityChange'>[];
@@ -25,6 +26,14 @@ function Heatmap() {
 }
 
 function _Heatmap({ headerTiles }: HeatmapProps) {
+  const { dispatch: recSelectionDispatch } = useRecSelection();
+  const handleTaskToggle = (taskName: VisTask['name']) => {
+    recSelectionDispatch({
+      type: 'toggleTask',
+      data: taskName,
+    });
+  };
+
   const { tileWidth, tileHeight, numVisibleTiles } = useHeatmapDimensions();
   return (
     <div
@@ -37,9 +46,9 @@ function _Heatmap({ headerTiles }: HeatmapProps) {
             key={`heatmap-header-tile-${idx}`}
             title={title}
             info={info}
-            onVisibilityChange={console.log}
             width={tileWidth}
             height={tileHeight}
+            onVisibilityChange={(_) => handleTaskToggle(title)}
           />
         ))}
       </div>

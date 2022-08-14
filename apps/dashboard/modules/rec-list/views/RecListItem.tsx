@@ -1,15 +1,39 @@
 import { useState } from 'react';
 import { VegaLite } from 'react-vega';
+import tw from 'twin.macro';
 
 import { RankedVisualization } from '@visrecly/ranking';
 
 import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
+import { RecSelectionStatus } from '@dashboard/modules/rec-selection/types/types';
 
 type RecListItemProps = {
   rank: number;
   rankedVisualization: RankedVisualization;
   width: number;
   height: number;
+  selectionStatus: RecSelectionStatus;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+};
+
+const styles = {
+  recListItem: ({
+    width,
+    height,
+    selectionStatus,
+  }: {
+    width: number;
+    height: number;
+    selectionStatus: RecSelectionStatus;
+  }) => [
+    { width: width, maxWidth: width, height: height, maxHeight: height },
+    tw`flex justify-start items-center bg-white space-x-4 px-2 cursor-pointer rounded-md`,
+    tw`transition-all duration-300 border-2 border-primary-700`,
+    selectionStatus === 'highlighted' && tw`scale-[1.00] border-primary-700`,
+    selectionStatus === 'faded' &&
+      tw`scale-[0.9] grayscale-[100%] opacity-[0.3]`,
+  ],
 };
 
 function RecListItem({
@@ -17,6 +41,9 @@ function RecListItem({
   rankedVisualization,
   width,
   height,
+  selectionStatus,
+  onMouseEnter,
+  onMouseLeave,
 }: RecListItemProps) {
   const [isOpen, setIsOpen] = useState(false);
   const handleClickOpen = () => {
@@ -28,14 +55,10 @@ function RecListItem({
   return (
     <>
       <div
-        className="flex justify-start items-center bg-white space-x-4 px-2 cursor-pointer rounded-md transition-all duration-300 hover:scale-[1.025] border-2 border-primary-700"
         onClick={handleClickOpen}
-        css={{
-          width: width,
-          maxWidth: width,
-          height: height,
-          maxHeight: height,
-        }}
+        css={styles.recListItem({ width, height, selectionStatus })}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
         <RankIndicator rank={rank} />
         <ChartItem spec={rankedVisualization.vegaLiteSpec} />

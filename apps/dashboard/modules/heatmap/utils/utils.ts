@@ -1,7 +1,9 @@
 import { RankedVisualization } from '@visrecly/ranking';
 
 import { normalizeCost } from '@dashboard/modules/heatmap/beans/scale';
-import { ColumnType } from '@dashboard/modules/heatmap/types/types';
+import { BinType, ColumnType } from '@dashboard/modules/heatmap/types/types';
+import { RecSelectionState } from '@dashboard/modules/rec-selection/types/types';
+import { determineSelectionStatus } from '@dashboard/modules/rec-selection/utils/utils';
 
 export function columnsFromVisArray(
   visArray: RankedVisualization[],
@@ -9,11 +11,21 @@ export function columnsFromVisArray(
   return Object.keys(visArray[0].aggregatedCosts);
 }
 
-export function binsFromVisArray(visArray: RankedVisualization[]) {
+export function binsFromVisArray(
+  visArray: RankedVisualization[],
+  recSelectionState: RecSelectionState,
+) {
+  const { activeRec, activeTasks } = recSelectionState;
   return (visTaskName) =>
-    visArray.map(({ aggregatedCosts }, idx) => ({
-      idx,
-      cost: aggregatedCosts[visTaskName],
-      normalizedCost: normalizeCost(aggregatedCosts[visTaskName]),
-    }));
+    visArray.map<BinType>((rec, idx) => {
+      const selectionStatus = activeTasks.includes(visTaskName)
+        ? determineSelectionStatus(activeRec, { ...rec, rank: idx })
+        : 'faded';
+      return {
+        rank: idx,
+        cost: rec.aggregatedCosts[visTaskName],
+        normalizedCost: normalizeCost(rec.aggregatedCosts[visTaskName]),
+        selectionStatus: selectionStatus,
+      };
+    });
 }
