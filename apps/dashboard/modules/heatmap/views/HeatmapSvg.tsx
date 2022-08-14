@@ -17,7 +17,6 @@ import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
 import { RecSelectionStatus } from '@dashboard/modules/rec-selection/types/types';
-import { determineSelectionStatus } from '@dashboard/modules/rec-selection/utils/utils';
 
 type HeatmapSvgProps = {
   visArray: RankedVisualization[];
@@ -69,7 +68,6 @@ const styles = {
 };
 
 function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
-  const { state: recSelectionState } = useRecSelection();
   const [selectedVis, setSelectedVis] = useState<RankedVisualization | null>(
     null,
   );
@@ -92,9 +90,8 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
     domain: [0, numRecommendations],
     range: [0, height],
   });
-
-  const { dispatch: recSelectionDispatch } = useRecSelection();
-
+  const { state: recSelectionState, dispatch: recSelectionDispatch } =
+    useRecSelection();
   return (
     <>
       <svg width={width} height={height} overflow="visible">
@@ -113,10 +110,7 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
                   key={`heatmap-rect-${bin.row}-${bin.column}`}
                   className="visx-heatmap-rect"
                   css={styles.rect({
-                    selectionStatus: determineSelectionStatus(
-                      recSelectionState.activeRec,
-                      { ...visArray[bin.bin.rank], rank: bin.bin.rank },
-                    ),
+                    selectionStatus: bin.bin.selectionStatus,
                   })}
                   width={bin.width}
                   height={bin.height}

@@ -15,12 +15,12 @@ export function binsFromVisArray(
   visArray: RankedVisualization[],
   recSelectionState: RecSelectionState,
 ) {
+  const { activeRec, activeTasks } = recSelectionState;
   return (visTaskName) =>
     visArray.map<BinType>((rec, idx) => {
-      const selectionStatus = determineSelectionStatus(
-        recSelectionState.activeRec,
-        { ...rec, rank: idx },
-      );
+      const selectionStatus = activeTasks.includes(visTaskName)
+        ? determineSelectionStatus(activeRec, { ...rec, rank: idx })
+        : 'faded';
       return {
         rank: idx,
         cost: rec.aggregatedCosts[visTaskName],
