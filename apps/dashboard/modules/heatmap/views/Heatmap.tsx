@@ -5,6 +5,10 @@ import HeatmapHeaderTile, {
   HeatmapHeaderTileProps,
 } from '@dashboard/modules/heatmap/views/HeatmapHeaderTile';
 import HeatmapSvg from '@dashboard/modules/heatmap/views/HeatmapSvg';
+import {
+  OnboardingSection,
+  onboardingStep,
+} from '@dashboard/modules/onboarding/utils/utils';
 import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
 
 type HeatmapProps = {
@@ -37,10 +41,14 @@ function _Heatmap({ headerTiles }: HeatmapProps) {
   const { tileWidth, tileHeight, numVisibleTiles } = useHeatmapDimensions();
   return (
     <div
+      id={onboardingStep(OnboardingSection.Heatmap)}
       className="bg-primary-100 h-full w-full flex flex-col overflow-auto drop-shadow-2xl"
       style={{ maxWidth: numVisibleTiles * tileWidth }}
     >
-      <div className="flex">
+      <div
+        id={onboardingStep(OnboardingSection.HeatmapHeader)}
+        className="flex"
+      >
         {headerTiles.map(({ title, info }, idx) => (
           <HeatmapHeaderTile
             key={`heatmap-header-tile-${idx}`}

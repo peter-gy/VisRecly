@@ -3,6 +3,7 @@ import { ReactNode, useState } from 'react';
 import { GitHub } from '@mui/icons-material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import HelpIcon from '@mui/icons-material/Help';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -19,6 +20,10 @@ import useLayoutEffect from '@dashboard/hooks/useIsomorphicLayoutEffect';
 import useMuiAppBarHeight from '@dashboard/hooks/useMuiAppBarHeight';
 import useLayoutDimensions from '@dashboard/modules/layout/hooks/useLayoutDimensions';
 import { useLayout } from '@dashboard/modules/layout/provider/LayoutContext';
+import {
+  OnboardingSection,
+  onboardingStep,
+} from '@dashboard/modules/onboarding/utils/utils';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -136,11 +141,19 @@ function LeftDrawerLayout({
               >
                 <SettingsIcon />
               </IconButton>
-              <Typography id="app-title" variant="h6" noWrap component="div">
+              <Typography
+                id={onboardingStep(OnboardingSection.AppTitle)}
+                variant="h6"
+                noWrap
+                component="div"
+              >
                 <div className="text-sm md:text-lg">{title}</div>
               </Typography>
             </div>
-            <div className="hidden sm:block">
+            <div className="hidden sm:flex space-x-4 justify-center items-center">
+              <IconButton id={onboardingStep(OnboardingSection.AppInfo)}>
+                <HelpIcon className="text-white" />
+              </IconButton>
               <a
                 href="https://github.com/peter-gy/visrecly"
                 target="_blank"

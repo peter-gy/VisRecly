@@ -7,6 +7,10 @@ import HeatmapScale from '@dashboard/modules/heatmap/views/HeatmapScale';
 import useLayoutInfo from '@dashboard/modules/layout/hooks/useLayoutInfo';
 import { LayoutInfo } from '@dashboard/modules/layout/types/types';
 import LeftDrawerLayout from '@dashboard/modules/layout/views/LeftDrawerLayout';
+import {
+  OnboardingSection,
+  onboardingStep,
+} from '@dashboard/modules/onboarding/utils/utils';
 import useRankingPipeline from '@dashboard/modules/ranking/hooks/useRankingPipeline';
 import RecList from '@dashboard/modules/rec-list/views/RecList';
 
@@ -69,18 +73,18 @@ function MainContent() {
     <>
       <OnboardingElement />
       <div css={styles.mainContainer(layoutInfo)}>
-        <div id={RecList.name} css={styles.recListContainer(layoutInfo)}>
+        <div
+          id={onboardingStep(OnboardingSection.RecList)}
+          css={styles.recListContainer(layoutInfo)}
+        >
           <RecList />
         </div>
-        <div
-          id={HeatmapScale.name}
-          css={styles.heatmapScaleContainer(layoutInfo)}
-        >
+        <div css={styles.heatmapScaleContainer(layoutInfo)}>
           <HeatmapScale />
         </div>
         {/* Spacer */}
         <div className="flex-grow"></div>
-        <div id={Heatmap.name} css={styles.heatmapContainer(layoutInfo)}>
+        <div css={styles.heatmapContainer(layoutInfo)}>
           <Heatmap />
         </div>
       </div>

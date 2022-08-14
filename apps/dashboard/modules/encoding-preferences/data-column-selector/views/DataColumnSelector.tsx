@@ -6,6 +6,10 @@ import { Snackbar } from '@mui/material';
 import { Alert } from '@dashboard/modules/components/alert-message/views/AlertMessage';
 import { snakeCaseToHumanCase } from '@dashboard/modules/encoding-preferences/data-column-selector/utils/utils';
 import DataColumnTypeIcon from '@dashboard/modules/encoding-preferences/data-column-selector/views/DataColumnTypeIcon';
+import {
+  OnboardingSection,
+  onboardingStep,
+} from '@dashboard/modules/onboarding/utils/utils';
 import { useRecInput } from '@dashboard/modules/rec-input/provider/RecInputContext';
 import { DataColumn as DataColumnType } from '@dashboard/modules/rec-input/types/types';
 
@@ -67,7 +71,10 @@ function _DataColumnSelector({
   };
 
   return (
-    <div className="flex flex-col">
+    <div
+      id={onboardingStep(OnboardingSection.DataColumnSelector)}
+      className="flex flex-col"
+    >
       {availableDataColumns.map(({ name, type }) => {
         const isSelected =
           selectedDataColumns.find((col) => col.name === name) !== undefined;
