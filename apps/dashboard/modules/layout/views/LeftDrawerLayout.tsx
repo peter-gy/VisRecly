@@ -136,7 +136,7 @@ function LeftDrawerLayout({
               >
                 <SettingsIcon />
               </IconButton>
-              <Typography variant="h6" noWrap component="div">
+              <Typography id="app-title" variant="h6" noWrap component="div">
                 <div className="text-sm md:text-lg">{title}</div>
               </Typography>
             </div>

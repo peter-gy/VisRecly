@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import tw from 'twin.macro';
 
 import DrawerContent from '@dashboard/modules/drawer/views/DrawerContent';
@@ -8,6 +9,11 @@ import { LayoutInfo } from '@dashboard/modules/layout/types/types';
 import LeftDrawerLayout from '@dashboard/modules/layout/views/LeftDrawerLayout';
 import useRankingPipeline from '@dashboard/modules/ranking/hooks/useRankingPipeline';
 import RecList from '@dashboard/modules/rec-list/views/RecList';
+
+const OnboardingElement = dynamic(
+  () => import('@dashboard/modules/onboarding/views/OnboardingElement'),
+  { ssr: false },
+);
 
 const App = () => {
   return (
@@ -60,19 +66,25 @@ function MainContent() {
   useRankingPipeline();
 
   return (
-    <div css={styles.mainContainer(layoutInfo)}>
-      <div css={styles.recListContainer(layoutInfo)}>
-        <RecList />
+    <>
+      <OnboardingElement />
+      <div css={styles.mainContainer(layoutInfo)}>
+        <div id={RecList.name} css={styles.recListContainer(layoutInfo)}>
+          <RecList />
+        </div>
+        <div
+          id={HeatmapScale.name}
+          css={styles.heatmapScaleContainer(layoutInfo)}
+        >
+          <HeatmapScale />
+        </div>
+        {/* Spacer */}
+        <div className="flex-grow"></div>
+        <div id={Heatmap.name} css={styles.heatmapContainer(layoutInfo)}>
+          <Heatmap />
+        </div>
       </div>
-      <div css={styles.heatmapScaleContainer(layoutInfo)}>
-        <HeatmapScale />
-      </div>
-      {/* Spacer */}
-      <div className="flex-grow"></div>
-      <div css={styles.heatmapContainer(layoutInfo)}>
-        <Heatmap />
-      </div>
-    </div>
+    </>
   );
 }
 

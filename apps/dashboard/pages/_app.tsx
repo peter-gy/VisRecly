@@ -1,6 +1,7 @@
 import { cache } from '@emotion/css';
 import { CacheProvider } from '@emotion/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import 'intro.js/introjs.css';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 
