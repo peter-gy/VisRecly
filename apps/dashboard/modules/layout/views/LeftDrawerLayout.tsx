@@ -49,7 +49,10 @@ function LeftDrawerLayout({
   drawerProps = {},
   drawerWidth,
 }: LeftDrawerLayoutProps) {
-  const { state: {drawerOpen}, dispatch: layoutDispatch } = useLayout();
+  const {
+    state: { drawerOpen },
+    dispatch: layoutDispatch,
+  } = useLayout();
 
   // Set the drawer width
   const { drawerWidth: responsiveDrawerWidth, drawerShouldBeOpenInitially } =

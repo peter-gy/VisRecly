@@ -10,11 +10,18 @@ import {
 import { sleep } from '@dashboard/modules/utils/functions/functions';
 
 function OnboardingInfoButton() {
-  const { dispatch: layoutDispatch } = useLayout();
+  const {
+    state: { drawerOpen },
+    dispatch: layoutDispatch,
+  } = useLayout();
   const setOnboardingEnabled = useOnboardingEnabled()[1];
   const handleInfoButtonClick = () => {
-    layoutDispatch({ type: 'setDrawerOpen', data: true });
-    sleep(750).then(() => setOnboardingEnabled(true));
+    if (!drawerOpen) {
+      layoutDispatch({ type: 'setDrawerOpen', data: true });
+      sleep(750).then(() => setOnboardingEnabled(true));
+    } else {
+      setOnboardingEnabled(true);
+    }
   };
   return (
     <IconButton
