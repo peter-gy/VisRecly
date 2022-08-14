@@ -1,18 +1,31 @@
 import { Steps } from 'intro.js-react';
+import { useEffect } from 'react';
 
 import { initialStep, steps } from '@dashboard/modules/onboarding/beans/beans';
+import useOnboardingEnabled from '@dashboard/modules/onboarding/hooks/useOnboardingEnabled';
 
 function OnboardingElement() {
+  const [enabled, setEnabled] = useOnboardingEnabled();
   const handleExit = () => {
-    console.log('exit intro');
+    setEnabled(false, false);
   };
+
+  useEffect(() => {
+    const onStorageChange = (event) => {
+      setEnabled(true, false);
+    };
+    window.addEventListener('storageChange', onStorageChange);
+    return () => window.removeEventListener('storageChange', onStorageChange);
+  }, [setEnabled]);
+
   return (
     <>
       <Steps
         initialStep={initialStep}
         steps={steps}
+        enabled={enabled}
         onExit={handleExit}
-        enabled={true}
+        onComplete={handleExit}
       />
     </>
   );

@@ -20,6 +20,7 @@ import useLayoutEffect from '@dashboard/hooks/useIsomorphicLayoutEffect';
 import useMuiAppBarHeight from '@dashboard/hooks/useMuiAppBarHeight';
 import useLayoutDimensions from '@dashboard/modules/layout/hooks/useLayoutDimensions';
 import { useLayout } from '@dashboard/modules/layout/provider/LayoutContext';
+import useOnboardingEnabled from '@dashboard/modules/onboarding/hooks/useOnboardingEnabled';
 import {
   OnboardingSection,
   onboardingStep,
@@ -125,6 +126,11 @@ function LeftDrawerLayout({
     setOpen(false);
   };
 
+  const setOnboardingEnabled = useOnboardingEnabled()[1];
+  const handleInfoButtonClick = () => {
+    setOnboardingEnabled(true);
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -151,7 +157,10 @@ function LeftDrawerLayout({
               </Typography>
             </div>
             <div className="hidden sm:flex space-x-4 justify-center items-center">
-              <IconButton id={onboardingStep(OnboardingSection.AppInfo)}>
+              <IconButton
+                id={onboardingStep(OnboardingSection.AppInfo)}
+                onClick={handleInfoButtonClick}
+              >
                 <HelpIcon className="text-white" />
               </IconButton>
               <a
