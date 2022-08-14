@@ -2,6 +2,10 @@ import { Group } from '@visx/group';
 import { scaleLinear } from '@visx/scale';
 
 import { scaleSections } from '@dashboard/modules/heatmap/beans/scale';
+import {
+  OnboardingSection,
+  onboardingStep,
+} from '@dashboard/modules/onboarding/utils/utils';
 
 function HeatmapScale() {
   const [width, height] = [50, 500];
@@ -18,7 +22,11 @@ function HeatmapScale() {
   });
   return (
     <div className="bg-primary-100 rounded-r-lg shadow-inner">
-      <svg width={1.75 * width} height={1.1 * height}>
+      <svg
+        id={onboardingStep(OnboardingSection.HeatmapScale)}
+        width={1.75 * width}
+        height={1.1 * height}
+      >
         <Group transform={`translate(0, ${0.05 * height})`}>
           {scaleSections.map(({ name, color, range }, idx) => (
             <ScaleSectionRect

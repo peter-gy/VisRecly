@@ -9,6 +9,10 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 
+import {
+  OnboardingSection,
+  onboardingStep,
+} from '@dashboard/modules/onboarding/utils/utils';
 import { useRecInput } from '@dashboard/modules/rec-input/provider/RecInputContext';
 
 function DataSetSelector() {
@@ -49,7 +53,7 @@ function _DataSetSelector({
     }
   };
   return (
-    <FormControl>
+    <FormControl id={onboardingStep(OnboardingSection.DataSetSelector)}>
       <InputLabel>Dataset</InputLabel>
       <Select
         label="Dataset"
