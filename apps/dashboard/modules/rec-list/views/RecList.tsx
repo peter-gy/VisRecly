@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import tw from 'twin.macro';
 
 import { RankedVisualization } from '@visrecly/ranking';
@@ -13,10 +13,12 @@ import {
 import InfoDialogButton from '@dashboard/modules/components/info-dialog-button/views/InfoDialogButton';
 import LoadingIndicator from '@dashboard/modules/components/loading-indicator/views/LoadingIndicator';
 import useRecListDimensions from '@dashboard/modules/rec-list/hooks/useRecListDimensions';
+import { recListItemId } from '@dashboard/modules/rec-list/utils/utils';
 import RecListItem from '@dashboard/modules/rec-list/views/RecListItem';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
 import { determineSelectionStatus } from '@dashboard/modules/rec-selection/utils/utils';
+import { isInViewport } from '@dashboard/modules/utils/functions/functions';
 import { RankedVisualizationExplicit } from '@dashboard/modules/utils/types/types';
 
 const styles = {
@@ -96,6 +98,21 @@ function RecList() {
       component = <RecListView items={items} />;
     }
   }
+
+  const activeRank = activeRec?.rank;
+  useEffect(() => {
+    if (activeRank !== undefined) {
+      const itemId = recListItemId(activeRank);
+      const itemElement = document.getElementById(itemId);
+      if (
+        itemElement &&
+        !isInViewport(itemElement, -1.25 * recListItemHeight)
+      ) {
+        itemElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [activeRank, recListItemHeight]);
+
   return (
     <>
       <RecListHeader />

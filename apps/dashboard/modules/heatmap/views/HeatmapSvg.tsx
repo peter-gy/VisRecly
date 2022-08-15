@@ -12,6 +12,7 @@ import { BinType, ColumnType } from '@dashboard/modules/heatmap/types/types';
 import {
   binsFromVisArray,
   columnsFromVisArray,
+  heatmapRectId,
 } from '@dashboard/modules/heatmap/utils/utils';
 import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
@@ -107,7 +108,8 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
             heatmap.map((heatmapBins) =>
               heatmapBins.map((bin) => (
                 <rect
-                  key={`heatmap-rect-${bin.row}-${bin.column}`}
+                  key={heatmapRectId(bin.row, bin.column)}
+                  id={heatmapRectId(bin.row, bin.column)}
                   className="visx-heatmap-rect"
                   css={styles.rect({
                     selectionStatus: bin.bin.selectionStatus,

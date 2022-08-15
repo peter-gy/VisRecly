@@ -5,6 +5,7 @@ import tw from 'twin.macro';
 import { RankedVisualization } from '@visrecly/ranking';
 
 import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
+import { recListItemId } from '@dashboard/modules/rec-list/utils/utils';
 import { RecSelectionStatus } from '@dashboard/modules/rec-selection/types/types';
 
 type RecListItemProps = {
@@ -55,6 +56,7 @@ function RecListItem({
   return (
     <>
       <div
+        id={recListItemId(rank)}
         onClick={handleClickOpen}
         css={styles.recListItem({ width, height, selectionStatus })}
         onMouseEnter={onMouseEnter}

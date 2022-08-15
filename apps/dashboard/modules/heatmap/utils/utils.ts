@@ -29,3 +29,7 @@ export function binsFromVisArray(
       };
     });
 }
+
+export function heatmapRectId(row: number, column: number) {
+  return `heatmap-rect-${row}-${column}`;
+}
