@@ -136,10 +136,14 @@ function RecListHeader() {
       <InfoDialogButton
         tooltip="How to interpret this?"
         title="Overall Rankings"
-        description={`
-        Each recommendation is displayed in this column.
-        The higher a given visualization appears in the list, the more relevant it is overall.
-        `}
+        description={
+          <p>
+            Each recommendation is displayed in this column.
+            <br />
+            The higher a given visualization appears in the list, the more
+            relevant it is overall.
+          </p>
+        }
       />
     </div>
   );

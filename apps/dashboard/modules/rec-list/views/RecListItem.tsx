@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { VegaLite } from 'react-vega';
 import tw from 'twin.macro';
 
-import { RankedVisualization } from '@visrecly/ranking';
+import { RankedVisualizationExplicit } from '@visrecly/ranking';
 
 import { colorScale } from '@dashboard/modules/heatmap/beans/scale';
 import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
@@ -11,7 +11,7 @@ import { RecSelectionStatus } from '@dashboard/modules/rec-selection/types/types
 
 type RecListItemProps = {
   rank: number;
-  rankedVisualization: RankedVisualization;
+  rankedVisualization: RankedVisualizationExplicit;
   width: number;
   height: number;
   selectionStatus: RecSelectionStatus;
@@ -87,7 +87,7 @@ function RankIndicator({
 }: RankIndicatorProps) {
   return (
     <div
-      className="w-[40px] h-[40px] border-[1px] rounded-lg flex justify-center items-center"
+      className="w-[40px] h-[40px] border-[1px] rounded-lg flex justify-center items-center flex-grow md:flex-grow-0"
       style={{ backgroundColor }}
     >
       {rank}
@@ -101,7 +101,7 @@ type ChartItemProps = {
 
 function ChartItem({ spec }: ChartItemProps) {
   return (
-    <div className="w-full h-full overflow-auto">
+    <div className="hidden md:w-full md:h-full md:overflow-auto md:block">
       <VegaLite spec={spec} actions={false} />
     </div>
   );

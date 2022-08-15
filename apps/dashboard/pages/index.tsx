@@ -49,7 +49,7 @@ const styles = {
     },
   ],
   heatmapScaleContainer: ({ drawerOpen, mainContentWidth }: LayoutInfo) => [
-    tw`flex justify-center items-center bg-primary-200`,
+    tw`bg-primary-200 hidden md:flex md:justify-center md:items-center`,
   ],
   heatmapContainer: ({ drawerOpen, mainContentWidth }: LayoutInfo) => [
     tw`ml-0 flex-grow flex justify-end`,

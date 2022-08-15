@@ -10,7 +10,7 @@ function useRecListDimensions() {
     ? 0.25 * mainContentWidth
     : 0.25 * windowWidth;
   const recListItemWidth =
-    windowWidth < lg ? 0.6 * recListWidth : 0.85 * recListWidth;
+    windowWidth < lg ? 0.6 * recListWidth : 0.75 * recListWidth;
   const recListItemHeight = 0.45 * recListWidth;
   return { recListWidth, recListItemWidth, recListItemHeight };
 }
