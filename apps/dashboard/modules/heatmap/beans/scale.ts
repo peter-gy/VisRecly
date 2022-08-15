@@ -14,7 +14,7 @@ const scaleSectionData: Omit<ScaleSection, 'range'>[] = [
   { name: 'Bad', color: theme`colors.scale.bad` },
 ];
 
-const scaleRange = [0, 100];
+export const scaleRange = [0, 100];
 const absoluteRange = scaleRange[1] - scaleRange[0];
 const numSections = scaleSectionData.length;
 
