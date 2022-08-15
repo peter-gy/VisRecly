@@ -12,6 +12,7 @@ import {
   OnboardingSection,
   onboardingStep,
 } from '@dashboard/modules/onboarding/utils/utils';
+import { initialRecInputState } from '@dashboard/modules/rec-input/beans/beans';
 import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
 import { isInViewport } from '@dashboard/modules/utils/functions/functions';
 
@@ -61,26 +62,48 @@ function _Heatmap({ headerTiles }: HeatmapProps) {
   return (
     <div
       id={onboardingStep(OnboardingSection.Heatmap)}
-      className="bg-primary-100 h-full w-full flex flex-col overflow-auto drop-shadow-2xl"
-      style={{ maxWidth: numVisibleTiles * tileWidth }}
+      className="flex bg-primary-200 overflow-auto"
     >
-      <div
-        id={onboardingStep(OnboardingSection.HeatmapHeader)}
-        className="flex"
-      >
-        {headerTiles.map(({ title, info }, idx) => (
-          <HeatmapHeaderTile
-            key={`heatmap-header-tile-${idx}`}
-            title={title}
-            info={info}
-            width={tileWidth}
-            height={tileHeight}
-            onVisibilityChange={(_) => handleTaskToggle(title)}
-          />
-        ))}
+      <div style={{ marginTop: tileHeight }} className="bg-primary-200">
+        {[...new Array(initialRecInputState.numMaxModels).keys()].map((idx) => {
+          return (
+            <div
+              key={`rank-tile-${idx}`}
+              style={{ height: tileHeight }}
+              className="bg-primary-200"
+            >
+              <div
+                style={{ minWidth: tileWidth / 3, minHeight: tileHeight / 3 }}
+                className="bg-primary-700 text-center flex justify-center items-center text-white mr-[-2px]"
+              >
+                {idx + 1}
+              </div>
+            </div>
+          );
+        })}
       </div>
-      <div className="grow flex">
-        <HeatmapSvg tileWidth={tileWidth} tileHeight={tileHeight} />
+      <div
+        className="h-full w-full flex flex-col drop-shadow-2xl"
+        style={{ maxWidth: numVisibleTiles * tileWidth }}
+      >
+        <div
+          id={onboardingStep(OnboardingSection.HeatmapHeader)}
+          className="flex"
+        >
+          {headerTiles.map(({ title, info }, idx) => (
+            <HeatmapHeaderTile
+              key={`heatmap-header-tile-${idx}`}
+              title={title}
+              info={info}
+              width={tileWidth}
+              height={tileHeight}
+              onVisibilityChange={(_) => handleTaskToggle(title)}
+            />
+          ))}
+        </div>
+        <div className="grow flex">
+          <HeatmapSvg tileWidth={tileWidth} tileHeight={tileHeight} />
+        </div>
       </div>
     </div>
   );
