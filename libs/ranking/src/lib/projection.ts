@@ -1,8 +1,5 @@
-import {
-  CostRange,
-  RankedVisualization,
-  computeCostRange,
-} from '@visrecly/ranking';
+import { CostRange, RankedVisualization } from './types';
+import { computeCostRange } from './utils';
 
 /**
  * Constructs a function that can be used to linerarly project between ranges.

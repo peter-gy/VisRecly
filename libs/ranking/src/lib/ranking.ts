@@ -1,10 +1,11 @@
+import { ClingoError } from 'clingo-wasm';
+
 import {
   Draco,
   SolutionSet,
   ZippedSolutionSetElement,
   solutionSetToZippedElements,
 } from '@visrecly/draco-web';
-import { ClingoError } from '@visrecly/types';
 import {
   TASK_MAP,
   VegaLiteAnyMark,
