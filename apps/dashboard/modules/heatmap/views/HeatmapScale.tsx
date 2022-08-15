@@ -21,7 +21,7 @@ function HeatmapScale() {
     range: [0, height],
   });
   return (
-    <div className="bg-primary-100 rounded-r-lg shadow-inner">
+    <div className="bg-primary-100 rounded-r-lg shadow-inner pr-1.5">
       <svg
         id={onboardingStep(OnboardingSection.HeatmapScale)}
         width={1.75 * width}
