@@ -160,11 +160,13 @@ function LeftDrawerLayout({
                 noWrap
                 component="div"
               >
-                <div className="text-sm md:text-lg">{title}</div>
+                <div className="font-bold text-sm md:text-lg">{title}</div>
               </Typography>
             </div>
             <div className="hidden sm:flex space-x-4 justify-center items-center">
-              <OnboardingInfoButton />
+              <div className="hidden md:block">
+                <OnboardingInfoButton />
+              </div>
               <a
                 href="https://github.com/peter-gy/visrecly"
                 target="_blank"

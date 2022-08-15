@@ -17,9 +17,10 @@ module.exports = {
           DEFAULT: '#2563EB',
         },
         scale: {
-          good: '#8bc34a',
-          medium: '#fdd835',
-          bad: '#ff5f52',
+          good: '#72D6C9',
+          average: '#9AD0EC',
+          poor: '#7189BF',
+          bad: '#DF7599',
         },
       },
     },

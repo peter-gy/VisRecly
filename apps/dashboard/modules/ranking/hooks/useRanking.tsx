@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import {
-  RankedVisualization,
+  RankedVisualizationExplicit,
   RankingFunctionParams,
   RankingFunctionReturn,
   rank,
@@ -29,7 +29,7 @@ function fetchRanking(params: RankingFunctionParams) {
 
 async function runRanking(
   params: RankingFunctionParams,
-): Promise<BaseResponse<ClingoError | RankedVisualization[]>> {
+): Promise<BaseResponse<ClingoError | RankedVisualizationExplicit[]>> {
   try {
     const result = await rank(...params);
     return { success: true, data: result };

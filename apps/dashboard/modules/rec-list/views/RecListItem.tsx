@@ -2,14 +2,16 @@ import { useState } from 'react';
 import { VegaLite } from 'react-vega';
 import tw from 'twin.macro';
 
-import { RankedVisualization } from '@visrecly/ranking';
+import { RankedVisualizationExplicit } from '@visrecly/ranking';
 
+import { colorScale } from '@dashboard/modules/heatmap/beans/scale';
 import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
+import { recListItemId } from '@dashboard/modules/rec-list/utils/utils';
 import { RecSelectionStatus } from '@dashboard/modules/rec-selection/types/types';
 
 type RecListItemProps = {
   rank: number;
-  rankedVisualization: RankedVisualization;
+  rankedVisualization: RankedVisualizationExplicit;
   width: number;
   height: number;
   selectionStatus: RecSelectionStatus;
@@ -52,15 +54,17 @@ function RecListItem({
   const handleClose = () => {
     setIsOpen(false);
   };
+  const rankColor = colorScale(rankedVisualization.overallCost);
   return (
     <>
       <div
+        id={recListItemId(rank)}
         onClick={handleClickOpen}
         css={styles.recListItem({ width, height, selectionStatus })}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        <RankIndicator rank={rank} />
+        <RankIndicator rank={rank} backgroundColor={rankColor} />
         <ChartItem spec={rankedVisualization.vegaLiteSpec} />
       </div>
       <RecDetail
@@ -74,11 +78,18 @@ function RecListItem({
 
 type RankIndicatorProps = {
   rank: number;
+  backgroundColor?: string;
 };
 
-function RankIndicator({ rank }: RankIndicatorProps) {
+function RankIndicator({
+  rank,
+  backgroundColor = 'transparent',
+}: RankIndicatorProps) {
   return (
-    <div className="w-[40px] h-[40px] border-[1px] rounded-lg flex justify-center items-center">
+    <div
+      className="w-[40px] h-[40px] border-[1px] rounded-lg flex justify-center items-center flex-grow md:flex-grow-0"
+      style={{ backgroundColor }}
+    >
       {rank}
     </div>
   );
@@ -90,7 +101,7 @@ type ChartItemProps = {
 
 function ChartItem({ spec }: ChartItemProps) {
   return (
-    <div className="w-full h-full overflow-auto">
+    <div className="hidden md:w-full md:h-full md:overflow-auto md:block">
       <VegaLite spec={spec} actions={false} />
     </div>
   );

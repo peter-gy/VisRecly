@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import VisibilityOnIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
 import { Information } from '@dashboard/modules/components/info-dialog-button/information.type';
@@ -41,9 +42,13 @@ function HeatmapHeaderTile({
     >
       <div className="flex justify-between items-center">
         <InfoDialogButton {...info} />
-        <IconButton onClick={handleVisibilityIconClick}>
-          <VisibilityIcon />
-        </IconButton>
+        <Tooltip
+          title={visible ? 'Blend out this task' : 'Highlight this task'}
+        >
+          <IconButton onClick={handleVisibilityIconClick}>
+            <VisibilityIcon />
+          </IconButton>
+        </Tooltip>
       </div>
       <div className="text-xs text-center">{title}</div>
     </div>

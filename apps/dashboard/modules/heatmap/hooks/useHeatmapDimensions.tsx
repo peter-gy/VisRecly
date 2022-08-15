@@ -1,3 +1,5 @@
+import { TASKS } from '@visrecly/vis-tasks';
+
 import useLayoutInfo from '@dashboard/modules/layout/hooks/useLayoutInfo';
 
 function useHeatmapDimensions() {
@@ -11,7 +13,11 @@ function useHeatmapDimensions() {
   const [tileWidth, tileHeight] = [80, 80];
   const heatmapWidth = drawerOpen ? 0.65 * mainContentWidth : 0.7 * windowWidth;
   const heatmapHeight = windowHeight - appBarHeight - tileHeight;
-  const numVisibleTiles = Math.floor(heatmapWidth / tileWidth);
+  const numMaxTiles = TASKS.length;
+  const numVisibleTiles = Math.min(
+    Math.floor(heatmapWidth / tileWidth),
+    numMaxTiles,
+  );
   return {
     tileWidth,
     tileHeight,

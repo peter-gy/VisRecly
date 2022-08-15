@@ -1,4 +1,5 @@
 import HelpIcon from '@mui/icons-material/Help';
+import { Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
 import { useLayout } from '@dashboard/modules/layout/provider/LayoutContext';
@@ -24,12 +25,14 @@ function OnboardingInfoButton() {
     }
   };
   return (
-    <IconButton
-      id={onboardingStep(OnboardingSection.AppInfo)}
-      onClick={handleInfoButtonClick}
-    >
-      <HelpIcon className="text-white" />
-    </IconButton>
+    <Tooltip title="Go through the onboarding again">
+      <IconButton
+        id={onboardingStep(OnboardingSection.AppInfo)}
+        onClick={handleInfoButtonClick}
+      >
+        <HelpIcon className="text-white" />
+      </IconButton>
+    </Tooltip>
   );
 }
 

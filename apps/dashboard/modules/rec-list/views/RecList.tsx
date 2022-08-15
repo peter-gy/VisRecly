@@ -1,7 +1,7 @@
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import tw from 'twin.macro';
 
-import { RankedVisualization } from '@visrecly/ranking';
+import { RankedVisualizationExplicit } from '@visrecly/ranking';
 
 import { IconButton, List, ListItem } from '@mui/material';
 
@@ -13,11 +13,12 @@ import {
 import InfoDialogButton from '@dashboard/modules/components/info-dialog-button/views/InfoDialogButton';
 import LoadingIndicator from '@dashboard/modules/components/loading-indicator/views/LoadingIndicator';
 import useRecListDimensions from '@dashboard/modules/rec-list/hooks/useRecListDimensions';
+import { recListItemId } from '@dashboard/modules/rec-list/utils/utils';
 import RecListItem from '@dashboard/modules/rec-list/views/RecListItem';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
 import { determineSelectionStatus } from '@dashboard/modules/rec-selection/utils/utils';
-import { RankedVisualizationExplicit } from '@dashboard/modules/utils/types/types';
+import { isInViewport } from '@dashboard/modules/utils/functions/functions';
 
 const styles = {
   listViewContainer: ({
@@ -68,19 +69,19 @@ function RecList() {
       />
     );
   } else {
-    const visArray = rankingResult as RankedVisualization[];
-    const items = visArray.map((e, idx) => (
+    const visArray = rankingResult as RankedVisualizationExplicit[];
+    const items = visArray.map((vis) => (
       <RecListItem
-        key={`rec-list-item-${idx}`}
-        rank={idx + 1}
-        rankedVisualization={e}
+        key={`rec-list-item-${vis.overallRank}`}
+        rank={vis.overallRank}
+        rankedVisualization={vis}
         width={recListItemWidth}
         height={recListItemHeight}
-        onMouseEnter={() => handleItemMouseEnter({ ...e, rank: idx })}
-        onMouseLeave={() => handleItemMouseLeave({ ...e, rank: idx })}
+        onMouseEnter={() => handleItemMouseEnter(vis)}
+        onMouseLeave={() => handleItemMouseLeave(vis)}
         selectionStatus={determineSelectionStatus(activeRec, {
-          ...e,
-          rank: idx,
+          ...vis,
+          overallRank: vis.overallRank,
         })}
       />
     ));
@@ -96,6 +97,21 @@ function RecList() {
       component = <RecListView items={items} />;
     }
   }
+
+  const activeRank = activeRec?.overallRank;
+  useEffect(() => {
+    if (activeRank !== undefined) {
+      const itemId = recListItemId(activeRank);
+      const itemElement = document.getElementById(itemId);
+      if (
+        itemElement &&
+        !isInViewport(itemElement, -1.25 * recListItemHeight)
+      ) {
+        itemElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [activeRank, recListItemHeight]);
+
   return (
     <>
       <RecListHeader />
@@ -120,10 +136,14 @@ function RecListHeader() {
       <InfoDialogButton
         tooltip="How to interpret this?"
         title="Overall Rankings"
-        description={`
-        Each recommendation is displayed in this column.
-        The higher a given visualization appears in the list, the more relevant it is overall.
-        `}
+        description={
+          <p>
+            Each recommendation is displayed in this column.
+            <br />
+            The higher a given visualization appears in the list, the more
+            relevant it is overall.
+          </p>
+        }
       />
     </div>
   );

@@ -1,5 +1,6 @@
-import { CostRange, RankedVisualization } from '@visrecly/ranking';
 import { VisTask, VisTaskCostMap } from '@visrecly/vis-tasks';
+
+import { CostRange, RankedVisualization } from './types';
 
 /**
  * Computes the cost range for the supplied `visArray`, considering all costs

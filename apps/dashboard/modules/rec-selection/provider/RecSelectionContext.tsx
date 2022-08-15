@@ -1,10 +1,10 @@
 import { ReactNode, createContext, useContext, useReducer } from 'react';
 
+import { RankedVisualizationExplicit } from '@visrecly/ranking';
 import { VisTask } from '@visrecly/vis-tasks';
 
 import { initialRecSelectionState } from '@dashboard/modules/rec-selection/beans/beans';
 import { RecSelectionState } from '@dashboard/modules/rec-selection/types/types';
-import { RankedVisualizationExplicit } from '@dashboard/modules/utils/types/types';
 
 /**
  * Possible actions to dispatch to the reducer

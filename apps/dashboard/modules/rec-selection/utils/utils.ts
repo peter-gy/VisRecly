@@ -1,5 +1,6 @@
+import { RankedVisualizationExplicit } from '@visrecly/ranking';
+
 import { RecSelectionStatus } from '@dashboard/modules/rec-selection/types/types';
-import { RankedVisualizationExplicit } from '@dashboard/modules/utils/types/types';
 
 export function determineSelectionStatus(
   activeRec: RankedVisualizationExplicit | undefined,
@@ -8,5 +9,5 @@ export function determineSelectionStatus(
   if (activeRec === undefined) {
     return 'normal';
   }
-  return activeRec.rank === rec.rank ? 'highlighted' : 'faded';
+  return activeRec.overallRank === rec.overallRank ? 'highlighted' : 'faded';
 }

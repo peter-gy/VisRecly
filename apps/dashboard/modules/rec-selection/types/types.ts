@@ -1,6 +1,5 @@
+import { RankedVisualizationExplicit } from '@visrecly/ranking';
 import { VisTask } from '@visrecly/vis-tasks';
-
-import { RankedVisualizationExplicit } from '@dashboard/modules/utils/types/types';
 
 export type RecSelectionState = {
   /**

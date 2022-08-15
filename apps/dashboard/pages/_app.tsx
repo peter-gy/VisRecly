@@ -21,7 +21,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Visrecly</title>
+        <title>VisRecly</title>
       </Head>
       <main className="app">
         <CacheProvider value={cache}>

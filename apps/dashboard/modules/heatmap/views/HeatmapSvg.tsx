@@ -3,7 +3,7 @@ import { scaleLinear } from '@visx/scale';
 import { useState } from 'react';
 import tw, { theme } from 'twin.macro';
 
-import { RankedVisualization } from '@visrecly/ranking';
+import { RankedVisualizationExplicit } from '@visrecly/ranking';
 
 import AlertMessage from '@dashboard/modules/components/alert-message/views/AlertMessage';
 import LoadingIndicator from '@dashboard/modules/components/loading-indicator/views/LoadingIndicator';
@@ -12,6 +12,7 @@ import { BinType, ColumnType } from '@dashboard/modules/heatmap/types/types';
 import {
   binsFromVisArray,
   columnsFromVisArray,
+  heatmapRectId,
 } from '@dashboard/modules/heatmap/utils/utils';
 import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
@@ -19,7 +20,7 @@ import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSe
 import { RecSelectionStatus } from '@dashboard/modules/rec-selection/types/types';
 
 type HeatmapSvgProps = {
-  visArray: RankedVisualization[];
+  visArray: RankedVisualizationExplicit[];
   tileWidth: number;
   tileHeight: number;
 };
@@ -46,7 +47,7 @@ function HeatmapSvg({
       />
     );
   }
-  const visArray = rankingResult as RankedVisualization[];
+  const visArray = rankingResult as RankedVisualizationExplicit[];
   return (
     <_HeatmapSvg
       visArray={visArray}
@@ -68,9 +69,8 @@ const styles = {
 };
 
 function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
-  const [selectedVis, setSelectedVis] = useState<RankedVisualization | null>(
-    null,
-  );
+  const [selectedVis, setSelectedVis] =
+    useState<RankedVisualizationExplicit | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const handleClose = () => {
     setDetailOpen(false);
@@ -107,7 +107,8 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
             heatmap.map((heatmapBins) =>
               heatmapBins.map((bin) => (
                 <rect
-                  key={`heatmap-rect-${bin.row}-${bin.column}`}
+                  key={heatmapRectId(bin.row, bin.column)}
+                  id={heatmapRectId(bin.row, bin.column)}
                   className="visx-heatmap-rect"
                   css={styles.rect({
                     selectionStatus: bin.bin.selectionStatus,
@@ -116,21 +117,25 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
                   height={bin.height}
                   x={bin.x}
                   y={bin.y}
-                  fill={colorScale(bin.bin.cost)}
+                  fill={colorScale(bin.bin.overallCost)}
                   fillOpacity={bin.opacity}
                   onClick={() => {
                     const {
-                      bin: { rank },
+                      bin: { overallRank },
                     } = bin;
-                    const vis = visArray[rank];
+                    const vis = visArray.find(
+                      (vis) => vis.overallRank === overallRank,
+                    );
                     setSelectedVis(vis);
                     setDetailOpen(true);
                   }}
                   onMouseEnter={() => {
                     const {
-                      bin: { rank },
+                      bin: { overallRank },
                     } = bin;
-                    const vis = { ...visArray[rank], rank };
+                    const vis = visArray.find(
+                      (vis) => vis.overallRank === overallRank,
+                    );
                     recSelectionDispatch({ type: 'setActiveRec', data: vis });
                   }}
                   onMouseLeave={() => {

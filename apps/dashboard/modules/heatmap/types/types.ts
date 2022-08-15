@@ -18,8 +18,11 @@ export type ColumnType = VisTask['name'];
  * by indexing the sorted array in the shared state.
  */
 export type BinType = {
-  rank: number;
-  cost: number;
-  normalizedCost: number;
+  overallRank: number;
+  overallCost: number;
+  overallCostNormalized: number;
+  taskRank: number;
+  taskCost: number;
+  taskCostNormalized: number;
   selectionStatus: RecSelectionStatus;
 };
