@@ -1,4 +1,8 @@
-import { CostRange, RankedVisualization } from '@visrecly/ranking';
+import {
+  CostRange,
+  RankedVisualization,
+  RankedVisualizationExplicit,
+} from '@visrecly/ranking';
 import { VisTask, VisTaskCostMap } from '@visrecly/vis-tasks';
 
 /**

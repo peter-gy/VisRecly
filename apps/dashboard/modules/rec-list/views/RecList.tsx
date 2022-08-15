@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useRef } from 'react';
 import tw from 'twin.macro';
 
-import { RankedVisualization } from '@visrecly/ranking';
+import { RankedVisualizationExplicit } from '@visrecly/ranking';
 
 import { IconButton, List, ListItem } from '@mui/material';
 
@@ -19,7 +19,6 @@ import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputCo
 import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
 import { determineSelectionStatus } from '@dashboard/modules/rec-selection/utils/utils';
 import { isInViewport } from '@dashboard/modules/utils/functions/functions';
-import { RankedVisualizationExplicit } from '@dashboard/modules/utils/types/types';
 
 const styles = {
   listViewContainer: ({
@@ -70,19 +69,19 @@ function RecList() {
       />
     );
   } else {
-    const visArray = rankingResult as RankedVisualization[];
-    const items = visArray.map((e, idx) => (
+    const visArray = rankingResult as RankedVisualizationExplicit[];
+    const items = visArray.map((vis) => (
       <RecListItem
-        key={`rec-list-item-${idx}`}
-        rank={idx + 1}
-        rankedVisualization={e}
+        key={`rec-list-item-${vis.overallRank}`}
+        rank={vis.overallRank}
+        rankedVisualization={vis}
         width={recListItemWidth}
         height={recListItemHeight}
-        onMouseEnter={() => handleItemMouseEnter({ ...e, rank: idx })}
-        onMouseLeave={() => handleItemMouseLeave({ ...e, rank: idx })}
+        onMouseEnter={() => handleItemMouseEnter(vis)}
+        onMouseLeave={() => handleItemMouseLeave(vis)}
         selectionStatus={determineSelectionStatus(activeRec, {
-          ...e,
-          rank: idx,
+          ...vis,
+          overallRank: vis.overallRank,
         })}
       />
     ));
@@ -99,7 +98,7 @@ function RecList() {
     }
   }
 
-  const activeRank = activeRec?.rank;
+  const activeRank = activeRec?.overallRank;
   useEffect(() => {
     if (activeRank !== undefined) {
       const itemId = recListItemId(activeRank);

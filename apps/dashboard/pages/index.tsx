@@ -22,7 +22,7 @@ const OnboardingElement = dynamic(
 const App = () => {
   return (
     <LeftDrawerLayout
-      title="Visrecly"
+      title="VisRecly"
       mainContent={<MainContent />}
       drawerContent={<DrawerContent />}
     />

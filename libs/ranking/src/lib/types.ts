@@ -1,5 +1,5 @@
 import { VegaLiteSpec } from '@visrecly/draco-core';
-import { VisTaskCostMap } from '@visrecly/vis-tasks';
+import { VisTask, VisTaskCostMap } from '@visrecly/vis-tasks';
 
 import { rank } from './ranking';
 
@@ -14,6 +14,11 @@ export type RankingFunctionParams = Parameters<RankingFunction>;
  * Type alias for the raw return value of the ranking function.
  */
 export type RankingFunctionReturn = ReturnType<RankingFunction>;
+
+/**
+ * Type alias to map a rank to a given vis task
+ */
+export type VisTaskRankMap = Record<VisTask['name'], number>;
 
 /**
  * Associates ranking costs with a visualization recommendation.
@@ -38,10 +43,24 @@ export type RankedVisualization = {
   visTaskCosts: VisTaskCostMap;
 
   /**
+   * Overall cost, computed as a function of `dataOrientedCost` and `visTaskCosts`.
+   */
+  overallCost: number;
+
+  /**
    * The total cost per vis task, equals the sum of the data-oriented
    * and task-oriented costs.
    */
   aggregatedCosts: VisTaskCostMap;
+};
+
+/**
+ * Represents a `RankedVisualization` with the additional property `rank`
+ * being explicitly attached to it.
+ */
+export type RankedVisualizationExplicit = RankedVisualization & {
+  overallRank: number;
+  visTaskRankMap: VisTaskRankMap;
 };
 
 export type CostRange = {

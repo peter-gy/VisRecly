@@ -1,11 +1,10 @@
-import { ClingoError } from 'clingo-wasm';
-
 import {
   Draco,
   SolutionSet,
   ZippedSolutionSetElement,
   solutionSetToZippedElements,
 } from '@visrecly/draco-web';
+import { ClingoError } from '@visrecly/types';
 import {
   TASK_MAP,
   VegaLiteAnyMark,
@@ -15,7 +14,7 @@ import {
 
 import { encodingPrefsToAsp } from './encodingPreferences';
 import { projectCosts } from './projection';
-import { RankedVisualization } from './types';
+import { RankedVisualization, RankedVisualizationExplicit } from './types';
 
 /**
  * Top-level function to generate and rank visualizations
@@ -58,7 +57,13 @@ export async function rank(
     elementsWithCosts,
     costProjectionConfig,
   );
-  return projectedElements.sort(compareVisualizations);
+  return projectedElements
+    .sort(compareVisualizations)
+    .map<RankedVisualizationExplicit>((e, idx) => ({
+      ...e,
+      overallRank: idx + 1,
+      visTaskRankMap: computeVisTaskRankMap(e.aggregatedCosts),
+    }));
 }
 
 /**
@@ -72,7 +77,21 @@ export async function rank(
  * @param b  - The second ranked visualization.
  */
 function compareVisualizations(a: RankedVisualization, b: RankedVisualization) {
-  return a.dataOrientedCost - b.dataOrientedCost;
+  return a.overallCost - b.overallCost;
+}
+
+function computeVisTaskRankMap(aggregatedCosts: VisTaskCostMap) {
+  return Object.keys(aggregatedCosts)
+    .map((key) => [key, aggregatedCosts[key]])
+    .sort((a, b) => (a[1] as number) - (b[1] as number))
+    .map((e, idx) => [e[0], idx])
+    .reduce(
+      (obj, [visTaskName, idx]) => ({
+        ...obj,
+        [visTaskName]: (idx as number) + 1,
+      }),
+      {},
+    );
 }
 
 /**
@@ -96,7 +115,21 @@ function computeSingleElementCost(
     visTaskCosts,
     dataOrientedCost,
   );
-  return { vegaLiteSpec, dataOrientedCost, visTaskCosts, aggregatedCosts };
+  const overallCost = computeOverallCost(dataOrientedCost, visTaskCosts);
+  return {
+    vegaLiteSpec,
+    dataOrientedCost,
+    visTaskCosts,
+    aggregatedCosts,
+    overallCost,
+  };
+}
+
+function computeOverallCost(
+  dataOrientedCost: number,
+  visTaskCosts: VisTaskCostMap,
+) {
+  return dataOrientedCost;
 }
 
 /**

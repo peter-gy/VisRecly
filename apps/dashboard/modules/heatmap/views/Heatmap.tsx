@@ -47,7 +47,7 @@ function _Heatmap({ headerTiles }: HeatmapProps) {
 
   const { tileWidth, tileHeight, numVisibleTiles } = useHeatmapDimensions();
 
-  const activeRank = activeRec?.rank;
+  const activeRank = activeRec?.overallRank;
   useEffect(() => {
     if (activeRank !== undefined) {
       const rectId = heatmapRectId(activeRank - 1, 0);
