@@ -4,6 +4,7 @@ import tw from 'twin.macro';
 
 import { RankedVisualization } from '@visrecly/ranking';
 
+import { colorScale } from '@dashboard/modules/heatmap/beans/scale';
 import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
 import { recListItemId } from '@dashboard/modules/rec-list/utils/utils';
 import { RecSelectionStatus } from '@dashboard/modules/rec-selection/types/types';
@@ -53,6 +54,7 @@ function RecListItem({
   const handleClose = () => {
     setIsOpen(false);
   };
+  const rankColor = colorScale(rankedVisualization.overallCost);
   return (
     <>
       <div
@@ -62,7 +64,7 @@ function RecListItem({
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        <RankIndicator rank={rank} />
+        <RankIndicator rank={rank} backgroundColor={rankColor} />
         <ChartItem spec={rankedVisualization.vegaLiteSpec} />
       </div>
       <RecDetail
@@ -76,11 +78,18 @@ function RecListItem({
 
 type RankIndicatorProps = {
   rank: number;
+  backgroundColor?: string;
 };
 
-function RankIndicator({ rank }: RankIndicatorProps) {
+function RankIndicator({
+  rank,
+  backgroundColor = 'transparent',
+}: RankIndicatorProps) {
   return (
-    <div className="w-[40px] h-[40px] border-[1px] rounded-lg flex justify-center items-center">
+    <div
+      className="w-[40px] h-[40px] border-[1px] rounded-lg flex justify-center items-center"
+      style={{ backgroundColor }}
+    >
       {rank}
     </div>
   );
