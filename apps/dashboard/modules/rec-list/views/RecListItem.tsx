@@ -6,7 +6,10 @@ import { RankedVisualizationExplicit } from '@visrecly/ranking';
 
 import { colorScale } from '@dashboard/modules/heatmap/beans/scale';
 import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
-import { recListItemId } from '@dashboard/modules/rec-list/utils/utils';
+import {
+  recListItemId,
+  vegaSpecPatch,
+} from '@dashboard/modules/rec-list/utils/utils';
 import { RecSelectionStatus } from '@dashboard/modules/rec-selection/types/types';
 
 type RecListItemProps = {
@@ -102,7 +105,7 @@ type ChartItemProps = {
 function ChartItem({ spec }: ChartItemProps) {
   return (
     <div className="hidden md:w-full md:h-full md:overflow-auto md:block">
-      <VegaLite spec={spec} actions={false} />
+      <VegaLite spec={spec} actions={false} patch={vegaSpecPatch} />
     </div>
   );
 }

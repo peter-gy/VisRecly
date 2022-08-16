@@ -6,6 +6,6 @@
   box-sizing: border-box;
 }
 
-.vega-embed canvas {
+.vega-embed svg {
   @apply cursor-pointer;
 }

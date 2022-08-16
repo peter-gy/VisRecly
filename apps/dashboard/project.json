@@ -3,6 +3,22 @@
   "sourceRoot": "apps/dashboard",
   "projectType": "application",
   "targets": {
+    "prepare": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "mkdir -p apps/dashboard/public/data"
+          },
+          {
+            "command": "find libs/data/src/lib -type f -name \"*.json\" -exec cp \"{}\" apps/dashboard/public/data \\;"
+          },
+          {
+            "command": "find apps/dashboard/public/data -type f -name \"*.json\" -exec npx minify-json \"{}\" \\;"
+          }
+        ]
+      }
+    },
     "build": {
       "executor": "@nrwl/next:build",
       "outputs": ["{options.outputPath}"],
