@@ -1,12 +1,14 @@
 import dynamic from 'next/dynamic';
 import tw from 'twin.macro';
 
+import MobileAppBody from '@dashboard/modules/app-body/views/MobileAppBody';
 import DrawerContent from '@dashboard/modules/drawer/views/DrawerContent';
 import Heatmap from '@dashboard/modules/heatmap/views/Heatmap';
 import HeatmapScale from '@dashboard/modules/heatmap/views/HeatmapScale';
 import useLayoutInfo from '@dashboard/modules/layout/hooks/useLayoutInfo';
 import { LayoutInfo } from '@dashboard/modules/layout/types/types';
 import LeftDrawerLayout from '@dashboard/modules/layout/views/LeftDrawerLayout';
+import MobileGate from '@dashboard/modules/layout/views/MobileGate';
 import {
   OnboardingSection,
   onboardingStep,
@@ -20,6 +22,12 @@ const OnboardingElement = dynamic(
 );
 
 function AppBody() {
+  return (
+    <MobileGate standardChild={<_AppBody />} mobileChild={<MobileAppBody />} />
+  );
+}
+
+function _AppBody() {
   return (
     <>
       <RankingServiceComponent />
