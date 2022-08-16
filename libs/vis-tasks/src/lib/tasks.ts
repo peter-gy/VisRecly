@@ -149,10 +149,10 @@ export const DEVIATION = mergeVisTaskWithPreferences(
 
 const FILTER_TASK: VisTask = {
   name: 'Filter',
-  descriptionShort: 'Find data cases satisfying the given constrains',
+  descriptionShort: 'Find data cases satisfying the given constraints',
   descriptionLong: {
     contentType: 'text',
-    content: 'Find data cases satisfying the given constrains',
+    content: 'Find data cases satisfying the given constraints',
   },
 };
 const FILTER_PREFS: VisTaskPreferences = {
