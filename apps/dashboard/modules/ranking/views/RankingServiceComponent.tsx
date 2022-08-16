@@ -22,7 +22,6 @@ function RankingServiceComponent() {
 
   // Actually call the ranking function
   useEffect(() => {
-    console.log('RANKING');
     const selectedColumnNames = selectedDataColumns.map(({ name }) => name);
     runRanking([selectedColumnNames, numMaxModels, RELAX_HARD, PROJECT_RANGE]);
   }, [runRanking, selectedDataColumns, numMaxModels]);
