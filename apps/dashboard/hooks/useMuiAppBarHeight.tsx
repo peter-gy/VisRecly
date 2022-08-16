@@ -23,6 +23,7 @@ function useMuiAppBarHeight(): number {
   } else {
     currentToolbarMinHeight = toolbar;
   }
+  if (currentToolbarMinHeight === undefined) return 0;
   return (currentToolbarMinHeight as MinHeight).minHeight;
 }
 
