@@ -4,8 +4,9 @@
 
 * {
   box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
 }
 
-.vega-embed canvas {
+.vega-embed svg {
   @apply cursor-pointer;
 }

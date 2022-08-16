@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve",
-    "build": "nx build dashboard --production --skip-nx-cache",
+    "build": "nx prepare dashboard && nx build dashboard --production --skip-nx-cache",
     "test": "nx test"
   },
   "private": true,
@@ -13,6 +13,7 @@
     "@emotion/react": "11.10.0",
     "@emotion/server": "11.10.0",
     "@emotion/styled": "11.10.0",
+    "@lottiefiles/react-lottie-player": "^3.4.7",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.8.5",
     "@nrwl/next": "14.5.5",
