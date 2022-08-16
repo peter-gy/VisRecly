@@ -1,9 +1,6 @@
-import { useEffect } from 'react';
-
 import { TASKS, VisTask } from '@visrecly/vis-tasks';
 
 import useHeatmapDimensions from '@dashboard/modules/heatmap/hooks/useHeatmapDimensions';
-import { heatmapRectId } from '@dashboard/modules/heatmap/utils/utils';
 import HeatmapHeaderTile, {
   HeatmapHeaderTileProps,
 } from '@dashboard/modules/heatmap/views/HeatmapHeaderTile';
@@ -14,7 +11,6 @@ import {
 } from '@dashboard/modules/onboarding/utils/utils';
 import { initialRecInputState } from '@dashboard/modules/rec-input/beans/beans';
 import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
-import { isInViewport } from '@dashboard/modules/utils/functions/functions';
 
 type HeatmapProps = {
   headerTiles: Omit<HeatmapHeaderTileProps, 'onVisibilityChange'>[];
@@ -35,10 +31,7 @@ function Heatmap() {
 }
 
 function _Heatmap({ headerTiles }: HeatmapProps) {
-  const {
-    state: { activeRec },
-    dispatch: recSelectionDispatch,
-  } = useRecSelection();
+  const { dispatch: recSelectionDispatch } = useRecSelection();
   const handleTaskToggle = (taskName: VisTask['name']) => {
     recSelectionDispatch({
       type: 'toggleTask',
@@ -47,17 +40,6 @@ function _Heatmap({ headerTiles }: HeatmapProps) {
   };
 
   const { tileWidth, tileHeight, numVisibleTiles } = useHeatmapDimensions();
-
-  const activeRank = activeRec?.overallRank;
-  useEffect(() => {
-    if (activeRank !== undefined) {
-      const rectId = heatmapRectId(activeRank - 1, 0);
-      const rectElement = document.getElementById(rectId);
-      if (rectElement && !isInViewport(rectElement, -1.25 * tileHeight)) {
-        rectElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  }, [activeRank, tileHeight]);
 
   return (
     <div
