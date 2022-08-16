@@ -1,11 +1,11 @@
-import { BUDGETS } from './budgets';
+import { BARLEY } from './barley';
 import { CARS } from './cars';
-import { INCOME } from './income';
+import { MONARCHS } from './monarchs';
 import { MOVIES } from './movies';
-import { PENGUINS } from './penguins';
 import { DataSet, DataSetMap } from './types';
+import { WHEAT } from './wheat';
 
-export const DATA_SETS: DataSet[] = [BUDGETS, CARS, INCOME, MOVIES, PENGUINS];
+export const DATA_SETS: DataSet[] = [BARLEY, CARS, MONARCHS, MOVIES, WHEAT];
 
 /**
  * A collection of all declared `DataSet` instances,
