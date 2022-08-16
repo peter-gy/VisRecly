@@ -1,10 +1,3 @@
-/**
- * Hook to transparently run the full ranking pipeline by reading the input
- * from `RecInputContext` and dispatching the output to `RecOutputContext`.
- *
- * @see RecInputProvider
- * @see RecOutputProvider
- */
 import { useEffect } from 'react';
 
 import {
@@ -15,12 +8,12 @@ import useRanking from '@dashboard/modules/ranking/hooks/useRanking';
 import { useRecInput } from '@dashboard/modules/rec-input/provider/RecInputContext';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 
-function useRankingPipeline() {
+function RankingServiceComponent() {
   const { mutate: runRanking, isLoading, data: baseResponse } = useRanking();
   const {
     state: { selectedDataColumns, numMaxModels },
   } = useRecInput();
-  const { state: recOutputState, dispatch: outputDispatch } = useRecOutput();
+  const { dispatch: outputDispatch } = useRecOutput();
 
   // Sync react-query `isLoading` state with that of `RecOutputContext`
   useEffect(() => {
@@ -29,6 +22,7 @@ function useRankingPipeline() {
 
   // Actually call the ranking function
   useEffect(() => {
+    console.log('RANKING');
     const selectedColumnNames = selectedDataColumns.map(({ name }) => name);
     runRanking([selectedColumnNames, numMaxModels, RELAX_HARD, PROJECT_RANGE]);
   }, [runRanking, selectedDataColumns, numMaxModels]);
@@ -45,8 +39,7 @@ function useRankingPipeline() {
       }
     }
   }, [baseResponse, outputDispatch]);
-
-  return recOutputState;
+  return <></>;
 }
 
-export default useRankingPipeline;
+export default RankingServiceComponent;

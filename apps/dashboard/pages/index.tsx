@@ -11,7 +11,7 @@ import {
   OnboardingSection,
   onboardingStep,
 } from '@dashboard/modules/onboarding/utils/utils';
-import useRankingPipeline from '@dashboard/modules/ranking/hooks/useRankingPipeline';
+import RankingServiceComponent from '@dashboard/modules/ranking/views/RankingServiceComponent';
 import RecList from '@dashboard/modules/rec-list/views/RecList';
 
 const OnboardingElement = dynamic(
@@ -21,11 +21,14 @@ const OnboardingElement = dynamic(
 
 const App = () => {
   return (
-    <LeftDrawerLayout
-      title="VisRecly"
-      mainContent={<MainContent />}
-      drawerContent={<DrawerContent />}
-    />
+    <>
+      <RankingServiceComponent />
+      <LeftDrawerLayout
+        title="VisRecly"
+        mainContent={<MainContent />}
+        drawerContent={<DrawerContent />}
+      />
+    </>
   );
 };
 
@@ -61,13 +64,9 @@ const styles = {
   ],
 };
 
-// Wrapper to handle layout normalization with the `appBarHeight`
 function MainContent() {
   // Grab layout info for responsive styling
   const layoutInfo = useLayoutInfo();
-
-  // Run pipeline automatically
-  useRankingPipeline();
 
   return (
     <>
