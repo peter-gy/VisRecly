@@ -17,11 +17,11 @@ function MobileGate({
   mobileChild,
 }: MobileGateProps) {
   const theme = useTheme();
-  const { lg } = theme.breakpoints.values;
-  const _minWidth = minWidth ?? lg;
+  const { md } = theme.breakpoints.values;
+  const _minWidth = minWidth ?? md;
   const widthMatch = useMediaQuery(`(min-width: ${_minWidth}px)`);
 
-  const _minHeight = minHeight ?? lg / 1.5;
+  const _minHeight = minHeight ?? md / 1.5;
   const heightMatch = useMediaQuery(`(min-height: ${_minHeight}px)`);
   return <>{widthMatch && heightMatch ? standardChild : mobileChild}</>;
 }
