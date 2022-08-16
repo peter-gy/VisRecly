@@ -9,13 +9,19 @@ import {
 import {
   TASK_MAP,
   VegaLiteAnyMark,
+  VisTask,
   VisTaskCostMap,
   VisTaskMap,
 } from '@visrecly/vis-tasks';
 
 import { encodingPrefsToAsp } from './encodingPreferences';
 import { projectCosts } from './projection';
-import { RankedVisualization, RankedVisualizationExplicit } from './types';
+import {
+  RankedVisualization,
+  RankedVisualizationExplicit,
+  VisTaskRankMap,
+} from './types';
+import { mean } from './utils';
 
 /**
  * Top-level function to generate and rank visualizations
@@ -63,7 +69,7 @@ export async function rank(
     .map<RankedVisualizationExplicit>((e, idx) => ({
       ...e,
       overallRank: idx + 1,
-      visTaskRankMap: computeVisTaskRankMap(e.aggregatedCosts),
+      visTaskRankMap: computeVisTaskRankMap(e, projectedElements),
     }));
 }
 
@@ -75,16 +81,50 @@ export async function rank(
  * lower costs indicating better results.
  *
  * @param a - The first ranked visualization.
- * @param b  - The second ranked visualization.
+ * @param b - The second ranked visualization.
  */
 function compareVisualizations(a: RankedVisualization, b: RankedVisualization) {
   return a.overallCost - b.overallCost;
 }
 
-function computeVisTaskRankMap(aggregatedCosts: VisTaskCostMap) {
-  return Object.keys(aggregatedCosts)
-    .map((key) => [key, aggregatedCosts[key]])
-    .sort((a, b) => (a[1] as number) - (b[1] as number))
+/**
+ * Computes the global ranking of visualizations per task.
+ *
+ * @param vis - The vis to compute the global task ranks for.
+ * @param visArray - The array of ranked visualizations.
+ */
+function computeVisTaskRankMap(
+  vis: RankedVisualization,
+  visArray: RankedVisualization[],
+): VisTaskRankMap {
+  const taskNames = Object.keys(vis.visTaskCosts) as VisTask['name'][];
+  return taskNames.reduce((obj, taskName) => {
+    const costs = taskCosts(taskName, visArray);
+    const idx = costs.indexOf(vis.visTaskCosts[taskName]);
+    const rank = idx + 1;
+    return { ...obj, [taskName]: rank };
+  }, {});
+}
+
+function taskCosts(
+  taskName: VisTask['name'],
+  visArray: RankedVisualization[],
+): number[] {
+  return visArray
+    .map((vis) => vis.visTaskCosts[taskName])
+    .sort((a, b) => a - b);
+}
+
+/**
+ * Computes the local ranking of a visualization per task.
+ *
+ * @param aggregatedCosts - The aggregated cost map of a recommendation.
+ */
+function computeVisTaskRankMapLocal(
+  aggregatedCosts: VisTaskCostMap,
+): VisTaskRankMap {
+  return Object.entries(aggregatedCosts)
+    .sort((a, b) => a[1] - b[1])
     .map((e, idx) => [e[0], idx])
     .reduce(
       (obj, [visTaskName, idx]) => ({
@@ -116,21 +156,31 @@ function computeSingleElementCost(
     visTaskCosts,
     dataOrientedCost,
   );
+  const visTaskRankMapLocal = computeVisTaskRankMapLocal(aggregatedCosts);
   const overallCost = computeOverallCost(dataOrientedCost, visTaskCosts);
   return {
     vegaLiteSpec,
     dataOrientedCost,
     visTaskCosts,
+    visTaskRankMapLocal,
     aggregatedCosts,
     overallCost,
   };
 }
 
+/**
+ * Computes the overall cost of a visualization
+ * by summing the `dataOrientedCost` with the average of the `visTaskCosts`.
+
+ * @param dataOrientedCost - The data-oriented cost.
+ * @param visTaskCosts - Raw task-oriented costs.
+ */
 function computeOverallCost(
   dataOrientedCost: number,
   visTaskCosts: VisTaskCostMap,
 ) {
-  return dataOrientedCost;
+  const averageVisTaskCost = mean(Object.values(visTaskCosts));
+  return dataOrientedCost + averageVisTaskCost;
 }
 
 /**

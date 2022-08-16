@@ -18,9 +18,9 @@ module.exports = {
         },
         scale: {
           good: '#72D6C9',
-          average: '#9AD0EC',
-          poor: '#7189BF',
-          bad: '#DF7599',
+          average: '#84a6d6',
+          poor: '#4382bb',
+          bad: '#a57283',
         },
       },
     },

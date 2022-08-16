@@ -92,7 +92,7 @@ function RecDetailText({ rankedVisualization }: RecDetailTextProps) {
       content: `Rank ${rankedVisualization.overallRank}`,
     },
     {
-      title: '🚦Overall Rating',
+      title: '🚦Overall Assessment',
       content: `${sectionNameScale(rankedVisualization.overallCost)}`,
     },
     {

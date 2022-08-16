@@ -43,6 +43,11 @@ export type RankedVisualization = {
   visTaskCosts: VisTaskCostMap;
 
   /**
+   * Map of local ranks of each vis task.
+   */
+  visTaskRankMapLocal: VisTaskRankMap;
+
+  /**
    * Overall cost, computed as a function of `dataOrientedCost` and `visTaskCosts`.
    */
   overallCost: number;
@@ -55,11 +60,18 @@ export type RankedVisualization = {
 };
 
 /**
- * Represents a `RankedVisualization` with the additional property `rank`
- * being explicitly attached to it.
+ * Represents a `RankedVisualization` with the additional properties
+ * being explicitly attached to it, indicating global ranking.
  */
 export type RankedVisualizationExplicit = RankedVisualization & {
+  /**
+   * Global overall rank among all the recommendations.
+   */
   overallRank: number;
+
+  /**
+   * Map of global ranks for each vis task.
+   */
   visTaskRankMap: VisTaskRankMap;
 };
 

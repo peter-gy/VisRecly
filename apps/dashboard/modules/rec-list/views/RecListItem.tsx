@@ -90,7 +90,7 @@ function RankIndicator({
 }: RankIndicatorProps) {
   return (
     <div
-      className="w-[40px] h-[40px] border-[1px] rounded-lg flex justify-center items-center flex-grow md:flex-grow-0"
+      className="w-[40px] h-[40px] border-[1px] rounded-lg flex justify-center items-center flex-grow lg:flex-grow-0"
       style={{ backgroundColor }}
     >
       {rank}
@@ -104,7 +104,7 @@ type ChartItemProps = {
 
 function ChartItem({ spec }: ChartItemProps) {
   return (
-    <div className="hidden md:w-full md:h-full md:overflow-auto md:block">
+    <div className="hidden lg:w-full lg:h-full lg:overflow-auto lg:block">
       <VegaLite spec={spec} actions={false} patch={vegaSpecPatch} />
     </div>
   );
