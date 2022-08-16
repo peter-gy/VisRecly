@@ -44,7 +44,7 @@ function InfoDialogButton({
         aria-describedby="info-dialog-description"
       >
         <DialogTitle id="info-dialog-title">{title}</DialogTitle>
-        <DialogContent className="min-w-[50vw] max-w-[50vw]">
+        <DialogContent className="max-w-[50vw]">
           {typeof description === 'string' && (
             <DialogContentText id="info-dialog-slide-description">
               {description}

@@ -64,7 +64,9 @@ const styles = {
       stroke: theme`colors.primary.800`,
       ...tw`stroke-[0px]`,
     },
-    selectionStatus === 'faded' && tw`opacity-50 grayscale-[100%]`,
+    selectionStatus === 'faded' && tw`opacity-50 grayscale-[75%]`,
+    selectionStatus === 'ignored' &&
+      tw`cursor-default opacity-25 grayscale-[100%]`,
   ],
 };
 
@@ -121,8 +123,12 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
                   fillOpacity={bin.opacity}
                   onClick={() => {
                     const {
-                      bin: { overallRank },
+                      bin: { overallRank, selectionStatus },
                     } = bin;
+                    // No action when ignored
+                    if (selectionStatus === 'ignored') {
+                      return;
+                    }
                     const vis = visArray.find(
                       (vis) => vis.overallRank === overallRank,
                     );
@@ -131,8 +137,12 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
                   }}
                   onMouseEnter={() => {
                     const {
-                      bin: { overallRank },
+                      bin: { overallRank, selectionStatus },
                     } = bin;
+                    // No action when ignored
+                    if (selectionStatus === 'ignored') {
+                      return;
+                    }
                     const vis = visArray.find(
                       (vis) => vis.overallRank === overallRank,
                     );

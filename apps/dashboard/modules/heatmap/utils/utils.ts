@@ -21,7 +21,7 @@ export function binsFromVisArray(
       .map<BinType>((rec) => {
         const selectionStatus = activeTasks.includes(visTaskName)
           ? determineSelectionStatus(activeRec, rec)
-          : 'faded';
+          : 'ignored';
         return {
           overallRank: rec.overallRank,
           overallCost: rec.overallCost,
