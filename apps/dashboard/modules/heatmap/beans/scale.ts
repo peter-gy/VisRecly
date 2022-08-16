@@ -37,3 +37,8 @@ export const colorScale = scaleQuantize<string>({
   domain: [scaleRange[0], scaleRange[1]],
   range: scaleSections.map(({ color }) => color),
 });
+
+export const sectionNameScale = scaleQuantize<string>({
+  domain: [scaleRange[0], scaleRange[1]],
+  range: scaleSections.map(({ name }) => name),
+});

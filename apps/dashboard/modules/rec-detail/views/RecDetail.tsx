@@ -12,6 +12,7 @@ import useWindowSize from '@dashboard/hooks/useWindowSize';
 import {
   normalizeCost,
   scaleRange,
+  sectionNameScale,
 } from '@dashboard/modules/heatmap/beans/scale';
 import { topPerformingTasksOfVis } from '@dashboard/modules/rec-detail/utils/utils';
 
@@ -89,6 +90,10 @@ function RecDetailText({ rankedVisualization }: RecDetailTextProps) {
     {
       title: '🥇 Overall Rank',
       content: `Rank ${rankedVisualization.overallRank}`,
+    },
+    {
+      title: '🚦Overall Rating',
+      content: `${sectionNameScale(rankedVisualization.overallCost)}`,
     },
     {
       title: '🎯 Most Suitable Tasks',

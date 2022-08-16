@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic';
 import { ReactNode, useState } from 'react';
 
-import { GitHub } from '@mui/icons-material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -12,12 +11,12 @@ import Divider from '@mui/material/Divider';
 import Drawer, { DrawerProps } from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { styled, useTheme } from '@mui/material/styles';
 
 import useLayoutEffect from '@dashboard/hooks/useIsomorphicLayoutEffect';
 import useMuiAppBarHeight from '@dashboard/hooks/useMuiAppBarHeight';
+import GitHubIcon from '@dashboard/modules/components/icons/views/GitHubIcon';
 import useLayoutDimensions from '@dashboard/modules/layout/hooks/useLayoutDimensions';
 import { useLayout } from '@dashboard/modules/layout/provider/LayoutContext';
 import {
@@ -167,15 +166,7 @@ function LeftDrawerLayout({
               <div className="hidden md:block">
                 <OnboardingInfoButton />
               </div>
-              <a
-                href="https://github.com/peter-gy/visrecly"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Tooltip title="Project Source Code">
-                  <GitHub />
-                </Tooltip>
-              </a>
+              <GitHubIcon />
             </div>
           </div>
         </Toolbar>
