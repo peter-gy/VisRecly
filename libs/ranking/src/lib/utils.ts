@@ -28,18 +28,6 @@ function computeCostRangeSingleMap(aggregatedCosts: VisTaskCostMap): CostRange {
   };
 }
 
-/**
- * Orders the supplied `visArray` based on the items' effectiveness
- * with regard to `taskName`.
- *
- * @param visArray - The array of visualization recommendations.
- * @param taskName - The name of the task to be ranked.
- */
-export function rankVisualizationsForTask(
-  visArray: RankedVisualization[],
-  taskName: VisTask['name'],
-) {
-  return visArray.sort(
-    (a, b) => a.aggregatedCosts[taskName] - b.aggregatedCosts[taskName],
-  );
+export function mean(array: number[]) {
+  return array.reduce((acc, val) => acc + val, 0) / array.length;
 }
