@@ -1,14 +1,19 @@
 import { Group } from '@visx/group';
 import { scaleLinear } from '@visx/scale';
+import { theme } from 'twin.macro';
 
-import { scaleSections } from '@dashboard/modules/heatmap/beans/scale';
+import {
+  scaleSections,
+  sectionNameScale,
+} from '@dashboard/modules/heatmap/beans/scale';
 import {
   OnboardingSection,
   onboardingStep,
 } from '@dashboard/modules/onboarding/utils/utils';
+import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
 
 function HeatmapScale() {
-  const [width, height] = [50, 500];
+  const [width, height] = [55, 500];
   const sectionHeight = height / scaleSections.length;
   const scaleValues = [
     scaleSections[0].range[0],
@@ -20,6 +25,15 @@ function HeatmapScale() {
     domain: [scaleMin, scaleMax],
     range: [0, height],
   });
+
+  const {
+    state: { activeRec },
+  } = useRecSelection();
+  const activeScaleName =
+    activeRec !== undefined
+      ? sectionNameScale(activeRec.overallCost)
+      : undefined;
+
   return (
     <div className="bg-primary-100 rounded-r-lg shadow-inner pr-1.5">
       <svg
@@ -36,6 +50,7 @@ function HeatmapScale() {
               color={color}
               width={width}
               height={sectionHeight}
+              highlighted={name === activeScaleName}
             />
           ))}
         </Group>
@@ -57,6 +72,7 @@ type ScaleSectionRectProps = {
   color: string;
   width: number;
   height: number;
+  highlighted: boolean;
 };
 
 function ScaleSectionRect({
@@ -65,12 +81,25 @@ function ScaleSectionRect({
   color,
   width,
   height,
+  highlighted,
 }: ScaleSectionRectProps) {
   const x = 0;
   const y = idx * height;
   return (
     <Group transform={`translate(${x}, ${y})`}>
-      <rect x={0} y={0} width={width} height={height} style={{ fill: color }} />
+      <rect
+        x={0}
+        y={0}
+        width={width}
+        height={height}
+        style={{
+          fill: color,
+          ...(highlighted && {
+            stroke: theme`colors.primary.900`,
+            strokeWidth: 4,
+          }),
+        }}
+      />
       <text
         x={width / 2}
         y={height / 2}
