@@ -7,6 +7,6 @@
   font-family: 'Inter', sans-serif;
 }
 
-.vega-embed svg {
+.vega-embed canvas {
   @apply cursor-pointer;
 }
