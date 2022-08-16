@@ -17,7 +17,7 @@ function MobileAppBody() {
         <Player
           autoplay
           loop
-          src="/lottie/splash.json"
+          src="/lottie/bar-chart.json"
           style={{ height: '50vh', width: '50vw' }}
         ></Player>
         <div className="grow"></div>
