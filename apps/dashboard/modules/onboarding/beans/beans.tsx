@@ -93,6 +93,33 @@ export const steps: Step[] = [
       </>
     ),
   },
+  {
+    element: OnboardingSection.DrawerCloser,
+    intro: (
+      <>
+        <p>
+          <Emoji label="backhand index finger pointing left" symbol="👈" />
+          If you need more space on the screen, you can close the drawer using
+          this button.
+        </p>
+      </>
+    ),
+  },
+  {
+    element: OnboardingSection.AppInfo,
+    intro: (
+      <>
+        <p>
+          <Emoji label="repeat symbol" symbol="🔁" />
+          You can access these hints again at any time by clicking on this
+          button. <br />
+          <br />
+          Now dismiss this hint and let's explore the system!{' '}
+          <Emoji label="rocket" symbol="🚀" />
+        </p>
+      </>
+    ),
+  },
 ].map((step) => ({ ...step, element: `#${step.element}` }));
 
 export const initialStep = 0;

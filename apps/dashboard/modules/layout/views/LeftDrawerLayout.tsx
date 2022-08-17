@@ -186,7 +186,10 @@ function LeftDrawerLayout({
         {...drawerProps}
       >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton
+            id={onboardingStep(OnboardingSection.DrawerCloser)}
+            onClick={handleDrawerClose}
+          >
             {theme.direction === 'ltr' ? (
               <ChevronLeftIcon />
             ) : (
