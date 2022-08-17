@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve",
+    "start": "nx prepare dashboard && nx build draco && nx serve",
     "build": "nx prepare dashboard && nx build dashboard --production --skip-nx-cache",
     "test": "nx test"
   },
