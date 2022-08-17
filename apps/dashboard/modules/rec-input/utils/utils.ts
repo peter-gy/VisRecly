@@ -1,6 +1,6 @@
 import { DATA_SETS, DataSet } from '@visrecly/data';
+import { Schema } from '@visrecly/draco-core';
 import { Draco } from '@visrecly/draco-web';
-import { Schema } from '@visrecly/types';
 
 import {
   DataColumn,

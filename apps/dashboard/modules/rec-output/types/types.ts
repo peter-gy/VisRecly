@@ -1,5 +1,6 @@
+import { ClingoError } from 'clingo-wasm';
+
 import { RankedVisualization } from '@visrecly/ranking';
-import { ClingoError } from '@visrecly/types';
 
 export type RecOutputState = {
   /**

@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { ClingoError } from 'clingo-wasm';
 
 import {
   RankedVisualizationExplicit,
@@ -6,7 +7,6 @@ import {
   RankingFunctionReturn,
   rank,
 } from '@visrecly/ranking';
-import { ClingoError } from '@visrecly/types';
 
 import {
   ApiEndpoint,

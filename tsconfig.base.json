@@ -19,7 +19,6 @@
       "@visrecly/draco-core": ["libs/draco/js/build"],
       "@visrecly/draco-web": ["libs/draco-web/src/index.ts"],
       "@visrecly/ranking": ["libs/ranking/src/index.ts"],
-      "@visrecly/types": ["libs/types/src/index.ts"],
       "@visrecly/vis-tasks": ["libs/vis-tasks/src/index.ts"]
     }
   },

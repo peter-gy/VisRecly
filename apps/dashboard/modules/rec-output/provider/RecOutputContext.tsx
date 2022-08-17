@@ -1,7 +1,7 @@
+import { ClingoError } from 'clingo-wasm';
 import { ReactNode, createContext, useContext, useReducer } from 'react';
 
 import { RankedVisualization } from '@visrecly/ranking';
-import { ClingoError } from '@visrecly/types';
 
 import { initialRecOutputState } from '@dashboard/modules/rec-output/beans/beans';
 import { RecOutputState } from '@dashboard/modules/rec-output/types/types';
