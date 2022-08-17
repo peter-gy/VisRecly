@@ -55,6 +55,11 @@ function _Heatmap({ headerTiles }: HeatmapProps) {
             return (
               <div
                 key={`rank-tile-${idx}`}
+                id={
+                  idx === 1
+                    ? onboardingStep(OnboardingSection.HeatmapRankTile)
+                    : undefined
+                }
                 style={{ height: tileHeight }}
                 className="bg-primary-200"
               >
@@ -83,14 +88,22 @@ function _Heatmap({ headerTiles }: HeatmapProps) {
           className="flex sticky top-0 z-0"
         >
           {headerTiles.map(({ title, info }, idx) => (
-            <HeatmapHeaderTile
+            <div
               key={`heatmap-header-tile-${idx}`}
-              title={title}
-              info={info}
-              width={tileWidth}
-              height={tileHeight}
-              onVisibilityChange={(_) => handleTaskToggle(title)}
-            />
+              id={
+                idx === 0
+                  ? onboardingStep(OnboardingSection.HeatmapHeaderTile)
+                  : undefined
+              }
+            >
+              <HeatmapHeaderTile
+                title={title}
+                info={info}
+                width={tileWidth}
+                height={tileHeight}
+                onVisibilityChange={(_) => handleTaskToggle(title)}
+              />
+            </div>
           ))}
         </div>
         <div className="grow flex">

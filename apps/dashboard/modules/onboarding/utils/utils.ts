@@ -7,6 +7,9 @@ export enum OnboardingSection {
   HeatmapScale = 'heatmap-scale',
   Heatmap = 'heatmap',
   HeatmapHeader = 'heatmap-header',
+  HeatmapRankTile = 'heatmap-rank-tile',
+  HeatmapHeaderTile = 'heatmap-header-tile',
+  HeatmapTile = 'heatmap-rect-0-0',
   AppInfo = 'app-info',
   DrawerCloser = 'drawer-closer',
 }

@@ -88,7 +88,7 @@ type RecDetailTextProps = {
 function RecDetailText({ rankedVisualization }: RecDetailTextProps) {
   const items: RecDetailTextItemProps[] = [
     {
-      title: '🥇 Overall Rank',
+      title: '🏆 Overall Rank',
       content: `Rank ${rankedVisualization.overallRank}`,
     },
     {

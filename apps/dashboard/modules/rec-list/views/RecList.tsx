@@ -12,6 +12,10 @@ import {
 } from '@dashboard/modules/components/icons/views/Arrow';
 import InfoDialogButton from '@dashboard/modules/components/info-dialog-button/views/InfoDialogButton';
 import LoadingIndicator from '@dashboard/modules/components/loading-indicator/views/LoadingIndicator';
+import {
+  OnboardingSection,
+  onboardingStep,
+} from '@dashboard/modules/onboarding/utils/utils';
 import useRecListDimensions from '@dashboard/modules/rec-list/hooks/useRecListDimensions';
 import { recListItemId } from '@dashboard/modules/rec-list/utils/utils';
 import RecListItem from '@dashboard/modules/rec-list/views/RecListItem';
@@ -70,20 +74,26 @@ function RecList() {
     );
   } else {
     const visArray = rankingResult as RankedVisualizationExplicit[];
-    const items = visArray.map((vis) => (
-      <RecListItem
+    const items = visArray.map((vis, idx) => (
+      <div
         key={`rec-list-item-${vis.overallRank}`}
-        rank={vis.overallRank}
-        rankedVisualization={vis}
-        width={recListItemWidth}
-        height={recListItemHeight}
-        onMouseEnter={() => handleItemMouseEnter(vis)}
-        onMouseLeave={() => handleItemMouseLeave(vis)}
-        selectionStatus={determineSelectionStatus(activeRec, {
-          ...vis,
-          overallRank: vis.overallRank,
-        })}
-      />
+        id={
+          idx === 0 ? onboardingStep(OnboardingSection.RecListItem) : undefined
+        }
+      >
+        <RecListItem
+          rank={vis.overallRank}
+          rankedVisualization={vis}
+          width={recListItemWidth}
+          height={recListItemHeight}
+          onMouseEnter={() => handleItemMouseEnter(vis)}
+          onMouseLeave={() => handleItemMouseLeave(vis)}
+          selectionStatus={determineSelectionStatus(activeRec, {
+            ...vis,
+            overallRank: vis.overallRank,
+          })}
+        />
+      </div>
     ));
     if (items.length === 0) {
       isUnsatisfiable = true;

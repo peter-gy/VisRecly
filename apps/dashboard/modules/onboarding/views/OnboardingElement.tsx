@@ -34,6 +34,7 @@ function OnboardingElement() {
         enabled={atLeastMd && enabled}
         onExit={handleExit}
         onComplete={handleExit}
+        options={{ disableInteraction: true }}
       />
     </>
   );

@@ -75,6 +75,14 @@ function _DataColumnSelector({
       id={onboardingStep(OnboardingSection.DataColumnSelector)}
       className="flex flex-col"
     >
+      {selectedDataColumns.length !== 0 && (
+        <p className="text-xs mb-2">
+          Selected:{' '}
+          <span className="italic">
+            {selectedDataColumns.map((c) => c.name).join(', ')}
+          </span>
+        </p>
+      )}
       {availableDataColumns.map(({ name, type }) => {
         const isSelected =
           selectedDataColumns.find((col) => col.name === name) !== undefined;
