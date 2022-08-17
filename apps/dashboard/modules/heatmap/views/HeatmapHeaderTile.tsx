@@ -46,7 +46,7 @@ function HeatmapHeaderTile({
           title={visible ? 'Blend out this task' : 'Highlight this task'}
         >
           <IconButton onClick={handleVisibilityIconClick}>
-            <VisibilityIcon />
+            <VisibilityIcon className="text-primary-900" />
           </IconButton>
         </Tooltip>
       </div>

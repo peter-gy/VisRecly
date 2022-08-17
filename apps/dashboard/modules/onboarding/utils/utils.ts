@@ -8,6 +8,7 @@ export enum OnboardingSection {
   Heatmap = 'heatmap',
   HeatmapHeader = 'heatmap-header',
   AppInfo = 'app-info',
+  DrawerCloser = 'drawer-closer',
 }
 
 export function onboardingStep(section: OnboardingSection): string {
