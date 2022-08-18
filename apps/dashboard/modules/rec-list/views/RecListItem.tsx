@@ -6,6 +6,7 @@ import { RankedVisualizationExplicit } from '@visrecly/ranking';
 
 import { colorScale } from '@dashboard/modules/heatmap/beans/scale';
 import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
+import { useRecInput } from '@dashboard/modules/rec-input/provider/RecInputContext';
 import {
   recListItemId,
   vegaSpecPatch,
@@ -58,6 +59,9 @@ function RecListItem({
     setIsOpen(false);
   };
   const rankColor = colorScale(rankedVisualization.overallCost);
+  const {
+    state: { selectedDataColumns },
+  } = useRecInput();
   return (
     <>
       <div
@@ -74,6 +78,7 @@ function RecListItem({
         open={isOpen}
         onClose={handleClose}
         rankedVisualization={rankedVisualization}
+        selectedColumnNames={selectedDataColumns.map(({ name }) => name)}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { ReactElement, Ref, forwardRef } from 'react';
+import { ReactElement, ReactNode, Ref, forwardRef } from 'react';
 import { VegaLite } from 'react-vega';
 
 import { RankedVisualizationExplicit } from '@visrecly/ranking';
@@ -15,11 +15,13 @@ import {
   sectionNameScale,
 } from '@dashboard/modules/heatmap/beans/scale';
 import { topPerformingTasksOfVis } from '@dashboard/modules/rec-detail/utils/utils';
+import VegaLiteExporter from '@dashboard/modules/rec-detail/views/VegaLiteExporter';
 
 type RecDetailProps = {
   open: boolean;
   onClose: () => void;
   rankedVisualization: RankedVisualizationExplicit;
+  selectedColumnNames: string[];
 };
 
 const Transition = forwardRef(function Transition(
@@ -31,7 +33,12 @@ const Transition = forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function RecDetail({ open, onClose, rankedVisualization }: RecDetailProps) {
+function RecDetail({
+  open,
+  onClose,
+  rankedVisualization,
+  selectedColumnNames,
+}: RecDetailProps) {
   const { width, height } = useWindowSize();
   const appBarHeight = useMuiAppBarHeight();
   const factor = 0.5;
@@ -62,9 +69,14 @@ function RecDetail({ open, onClose, rankedVisualization }: RecDetailProps) {
           <h3>Recommendation Details</h3>
         </Toolbar>
       </AppBar>
-      <div className="mx-4 bg-primary-50 flex flex-row justify-around items-center">
+      <div className="px-4 bg-primary-100 flex flex-row justify-around items-center">
         <div style={layoutNormalization}>
-          <RecDetailText rankedVisualization={rankedVisualization} />
+          <div className="flex flex-col justify-center items-start space-y-8">
+            <RecDetailText
+              rankedVisualization={rankedVisualization}
+              selectedColumnNames={selectedColumnNames}
+            />
+          </div>
         </div>
         <div
           className="p-4 border-2 border-primary-800 rounded-md bg-white overflow-auto"
@@ -74,6 +86,12 @@ function RecDetail({ open, onClose, rankedVisualization }: RecDetailProps) {
             spec={rankedVisualization.vegaLiteSpec}
             width={factor * width}
             height={factor * height}
+            actions={{
+              export: true,
+              editor: true,
+              source: false,
+              compiled: false,
+            }}
           />
         </div>
       </div>
@@ -83,13 +101,21 @@ function RecDetail({ open, onClose, rankedVisualization }: RecDetailProps) {
 
 type RecDetailTextProps = {
   rankedVisualization: RankedVisualizationExplicit;
+  selectedColumnNames: string[];
 };
 
-function RecDetailText({ rankedVisualization }: RecDetailTextProps) {
+function RecDetailText({
+  rankedVisualization,
+  selectedColumnNames,
+}: RecDetailTextProps) {
   const items: RecDetailTextItemProps[] = [
     {
       title: '🏆 Overall Rank',
       content: `Rank ${rankedVisualization.overallRank}`,
+    },
+    {
+      title: '📊 Selected Columns',
+      content: selectedColumnNames.join(', '),
     },
     {
       title: '🚦Overall Assessment',
@@ -104,6 +130,14 @@ function RecDetailText({ rankedVisualization }: RecDetailTextProps) {
       content: `${normalizeCost(rankedVisualization.dataOrientedCost).toFixed(
         2,
       )} / ${scaleRange[1]}`,
+    },
+    {
+      title: '📂 Export Recommendation',
+      content: (
+        <div className="pt-4">
+          <VegaLiteExporter />
+        </div>
+      ),
     },
   ];
   const visRank = rankedVisualization.overallRank;
@@ -120,14 +154,15 @@ function RecDetailText({ rankedVisualization }: RecDetailTextProps) {
 
 type RecDetailTextItemProps = {
   title: string;
-  content: string;
+  content: string | ReactNode;
 };
 
 function RecDetailTextItem({ title, content }: RecDetailTextItemProps) {
   return (
-    <div className="flex flex-col space-y-1">
+    <div className="flex flex-col space-y-2">
       <span className="font-bold">{title}</span>
-      <span className="italic">{content}</span>
+      {typeof content === 'string' && <span className="italic">{content}</span>}
+      {typeof content === 'object' && content}
     </div>
   );
 }

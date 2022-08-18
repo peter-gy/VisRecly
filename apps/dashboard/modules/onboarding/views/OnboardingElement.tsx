@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material/styles';
 
 import { initialStep, steps } from '@dashboard/modules/onboarding/beans/beans';
 import useOnboardingEnabled from '@dashboard/modules/onboarding/hooks/useOnboardingEnabled';
+import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 
 function OnboardingElement() {
   const [enabled, setEnabled] = useOnboardingEnabled();
@@ -25,6 +26,13 @@ function OnboardingElement() {
   const theme = useTheme();
   const { md } = theme.breakpoints.values;
   const atLeastMd = useMediaQuery(`(min-width: ${md}px)`);
+
+  const {
+    state: { isLoading },
+  } = useRecOutput();
+  if (isLoading) {
+    return <></>;
+  }
 
   return (
     <>

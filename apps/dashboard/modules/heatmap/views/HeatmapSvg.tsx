@@ -15,6 +15,7 @@ import {
   heatmapRectId,
 } from '@dashboard/modules/heatmap/utils/utils';
 import RecDetail from '@dashboard/modules/rec-detail/views/RecDetail';
+import { useRecInput } from '@dashboard/modules/rec-input/provider/RecInputContext';
 import { useRecOutput } from '@dashboard/modules/rec-output/provider/RecOutputContext';
 import { useRecSelection } from '@dashboard/modules/rec-selection/provider/RecSelectionContext';
 import { RecSelectionStatus } from '@dashboard/modules/rec-selection/types/types';
@@ -94,6 +95,11 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
   });
   const { state: recSelectionState, dispatch: recSelectionDispatch } =
     useRecSelection();
+
+  const {
+    state: { selectedDataColumns },
+  } = useRecInput();
+
   return (
     <>
       <svg width={width} height={height} overflow="visible">
@@ -165,6 +171,7 @@ function _HeatmapSvg({ visArray, tileWidth, tileHeight }: HeatmapSvgProps) {
           open={detailOpen}
           onClose={handleClose}
           rankedVisualization={selectedVis}
+          selectedColumnNames={selectedDataColumns.map(({ name }) => name)}
         />
       )}
     </>
