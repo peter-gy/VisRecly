@@ -66,8 +66,7 @@ const styles = {
       ...tw`stroke-[0px]`,
     },
     selectionStatus === 'faded' && tw`opacity-50 grayscale`,
-    selectionStatus === 'ignored' &&
-      tw`cursor-default opacity-25 grayscale`,
+    selectionStatus === 'ignored' && tw`cursor-default opacity-25 grayscale`,
   ],
 };
 
