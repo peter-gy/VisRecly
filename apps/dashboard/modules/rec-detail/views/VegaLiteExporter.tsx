@@ -14,14 +14,20 @@ function VegaLiteExporter() {
     setVisible(!visible);
   };
 
+  const conditionalProps = {
+    startIcon: visible ? <VisibilityOffIcon /> : <VisibilityIcon />,
+  };
+
   return (
     <Button
       className="px-2"
       variant="contained"
-      startIcon={visible ? <VisibilityOffIcon /> : <VisibilityIcon />}
       onClick={handleClick}
+      {...((window ?? {})['safari'] === undefined && conditionalProps)}
     >
-      {visible ? 'Hide Options' : 'Show Options'}
+      {(window ?? {})['safari'] !== undefined && 'Show Options'}
+      {(window ?? {})['safari'] === undefined &&
+        (visible ? 'Hide Options' : 'Show Options')}
     </Button>
   );
 }
