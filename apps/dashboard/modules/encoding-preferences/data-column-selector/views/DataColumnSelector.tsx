@@ -24,9 +24,12 @@ function DataColumnSelector() {
       data: columns.map(({ name }) => name),
     });
   };
+  const sortedColumns = availableDataColumns.sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
   return (
     <_DataColumnSelector
-      availableDataColumns={availableDataColumns}
+      availableDataColumns={sortedColumns}
       selectedDataColumns={selectedDataColumns}
       onSelect={handleSelect}
     />
