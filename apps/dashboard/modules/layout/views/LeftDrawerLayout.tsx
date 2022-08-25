@@ -3,7 +3,7 @@ import { ReactNode, useState } from 'react';
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import SettingsIcon from '@mui/icons-material/Settings';
+import { Tooltip } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -151,7 +151,9 @@ function LeftDrawerLayout({
                 edge="start"
                 sx={{ mr: 2, ...(open && { display: 'none' }) }}
               >
-                <SettingsIcon />
+                <Tooltip title="Open drawer">
+                  <ChevronRightIcon fontSize="large" />
+                </Tooltip>
               </IconButton>
               <Typography
                 id={onboardingStep(OnboardingSection.AppTitle)}
