@@ -72,7 +72,11 @@ function RecListItem({
         onMouseLeave={onMouseLeave}
       >
         <RankIndicator rank={rank} backgroundColor={rankColor} />
-        <ChartItem spec={rankedVisualization.vegaLiteSpec} />
+        <ChartItem
+          spec={rankedVisualization.vegaLiteSpec}
+          width={0.6 * width}
+          height={0.6 * height}
+        />
       </div>
       <RecDetail
         open={isOpen}
@@ -105,12 +109,20 @@ function RankIndicator({
 
 type ChartItemProps = {
   spec: unknown;
+  width: number;
+  height: number;
 };
 
-function ChartItem({ spec }: ChartItemProps) {
+function ChartItem({ spec, width, height }: ChartItemProps) {
   return (
-    <div className="hidden lg:w-full lg:h-full lg:overflow-auto lg:block">
-      <VegaLite spec={spec} actions={false} patch={vegaSpecPatch} />
+    <div className="hidden lg:w-full lg:h-full lg:overflow-auto lg:flex lg:items-center lg:justify-center">
+      <VegaLite
+        spec={spec}
+        actions={false}
+        patch={vegaSpecPatch}
+        width={width}
+        height={height}
+      />
     </div>
   );
 }
