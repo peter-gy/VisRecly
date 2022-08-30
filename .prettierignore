@@ -3,4 +3,5 @@
 /dist
 /coverage
 */**/data/*.json
+libs/data/src/**/*.json
 */**/lottie/*.json
