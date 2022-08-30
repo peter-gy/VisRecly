@@ -14,7 +14,7 @@ class _Document extends Document {
 
   render() {
     return (
-      <Html className="bg-blue-800">
+      <Html className="bg-blue-800" lang="en">
         <Head>
           <link rel="icon" href="/favicon.ico" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />

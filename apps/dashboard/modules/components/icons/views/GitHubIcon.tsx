@@ -7,6 +7,7 @@ function GitHubIcon() {
       href="https://github.com/peter-gy/visrecly"
       target="_blank"
       rel="noreferrer"
+      aria-label="GitHub"
     >
       <Tooltip title="Project Source Code">
         <GitHub />

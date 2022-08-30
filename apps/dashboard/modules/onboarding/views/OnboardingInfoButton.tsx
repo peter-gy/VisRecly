@@ -29,6 +29,7 @@ function OnboardingInfoButton() {
       <IconButton
         id={onboardingStep(OnboardingSection.AppInfo)}
         onClick={handleInfoButtonClick}
+        aria-label="Show onboarding steps"
       >
         <HelpIcon className="text-white" />
       </IconButton>
