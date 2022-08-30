@@ -13,5 +13,6 @@ const nextConfig = {
   optimizeFonts: true,
   swcMinify: false,
   reactStrictMode: true,
+  productionBrowserSourceMaps: true,
 };
 module.exports = withNx(nextConfig);
