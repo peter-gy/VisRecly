@@ -50,6 +50,12 @@
         }
       }
     },
+    "analyze": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "ANALYZE=true npx nx serve dashboard"
+      }
+    },
     "export": {
       "executor": "@nrwl/next:export",
       "options": {
