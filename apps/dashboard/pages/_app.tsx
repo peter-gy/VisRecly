@@ -3,7 +3,6 @@ import { CacheProvider } from '@emotion/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import 'intro.js/introjs.css';
 import { AppProps } from 'next/app';
-import Head from 'next/head';
 
 import { ThemeProvider } from '@mui/material';
 
@@ -20,9 +19,6 @@ const queryClient = new QueryClient();
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Head>
-        <title>VisRecly</title>
-      </Head>
       <main className="app">
         <CacheProvider value={cache}>
           <GlobalStyles />
