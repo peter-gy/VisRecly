@@ -178,7 +178,11 @@ function RecListView({ items }: RecListViewProps) {
   };
   return (
     <>
-      <IconButton size="large" onClick={handleScrollUpClick}>
+      <IconButton
+        size="large"
+        onClick={handleScrollUpClick}
+        aria-label="Scroll to top"
+      >
         <ArrowUp className="text-white" fontSize="large" />
       </IconButton>
       <List ref={listRef} style={{ maxHeight: '100%', overflow: 'scroll' }}>
@@ -186,7 +190,11 @@ function RecListView({ items }: RecListViewProps) {
           <ListItem key={`rec-list-item-${index}`}>{item}</ListItem>
         ))}
       </List>
-      <IconButton size="large" onClick={handleScrollDownClick}>
+      <IconButton
+        size="large"
+        onClick={handleScrollDownClick}
+        aria-label="Scroll to bottom"
+      >
         <ArrowDown className="text-white" fontSize="large" />
       </IconButton>
     </>

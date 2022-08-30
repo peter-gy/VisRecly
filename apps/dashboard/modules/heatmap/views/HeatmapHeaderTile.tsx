@@ -45,7 +45,10 @@ function HeatmapHeaderTile({
         <Tooltip
           title={visible ? 'Blend out this task' : 'Highlight this task'}
         >
-          <IconButton onClick={handleVisibilityIconClick}>
+          <IconButton
+            onClick={handleVisibilityIconClick}
+            aria-label="Toggle visibility"
+          >
             <VisibilityIcon className="text-primary-900" />
           </IconButton>
         </Tooltip>

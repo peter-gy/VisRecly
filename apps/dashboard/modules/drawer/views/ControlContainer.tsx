@@ -38,7 +38,7 @@ function ControlContainer({
           <h2>{title}</h2>
         </Divider>
         <CustomWidthTooltip title={description} placement="right">
-          <IconButton>
+          <IconButton aria-label="Information">
             <InfoIcon className="text-primary" />
           </IconButton>
         </CustomWidthTooltip>

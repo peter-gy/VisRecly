@@ -33,7 +33,7 @@ function InfoDialogButton({
   return (
     <>
       <Tooltip title={tooltip}>
-        <IconButton onClick={handleClickOpen}>
+        <IconButton onClick={handleClickOpen} aria-label="Show information">
           <InfoIcon className="text-white" />
         </IconButton>
       </Tooltip>
@@ -55,7 +55,7 @@ function InfoDialogButton({
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={handleClose} autoFocus aria-label="Close dialog">
             Ok
           </Button>
         </DialogActions>
