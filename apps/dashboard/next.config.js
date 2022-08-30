@@ -15,4 +15,12 @@ const nextConfig = {
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
 };
-module.exports = withNx(nextConfig);
+
+if (process.env.NODE_ENV === 'development') {
+  const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+  });
+  module.exports = withBundleAnalyzer(withNx(nextConfig));
+} else {
+  module.exports = withNx(nextConfig);
+}

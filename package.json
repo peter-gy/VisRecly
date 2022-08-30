@@ -42,6 +42,7 @@
     "@babel/preset-typescript": "^7.17.12",
     "@emotion/babel-plugin": "11.10.0",
     "@emotion/babel-plugin-jsx-pragmatic": "^0.1.5",
+    "@next/bundle-analyzer": "^12.2.5",
     "@nrwl/cli": "14.5.5",
     "@nrwl/cypress": "14.5.5",
     "@nrwl/eslint-plugin-nx": "14.5.5",
@@ -85,6 +86,7 @@
     "ts-jest": "27.1.4",
     "ts-node": "10.9.1",
     "twin.macro": "^2.8.2",
-    "typescript": "~4.7.2"
+    "typescript": "~4.7.2",
+    "webpack-bundle-analyzer": "^4.6.1"
   }
 }
