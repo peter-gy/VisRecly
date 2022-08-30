@@ -17,7 +17,8 @@ import { BaseResponse } from '@dashboard/modules/api/types/endpoint.type';
  * @param res - the returned Next API response
  * @see https://github.com/domoritz/clingo-wasm/issues/185#issuecomment-1206916557
  */
-export default async function handler(
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse<BaseResponse<Awaited<RankingFunctionReturn>>>,
 ) {
@@ -32,3 +33,7 @@ export default async function handler(
     res.status(500).json({ success: false, message });
   }
 }
+
+// Do not export the API route for now, as in-browser ranking is implemented
+// export default handler;
+export default () => <></>;
