@@ -10,6 +10,25 @@ This idea and project were so interesting to me that I decided to make it the pr
 department of Universität Wien. I enjoy the supervision of [Torsten Möller](https://research.com/u/torsten-moller)
 and [Manfred Klaffenböck](https://www.cg.tuwien.ac.at/staff/ManfredKlaffenb%C3%B6ck).
 
+### Decomposing the Project's Name and Ambitions
+
+The first part, _VisRec_, stands for **Vis**ualization **Rec**ommendation, while the _ly_ segment is a
+tribute to Grammarly (the grammar checker) which inspired me to jump into this project. As I exposed myself to formal,
+academic concepts of visualization and visual data analysis, I realized that a Grammarly-like tool for visualization
+would be beneficial to VIS novices.
+
+There is an untold story behind every single set of data and visualizations provide great means to tell these stories.
+Yet, just as people do not enjoy written stories being full of grammar or spelling mistakes or being out of tone, they
+also do not enjoy looking at visualizations violating fundamental design guidelines or being out of context regarding
+the task at hand.
+
+On the one hand, as Grammarly dictates grammar and spelling rules for writing, VisRecly aims at enforcing non-negotiable
+visualization
+design guidelines in its recommendations. On the other hand, just as Grammarly allows for recommending synonyms and
+alternative sentence structures based on the communication goals and target audience of the author, VisRecly attempts to
+help its users
+find the "tone" of their visualization by ranking recommendations across tasks and highlighting the most suitable ones.
+
 ### Tech Overview
 
 In an attempt to make this tool as intriguing and accessible as possible, I am building it with modern web technologies,
@@ -35,24 +54,16 @@ This monorepo is made up of the modules below:
 - `apps/dashboard`: The actual client of the above modules, the dashboard that allows users to steer their desired
   tasks and marvel at the generated vega-lite-based visualizations.
 
-### Decomposing the Project's Name and Ambitions
+### Architectural Overview
 
-The first part, _VisRec_, stands for **Vis**ualization **Rec**ommendation, while the _ly_ segment is a
-tribute to Grammarly (the grammar checker) which inspired me to jump into this project. As I exposed myself to formal,
-academic concepts of visualization and visual data analysis, I realized that a Grammarly-like tool for visualization
-would be beneficial to VIS novices.
+![visrecly-arch](./assets/hifi_arch.jpg)
 
-There is an untold story behind every single set of data and visualizations provide great means to tell these stories.
-Yet, just as people do not enjoy written stories being full of grammar or spelling mistakes or being out of tone, they
-also do not enjoy looking at visualizations violating fundamental design guidelines or being out of context regarding
-the task at hand.
-
-On the one hand, as Grammarly dictates grammar and spelling rules for writing, VisRecly aims at enforcing non-negotiable
-visualization
-design guidelines in its recommendations. On the other hand, just as Grammarly allows for recommending synonyms and
-alternative sentence structures based on the communication goals and target audience of the author, VisRecly attempts to
-help its users
-find the "tone" of their visualization by ranking recommendations across tasks and highlighting the most suitable ones.
+- **(a) Input**: accepts user input (`apps/dashboard`)
+- **(b) Preprocess**: prepare data schema (`libs/draco`)
+- **(c) Generate**: Solve ASP problems and produce Vega-Lite specifications (`libs/draco-web`)
+- **(e) Rank**: Compute recommendation costs and rank visualizations (`libs/ranking`)
+- **(g) Output**: Render the ranked visualizations (`apps/dashboard`)
+- **(d)** and **(e)** are knowledge sources for design guidelines and VIS tasks (`libs/data`, `libs/vis-tasks`)
 
 ## Development
 
