@@ -1,5 +1,7 @@
 # VisRecly
 
+![VisRecly Demo](./assets/demo.gif)
+
 ## What Is This All About?
 
 _VisRecly_ is a task-based visualization-recommendation tool with the goal in mind to allow novice VIS users to create
