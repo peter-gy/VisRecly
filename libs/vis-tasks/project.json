@@ -1,4 +1,5 @@
 {
+  "name": "vis-tasks",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/vis-tasks/src",
   "projectType": "library",
