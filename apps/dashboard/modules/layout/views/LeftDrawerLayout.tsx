@@ -17,6 +17,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import useLayoutEffect from '@dashboard/hooks/useIsomorphicLayoutEffect';
 import useMuiAppBarHeight from '@dashboard/hooks/useMuiAppBarHeight';
 import GitHubIcon from '@dashboard/modules/components/icons/views/GitHubIcon';
+import ThesisIcon from '@dashboard/modules/components/icons/views/ThesisIcon';
 import useLayoutDimensions from '@dashboard/modules/layout/hooks/useLayoutDimensions';
 import { useLayout } from '@dashboard/modules/layout/provider/LayoutContext';
 import {
@@ -169,6 +170,7 @@ function LeftDrawerLayout({
                 <OnboardingInfoButton />
               </div>
               <GitHubIcon />
+              <ThesisIcon />
             </div>
           </div>
         </Toolbar>
