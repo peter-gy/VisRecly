@@ -1,6 +1,7 @@
 import { Player } from '@lottiefiles/react-lottie-player';
 
 import GitHubIcon from '@dashboard/modules/components/icons/views/GitHubIcon';
+import ThesisIcon from '@dashboard/modules/components/icons/views/ThesisIcon';
 
 function MobileAppBody() {
   return (
@@ -26,7 +27,10 @@ function MobileAppBody() {
           <p className="muted italic">
             Towards a User-task-focused Visualization Recommender Tool
           </p>
-          <GitHubIcon />
+          <div className="flex justify-center items-center space-x-8">
+            <GitHubIcon />
+            <ThesisIcon />
+          </div>
         </div>
       </div>
     </div>
