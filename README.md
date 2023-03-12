@@ -12,6 +12,8 @@ This idea and project were so interesting to me that I decided to make it the pr
 department of Universität Wien. I enjoy the supervision of [Torsten Möller](https://research.com/u/torsten-moller)
 and [Manfred Klaffenböck](https://www.cg.tuwien.ac.at/staff/ManfredKlaffenb%C3%B6ck).
 
+**You can read the full thesis [here](https://visrecly.vercel.app/visrecly_thesis.pdf)**.
+
 ### Decomposing the Project's Name and Ambitions
 
 The first part, _VisRec_, stands for **Vis**ualization **Rec**ommendation, while the _ly_ segment is a
